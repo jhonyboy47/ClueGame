@@ -28,7 +28,6 @@ public class IntBoard {
 		    	  
 		    	  //Checks for the first rows stuff
 		    	  if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < grid[0].length - 1) )
-		    		  tempSet.add(grid[row][col]);
 		    	  	  tempSet.add(grid[row+1][col]);
 		    	  	  tempSet.add(grid[row][col+1]);
 		    	  	  tempSet.add(grid[row][col-1]);
