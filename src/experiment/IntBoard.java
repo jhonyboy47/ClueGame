@@ -18,7 +18,7 @@ public class IntBoard {
 		calcAdjacencies();
 	}
 	
-	public Set<BoardCell> getAdjList() {
+	public Set<BoardCell> getAdjList(BoardCell cell) {
 		
 		return null;
 	}

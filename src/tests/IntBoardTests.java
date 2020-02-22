@@ -11,10 +11,11 @@ import experiment.BoardCell;
 import experiment.IntBoard;
 
 public class IntBoardTests {
+	IntBoard board;
 	
 	@Before
     public void beforeAll() {
-       IntBoard board = new IntBoard();  // constructor should call calcAdjacencies() so you can test them
+       board = new IntBoard();  // constructor should call calcAdjacencies() so you can test them
     }
 	
 	
@@ -83,7 +84,7 @@ public class IntBoardTests {
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(0, 1)));
 		assertTrue(testList.contains(board.getCell(1, 0)));
-		assertTrue(testList.contains(board.getCell(4, 0)));
+		assertTrue(testList.contains(board.getCell(0, 1)));
 		assertEquals(3, testList.size());
 	}
 	
