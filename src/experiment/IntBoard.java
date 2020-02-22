@@ -13,6 +13,10 @@ public class IntBoard {
 		
 	}
 	
+	public IntBoard() {
+		super();
+		calcAdjacencies();
+	}
 	
 	public Set<BoardCell> getAdjList() {
 		
@@ -30,4 +34,8 @@ public class IntBoard {
 		return null;
 	}
 	
+	public BoardCell getCell(int x, int y) {
+		
+		return null;
+	}
 }
