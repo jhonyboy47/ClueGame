@@ -16,7 +16,13 @@ public class IntBoard {
 		   {
 		       for (int col = 0; col < grid[0].length; col++)
 		       {
-		    	  Set<BoardCell> tempSet;
+		    	  Set<BoardCell> tempSet = new HashSet<BoardCell>();
+		    	  
+		    	  if ( grid[row][col].getColumn() == 0 && grid[row][col].getRow() == 0) {
+		    		  
+		    		  tempSet.add(grid[row+1][col]);
+		    		  tempSet.add(grid[row][col+1]);
+		    	  }
 		          
 		       }
 		   }
@@ -24,6 +30,8 @@ public class IntBoard {
 	
 	public IntBoard() {
 		super();
+		
+		//Assigns columb and row values to each boardcell
 		for (int row = 0; row < grid.length; row++)
 		   {
 		       for (int col = 0; col < grid[0].length; col++)
