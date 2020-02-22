@@ -17,11 +17,39 @@ public class IntBoard {
 		       for (int col = 0; col < grid[0].length; col++)
 		       {
 		    	  Set<BoardCell> tempSet = new HashSet<BoardCell>();
+		    	  BoardCell tempBoardCell = grid[row][col];
 		    	  
-		    	  if ( grid[row][col].getColumn() == 0 && grid[row][col].getRow() == 0) {
+		    	  //0,0 cell
+		    	  if ( tempBoardCell.getColumn() == 0 && tempBoardCell.getRow() == 0) {
 		    		  
 		    		  tempSet.add(grid[row+1][col]);
 		    		  tempSet.add(grid[row][col+1]);
+		    	  }
+		    	  
+		    	  //Checks for the first rows stuff
+		    	  if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < grid[0].length - 1) )
+		    		  tempSet.add(grid[row][col]);
+		    	  	  tempSet.add(grid[row+1][col]);
+		    	  	  tempSet.add(grid[row][col+1]);
+		    	  	  tempSet.add(grid[row][col-1]);
+		    	  	  
+		    	  //top right corner cell	  
+		    	  if ( tempBoardCell.getColumn() == grid[0].length-1 && tempBoardCell.getRow() == 0)
+
+		    	  //Checks for the first column's case stuff
+		    	  if ( (tempBoardCell.getColumn() == 0 && tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < grid.length - 1)) {
+		    		  tempSet.add(grid[row-1][col]);
+		    		  tempSet.add(grid[row+1][col]);
+		    		  tempSet.add(grid[row][col+1]);
+
+		    	  }
+		    	  
+		    	  //Checks for the Last column's case stuff
+		    	  if ( (tempBoardCell.getColumn() == grid[0].length-1 && tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < grid.length - 1)) {
+		    		  tempSet.add(grid[row-1][col]);
+		    		  tempSet.add(grid[row+1][col]);
+		    		  tempSet.add(grid[row][col-1]);
+
 		    	  }
 		          
 		       }
