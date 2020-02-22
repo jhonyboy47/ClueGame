@@ -1,4 +1,5 @@
 package experiment;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +20,12 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell) {
+		
+		Set<BoardCell> temp = new HashSet<BoardCell>();
+		temp.add(this.getCell(1, 0));
+		temp.add(this.getCell(-1, 0));
+		temp.add(this.getCell(0, 1));		
+		temp.add(this.getCell(0, -1));
 		
 		return null;
 	}
