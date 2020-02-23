@@ -116,7 +116,13 @@ public class IntBoard {
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		for(BoardCell cell : getAdjList(startCell)) {
-			if(!visited.contains(cell)) {
+			Boolean visitedBool = false;
+			for(BoardCell tempCell : visited) {
+				if(tempCell.getColumn() == cell.getColumn() && tempCell.getRow() == cell.getRow() ) {
+					visitedBool = true;
+				}
+			}
+			if(!visitedBool) {
 				visited.add(cell);
 				if(pathLength == 1) {
 					targets.add(cell);
@@ -141,6 +147,15 @@ public class IntBoard {
 		}
 		return grid[x][y];
 		
+	}
+	
+	public static void main(String [] args) {
+		IntBoard board;
+		
+	    board = new IntBoard();
+	    BoardCell cell = board.getCell(2, 3);
+		board.calcTargets(cell, 2);
+		Set targets = board.getTargets();
 	}
 }
 
