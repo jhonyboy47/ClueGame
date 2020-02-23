@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Before;
+
 
 public class IntBoard {
 	
@@ -108,14 +110,23 @@ public class IntBoard {
 	}
 	
 	public Set<BoardCell> getAdjList(BoardCell cell) {
-		System.out.println(adjMtx);
 		return adjMtx.get(cell);
 	}
 	
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
-		
-		
+		for(BoardCell cell : getAdjList(startCell)) {
+			if(!visited.contains(cell)) {
+				visited.add(cell);
+				if(pathLength == 1) {
+					targets.add(cell);
+				} else {
+					calcTargets(cell, pathLength - 1);
+				}
+				
+				visited.remove(cell);
+			}
+		}
 	}
 	
 	public Set<BoardCell> getTargets(){

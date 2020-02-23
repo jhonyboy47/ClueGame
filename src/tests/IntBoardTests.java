@@ -70,8 +70,7 @@ public class IntBoardTests {
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 0)));
 		assertTrue(testList.contains(board.getCell(3, 1)));
-		assertTrue(testList.contains(board.getCell(4, 0)));
-		assertEquals(3, testList.size());
+		assertEquals(2, testList.size());
 	}
 	
 	/*
