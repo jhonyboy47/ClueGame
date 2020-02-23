@@ -1,3 +1,4 @@
+// Authors: Michael Crews and Jhonathan Malagon
 package tests;
 
 import static org.junit.Assert.*;
@@ -11,8 +12,11 @@ import experiment.BoardCell;
 import experiment.IntBoard;
 
 public class IntBoardTests {
+	// For the tests we need an variable of type IntBoard
 	IntBoard board;
 	
+	
+	// Before every test we start with a new board
 	@Before
     public void beforeAll() {
        board = new IntBoard();  // constructor should call calcAdjacencies() so you can test them
@@ -89,7 +93,7 @@ public class IntBoardTests {
 	}
 	
 	/*
-	 * Test adjacencies for second column middle of grid
+	 * Test adjacencies for second column middle of grid again
 	 */
 	@Test
 	public void testAdjacency5()

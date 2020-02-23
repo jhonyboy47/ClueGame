@@ -1,9 +1,12 @@
+// Authors: Michael Crews and Jhonathan Malagon
 package experiment;
 
 public class BoardCell {
-
+	
+	// Declare two instance variables that every boardcell has
 	int row, column;
 	
+	// This is a parameterized constructor for boardcell to pass in the row and column
 	public BoardCell(int row, int column) {
 		this.row = row;
 		this.column = column;
@@ -16,7 +19,5 @@ public class BoardCell {
 	public int getColumn() {
 		return column;
 	}
-
-
 	
 }
