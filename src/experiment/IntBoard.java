@@ -18,37 +18,74 @@ public class IntBoard {
 		       {
 		    	  Set<BoardCell> tempSet = new HashSet<BoardCell>();
 		    	  BoardCell tempBoardCell = grid[row][col];
+		    	  int lastCol = grid[0].length-1;
+		    	  int lastRow = grid.length;
 		    	  
 		    	  //0,0 cell
-		    	  if ( tempBoardCell.getColumn() == 0 && tempBoardCell.getRow() == 0) {
+		    	  if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == 0)) {
 		    		  
 		    		  tempSet.add(grid[row+1][col]);
 		    		  tempSet.add(grid[row][col+1]);
 		    	  }
 		    	  
 		    	  //Checks for the first rows stuff
-		    	  if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < grid[0].length - 1) )
+		    	  else if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
 		    	  	  tempSet.add(grid[row+1][col]);
 		    	  	  tempSet.add(grid[row][col+1]);
 		    	  	  tempSet.add(grid[row][col-1]);
-		    	  	  
+		    	  }
+		       
 		    	  //top right corner cell	  
-		    	  if ( tempBoardCell.getColumn() == grid[0].length-1 && tempBoardCell.getRow() == 0)
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == 0)) {
+		    		  tempSet.add(grid[row+1][col]);
+		    		  tempSet.add(grid[row][col-1]);
+		    		  
+		    	  }
 
-		    	  //Checks for the first column's case stuff
-		    	  if ( (tempBoardCell.getColumn() == 0 && tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < grid.length - 1)) {
+		    	  //Checks for the Left Most column's case stuff
+		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
 		    		  tempSet.add(grid[row-1][col]);
 		    		  tempSet.add(grid[row+1][col]);
 		    		  tempSet.add(grid[row][col+1]);
 
 		    	  }
 		    	  
-		    	  //Checks for the Last column's case stuff
-		    	  if ( (tempBoardCell.getColumn() == grid[0].length-1 && tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < grid.length - 1)) {
+		    	  //Checks for the Right most column's case stuff
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
 		    		  tempSet.add(grid[row-1][col]);
 		    		  tempSet.add(grid[row+1][col]);
 		    		  tempSet.add(grid[row][col-1]);
 
+		    	  }
+		    	  
+		    	  //bottom left corner
+		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == lastRow)) {
+		    		  
+		    		  tempSet.add(grid[row-1][col]);
+		    		  tempSet.add(grid[row][col+1]);
+		    	  }
+		    	  
+		    	  //bottom rows
+		    	  else if ((tempBoardCell.getRow() == lastRow) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
+		    	  	  tempSet.add(grid[row-1][col]);
+		    	  	  tempSet.add(grid[row][col+1]);
+		    	  	  tempSet.add(grid[row][col-1]);
+		    	  }
+		    	  
+		    	  //bottom right corner
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == lastRow)) {
+		    		  tempSet.add(grid[row-1][col]);
+		    		  tempSet.add(grid[row][col-1]);
+		    		  
+		    	  }
+		    	  
+		    	  
+		    	  else if ( (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) && (tempBoardCell.getRow() > 0) && tempBoardCell.getRow() < lastRow ) {
+		    		  tempSet.add(grid[row+1][col]);
+		    		  tempSet.add(grid[row-1][col]);
+		    	  	  tempSet.add(grid[row][col+1]);
+		    	  	  tempSet.add(grid[row][col-1]);
+		    		  
 		    	  }
 		          
 		       }
