@@ -10,8 +10,8 @@ import org.junit.Before;
 public class IntBoard {
 	
 	private Map<BoardCell, Set<BoardCell>> adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
-	private Set<BoardCell> visited;
-	private Set<BoardCell> targets;
+	private Set<BoardCell> visited = new HashSet<BoardCell>();
+	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	private BoardCell[][] grid = new BoardCell[4][4];
 	
 	public void calcAdjacencies() {
@@ -115,14 +115,10 @@ public class IntBoard {
 	
 	
 	public void calcTargets(BoardCell startCell, int pathLength) {
+		visited.add(startCell);
 		for(BoardCell cell : getAdjList(startCell)) {
-			Boolean visitedBool = false;
-			for(BoardCell tempCell : visited) {
-				if(tempCell.getColumn() == cell.getColumn() && tempCell.getRow() == cell.getRow() ) {
-					visitedBool = true;
-				}
-			}
-			if(!visitedBool) {
+			System.out.println(!visited.contains(cell));
+			if(!visited.contains(cell)) {
 				visited.add(cell);
 				if(pathLength == 1) {
 					targets.add(cell);
@@ -137,7 +133,7 @@ public class IntBoard {
 	
 	public Set<BoardCell> getTargets(){
 		
-		return null;
+		return targets;
 	}
 	
 	public BoardCell getCell(int x, int y) {
@@ -155,7 +151,12 @@ public class IntBoard {
 	    board = new IntBoard();
 	    BoardCell cell = board.getCell(2, 3);
 		board.calcTargets(cell, 2);
-		Set targets = board.getTargets();
+		Set<BoardCell> targets2 = board.getTargets();
+		for(BoardCell tempCell : targets2) {
+			System.out.println(tempCell.getRow() + " " + tempCell.getColumn());
+		}
+	
+		
 	}
 }
 
