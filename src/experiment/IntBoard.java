@@ -87,7 +87,7 @@ public class IntBoard {
 		    	  	  tempSet.add(grid[row][col-1]);
 		    		  
 		    	  }
-		          
+		          adjMtx.put(tempBoardCell, tempSet);
 		       }
 		   }
 	}
@@ -122,6 +122,7 @@ public class IntBoard {
 	}
 	
 	public BoardCell getCell(int x, int y) {
+		// return null if getCell is called where x either y are out of bounds
 		if(x > (grid.length - 1) || x > (grid[0].length - 1) || x < 0 || y < 0) {
 			return null;
 		}

@@ -121,6 +121,93 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(1, 2)));
 		assertTrue(targets.contains(board.getCell(0, 3)));
 		assertTrue(targets.contains(board.getCell(1, 0)));
+		assertEquals(6, targets.size());
+	}
+	
+	/*
+	 * Test target for bottom right corner and a path length of 2
+	 */
+	@Test
+	public void testTargets3_2()
+	{
+		BoardCell cell = board.getCell(3, 3);
+		board.calcTargets(cell, 2);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(3, 1)));
+		assertTrue(targets.contains(board.getCell(2, 2)));
+		assertTrue(targets.contains(board.getCell(1, 3)));
+		assertEquals(3, targets.size());
+	}
+	
+	/*
+	 * Test target for top right corner and a path length of 1
+	 */
+	@Test
+	public void testTargets0_1()
+	{
+		BoardCell cell = board.getCell(0, 3);
+		board.calcTargets(cell, 1);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(0, 2)));
+		assertTrue(targets.contains(board.getCell(1, 3)));
+		assertEquals(2, targets.size());
+	}
+	
+	/*
+	 * Test target for middle and a path length of 3
+	 */
+	@Test
+	public void testTargets1_3()
+	{
+		BoardCell cell = board.getCell(1, 1);
+		board.calcTargets(cell, 3);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(0, 1)));
+		assertTrue(targets.contains(board.getCell(0, 3)));
+		assertTrue(targets.contains(board.getCell(1, 0)));
+		assertTrue(targets.contains(board.getCell(2, 1)));
+		assertTrue(targets.contains(board.getCell(2, 3)));
+		assertTrue(targets.contains(board.getCell(3, 0)));
+		assertEquals(6, targets.size());
+	}
+	
+	/*
+	 * Test target for right edge and a length of 2
+	 */
+	@Test
+	public void testTargets2_2()
+	{
+		BoardCell cell = board.getCell(2, 3);
+		board.calcTargets(cell, 2);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(0, 3)));
+		assertTrue(targets.contains(board.getCell(1, 2)));
+		assertTrue(targets.contains(board.getCell(2, 1)));
+		assertTrue(targets.contains(board.getCell(2, 2)));
+		assertEquals(4, targets.size());
+	}
+	
+	
+	/*
+	 * Test target for left edge and a length of 3
+	 */
+	@Test
+	public void testTargets2_3()
+	{
+		BoardCell cell = board.getCell(1, 0);
+		board.calcTargets(cell, 3);
+		Set targets = board.getTargets();
+		assertEquals(6, targets.size());
+		assertTrue(targets.contains(board.getCell(0, 1)));
+		assertTrue(targets.contains(board.getCell(1, 2)));
+		assertTrue(targets.contains(board.getCell(2, 1)));
+		assertTrue(targets.contains(board.getCell(2, 3)));
+		assertTrue(targets.contains(board.getCell(3,2)));
+		assertEquals(5, targets.size());
 	}
 	
 	
