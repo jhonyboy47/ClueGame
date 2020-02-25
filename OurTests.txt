@@ -1,0 +1,10 @@
+Authors: Jhonathan Malagon and Michael Crews
+
+Instead of using a double for loop for counting the number of doors we had on the board
+we chose to use a double while loop
+
+We then also counted the number of Jesus, Movie Theatre, and Car rooms to make sure 
+we are correctly reading in the room cells
+
+
+The way we tested our directions differently was by the Kitchen room has a door that opens DOWN, the Car room has a door that opens UP 
