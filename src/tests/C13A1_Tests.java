@@ -1,3 +1,4 @@
+///Authors: Jhonathan Malagon and Michael Crews
 package tests;
 import static org.junit.Assert.*;
 
