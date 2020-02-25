@@ -2,7 +2,6 @@
 package clueGame;
 
 public class BoardCell {
-	
 	// Declare two instance variables that every boardcell has
 	int row, column;
 	
