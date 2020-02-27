@@ -2,16 +2,18 @@
 
 package clueGame;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 
 public class Board {
 	public final static int MAX_BOARD_SIZE = 50;
-	private int numRows, numColumns;
-	
+	private int numRows, numColumns;	
 	private BoardCell[][] board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE] ;
 	private Map<Character, String> legend = new HashMap<Character,String>();
 	
@@ -23,9 +25,45 @@ public class Board {
 	
 	private String boardConfigFile, roomConfigFile;
 	
-	public void initialize() {}
+	public void initialize() {
+		try {
+			loadRoomConfig();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
-	public void loadRoomConfig() {}
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader("./data/" + roomConfigFile);
+		Scanner in = new Scanner(reader);
+		
+		while(in.hasNextLine()) {
+			String line = in.nextLine();
+			String[] lineArray = line.split(",");
+			if(lineArray.length != 3) {
+				throw new BadConfigFormatException("Error reading in legend file");
+			} 
+			String initialString = lineArray[0];
+			Character initial;
+			if(initialString.length() != 1) {
+				throw new BadConfigFormatException("Error reading in legend file");
+			} else {
+				initial = new Character(initialString.charAt(0));
+			}
+			String name = lineArray[1];
+			if(name.length() == 0) {
+				throw new BadConfigFormatException("Error reading in legend file");
+			}
+			String type = lineArray[2];
+			if(type != "Card" || type != "Other") {
+				throw new BadConfigFormatException("Error reading in legend file");
+			}
+			
+			
+			
+		}
+		
+	}
 	
 	public void calcAdjacencies() {}
 	
@@ -43,7 +81,8 @@ public class Board {
 	
 	//GETERS AND SETTERS
 	public void setConfigFiles(String layout, String legend) {
-		
+		boardConfigFile = layout;
+		roomConfigFile = legend;
 	}
 	
 	public Map<Character, String> getLegend(){
@@ -63,6 +102,10 @@ public class Board {
 	public BoardCell getCellAt(int row, int col) {
 		
 		return null;
+	}
+	
+	public void loadBoardConfig() {
+		
 	}
 
 	
