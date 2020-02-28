@@ -1,4 +1,4 @@
-﻿M, Movie Theater Room, Card
+M, Movie Theater Room, Card
 P, Ping Pong Room, Card
 G, Game Room, Card
 H, Hot Tube Room, Card

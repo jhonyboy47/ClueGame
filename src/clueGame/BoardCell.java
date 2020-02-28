@@ -4,29 +4,49 @@ package clueGame;
 public class BoardCell {
 	// Declare two instance variables that every boardcell has
 	int row, column;
-	char initial;
+	char initial = ' ';
+	boolean walkway = false, room = false, doorWay = false;
+	DoorDirection direction = DoorDirection.NONE;
 	// This is a parameterized constructor for boardcell to pass in the row and column
 	public BoardCell(int row, int column) {
 		this.row = row;
 		this.column = column;
 	}
 	
-	//FIXME
+
+	public void setDoorWay(boolean doorWay) {
+		this.doorWay = doorWay;
+	}
+
+	public void setWalkway(boolean walkway) {
+		this.walkway = walkway;
+	}
+
+	public void setRoom(boolean room) {
+		this.room = room;
+	}
 	public boolean isWalkway() {
-		return false;
+		return walkway;
 	}
 	
 	public boolean isRoom() {
-		return false;
+		return room;
 	}
 	public boolean isDoorway() {
-		return false;
+		
+		return doorWay;
 	}
 	
 	public DoorDirection getDoorDirection() {
-		return DoorDirection.NONE;
+		
+		return direction;
 	}
-	
+
+	public void setDirection(DoorDirection direction) {
+		this.direction = direction;
+	}
+
+
 	public int getRow() {
 		return row;
 	}
@@ -39,6 +59,11 @@ public class BoardCell {
 		
 		return initial;
 	}
+
+	public void setInitial(char initial) {
+		this.initial = initial;
+	}
+	
 	
 	
 	

@@ -24,7 +24,7 @@ public class C13A1_Tests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueGameBoardSpreadsheet.xlsx", "ClueRooms.txt");		
+		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.txt");		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
@@ -38,7 +38,7 @@ public class C13A1_Tests {
 		// Checks that the initials are correct for a few legends
 		assertEquals("Movie Theater Room", legend.get('M'));
 		assertEquals("Ping Pong Room", legend.get('P'));
-		assertEquals("Dinning Room", legend.get('D'));
+		assertEquals("Dining Room", legend.get('D'));
 		assertEquals("Game Room", legend.get('G'));
 		assertEquals("Library", legend.get('L'));
 		assertEquals("Closet", legend.get('X'));
@@ -131,9 +131,9 @@ public class C13A1_Tests {
 			}
 			row++;
 		}
-		Assert.assertEquals(26, jCells);
-		Assert.assertEquals(24, cCells);
-		Assert.assertEquals(30, jCells);
+		Assert.assertEquals(22, jCells);
+		Assert.assertEquals(35, cCells);
+		Assert.assertEquals(36, mCells);
 		
 	}
 

@@ -1,0 +1,23 @@
+Wrong number of cols in file
+ERROR Board has a room not included in the legend file.
+Error reading in legend file4
+Wrong number of cols in file
+ERROR Board has a room not included in the legend file.
+Error reading in legend file4
+Error reading in legend file2
+Error reading in legend file2
+Error reading in legend file2
+Error reading in legend file2
+Error reading in legend file2
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Error reading in legend file
+Wrong number of cols in file
+ERROR Board has a room not included in the legend file.
+Error reading in legend file

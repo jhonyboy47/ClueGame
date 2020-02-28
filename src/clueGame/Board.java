@@ -28,9 +28,11 @@ public class Board {
 	public void initialize() {
 		try {
 			loadRoomConfig();
+			loadBoardConfig();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
@@ -55,14 +57,13 @@ public class Board {
 				throw new BadConfigFormatException("Error reading in legend file");
 			}
 			String type = lineArray[2];
-			if(type != "Card" || type != "Other") {
+			type = type.substring(1);
+			if(!type.equals("Card") && !type.equals("Other")) {
 				throw new BadConfigFormatException("Error reading in legend file");
 			}
-			
-			
-			
+			name = name.substring(1);
+			legend.put(initial, name);
 		}
-		
 	}
 	
 	public void calcAdjacencies() {}
@@ -98,14 +99,90 @@ public class Board {
 		return numColumns;
 	}
 	
-	//FIXME
 	public BoardCell getCellAt(int row, int col) {
 		
-		return null;
+		return board[row][col];
 	}
 	
-	public void loadBoardConfig() {
+	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader("./data/" + boardConfigFile);
+		Scanner in = new Scanner(reader);
 		
+		int rows = 0;
+		int cols = 0;
+		Boolean firstFinished = false;
+		while(in.hasNextLine()) {
+			
+
+			String line = in.nextLine();
+			String[] lineArray = line.split(",");
+			if(firstFinished == true) {
+				if(cols != lineArray.length) {
+					throw new BadConfigFormatException("Wrong number of cols in file");
+				}
+			}
+			firstFinished = true;
+			cols = lineArray.length;
+			
+			int localCols = 0;
+			for(String initial : lineArray) {
+				Character directionChar = ' ';
+				
+				if(initial.length() == 2) {
+					directionChar = initial.charAt(1);
+				}
+				
+				if (initial.length() > 2 || initial.length() == 0) {
+					throw new BadConfigFormatException("ERROR each board space can only contain 1-2 characters, board contains: " + initial );
+				}
+				else if (initial.length() == 2) {
+					if ( !(directionChar == 'U' || directionChar == 'D' || directionChar == 'L' || directionChar == 'R' || directionChar == 'N') ) {
+						throw new BadConfigFormatException("Improper direction for board space: " + directionChar);
+					}
+				}
+				if( !legend.containsKey(initial.charAt(0)) ) {
+					throw new BadConfigFormatException("ERROR Board has a room not included in the legend file.");
+					
+				}
+				
+				// Once we have confirmed there are no config errors 
+				
+				BoardCell tempBoardCell = new BoardCell(rows, localCols);
+				
+				if ( initial.length() == 2) {
+					if(directionChar != 'N') {
+						tempBoardCell.setDoorWay(true);
+					}
+					tempBoardCell.setRoom(true);
+					switch(directionChar) {
+					case 'U':
+						tempBoardCell.setDirection(DoorDirection.UP);
+						break;
+					case 'D':
+						tempBoardCell.setDirection(DoorDirection.DOWN);
+						break;
+					case 'L':
+						tempBoardCell.setDirection(DoorDirection.LEFT);
+						break;
+					case 'R':
+						tempBoardCell.setDirection(DoorDirection.RIGHT);
+						break;
+					}	
+				} else {tempBoardCell.setDoorWay(false);}
+				if(initial.length() == 1 && initial.charAt(0) != 'W') {
+					tempBoardCell.setRoom(true);
+				} else if (initial.length() == 1) {
+					tempBoardCell.setWalkway(true);
+				}
+				tempBoardCell.setInitial(initial.charAt(0));
+				board[rows][localCols] = tempBoardCell;
+				localCols++;
+			}
+			rows++;
+		}
+		numColumns = cols; 
+		numRows = rows;
+				
 	}
 
 	
