@@ -1,4 +1,5 @@
 // Authors: Michael Crews and Jhonathan Malagon
+// We did the extra credit that outputs errors to an errorLog
 package clueGame;
 
 public class BoardCell {

@@ -1,4 +1,5 @@
 ///Authors: Jhonathan Malagon and Michael Crews
+// We did the extra credit that outputs errors to an errorLog
 
 package clueGame;
 
