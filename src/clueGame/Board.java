@@ -25,7 +25,9 @@ public class Board {
 	
 	private String boardConfigFile, roomConfigFile;
 	
+	
 	public void initialize() {
+		// Surround loadRoomConfig and loadBoardConfig with a try catch statement because they could throw a FileNotFoundException or a BadConfigFormatException
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
@@ -35,52 +37,18 @@ public class Board {
 		
 	}
 	
-	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
-		FileReader reader = new FileReader("./data/" + roomConfigFile);
-		Scanner in = new Scanner(reader);
-		
-		while(in.hasNextLine()) {
-			String line = in.nextLine();
-			String[] lineArray = line.split(",");
-			if(lineArray.length != 3) {
-				throw new BadConfigFormatException("Error reading in legend file");
-			} 
-			String initialString = lineArray[0];
-			Character initial;
-			if(initialString.length() != 1) {
-				throw new BadConfigFormatException("Error reading in legend file");
-			} else {
-				initial = new Character(initialString.charAt(0));
-			}
-			String name = lineArray[1];
-			if(name.length() == 0) {
-				throw new BadConfigFormatException("Error reading in legend file");
-			}
-			String type = lineArray[2];
-			type = type.substring(1);
-			if(!type.equals("Card") && !type.equals("Other")) {
-				throw new BadConfigFormatException("Error reading in legend file");
-			}
-			name = name.substring(1);
-			legend.put(initial, name);
-		}
-	}
-	
 	public void calcAdjacencies() {}
 	
 	public void calcTargets(BoardCell cell, int pathLlength ) {}
 	
-	// variable used for singleton pattern
 	private static Board theInstance = new Board();
-	// constructor is private to ensure only one can be created
+	
 	private Board() {}
-	// this method returns the only Board
+	
 	public static Board getInstance() {
 		return theInstance;
 	}
 	
-	
-	//GETERS AND SETTERS
 	public void setConfigFiles(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
@@ -93,7 +61,6 @@ public class Board {
 	public int getNumRows() {
 		return numRows;
 	}
-
 	
 	public int getNumColumns() {
 		return numColumns;
@@ -104,34 +71,84 @@ public class Board {
 		return board[row][col];
 	}
 	
+	
+	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader("./data/" + roomConfigFile);
+		Scanner in = new Scanner(reader);
+		
+		
+		//This while loop makes sure our code does not have any errors in set up of files being read in
+		while(in.hasNextLine()) {
+			String line = in.nextLine();
+			String[] lineArray = line.split(",");
+			if(lineArray.length != 3) {
+				throw new BadConfigFormatException("Error reading in legend file:  must have three inputs per row [initial (char), Roomname (String), Card or Other (String)] ");
+			} 
+			String initialString = lineArray[0];
+			Character initial;
+			if(initialString.length() != 1) {
+				throw new BadConfigFormatException("Error reading in legend file: First input per row must be one character ");
+			} else {
+				initial = new Character(initialString.charAt(0));
+			}
+			String name = lineArray[1];
+			if(name.length() == 0) {
+				throw new BadConfigFormatException("Error reading in legend file: Second input per row must be a String");
+			}
+			String type = lineArray[2];
+			type = type.substring(1);
+			if(!type.equals("Card") && !type.equals("Other")) {
+				throw new BadConfigFormatException("Error reading in legend file: Third input per row must be a String ('Other' or 'Card')");
+			}
+			name = name.substring(1);
+			//No errors were found in 'legend' file format thus, 'initial' key is mapped to name in legend map
+			legend.put(initial, name);
+		}
+	}
+	
+	
+	//Makes sure there are no errors in the csv file that has the actual board
 	public void loadBoardConfig() throws FileNotFoundException, BadConfigFormatException {
+		
+		//Basic file reading 
 		FileReader reader = new FileReader("./data/" + boardConfigFile);
 		Scanner in = new Scanner(reader);
 		
+		//Declare row and col counter
 		int rows = 0;
 		int cols = 0;
+		
+		//Once first loop is finished this is set to true
 		Boolean firstFinished = false;
 		while(in.hasNextLine()) {
 			
-
+			
 			String line = in.nextLine();
+			
+			// Makes a list of each row
 			String[] lineArray = line.split(",");
+			
+			//Checks that all rows have equal number of entries
 			if(firstFinished == true) {
 				if(cols != lineArray.length) {
 					throw new BadConfigFormatException("Wrong number of cols in file");
 				}
 			}
-			firstFinished = true;
+			
+			
 			cols = lineArray.length;
 			
+			//Used to hold colomn  index that we are currently at on our board
 			int localCols = 0;
 			for(String initial : lineArray) {
 				Character directionChar = ' ';
 				
+				//Used to avoid error of index out of range for single char entries
 				if(initial.length() == 2) {
 					directionChar = initial.charAt(1);
 				}
 				
+				//ERROR CHECKING 
 				if (initial.length() > 2 || initial.length() == 0) {
 					throw new BadConfigFormatException("ERROR each board space can only contain 1-2 characters, board contains: " + initial );
 				}
@@ -140,20 +157,26 @@ public class Board {
 						throw new BadConfigFormatException("Improper direction for board space: " + directionChar);
 					}
 				}
+				
 				if( !legend.containsKey(initial.charAt(0)) ) {
-					throw new BadConfigFormatException("ERROR Board has a room not included in the legend file.");
+					throw new BadConfigFormatException("ERROR Board has a room that is not included in the legend file.");
 					
 				}
 				
-				// Once we have confirmed there are no config errors 
-				
+				// Once we have confirmed there are no config errors it is safe to create a new BoardCell
 				BoardCell tempBoardCell = new BoardCell(rows, localCols);
 				
+				
+				//If we have a cell that has two characters it could be a door but it is definetly a room
 				if ( initial.length() == 2) {
+					tempBoardCell.setRoom(true);
+					
+					//N is the only invalid direction for a door thus anything else makes it a door
 					if(directionChar != 'N') {
 						tempBoardCell.setDoorWay(true);
 					}
-					tempBoardCell.setRoom(true);
+					
+					// Sets direction of door in tempBoardCell created
 					switch(directionChar) {
 					case 'U':
 						tempBoardCell.setDirection(DoorDirection.UP);
@@ -168,18 +191,30 @@ public class Board {
 						tempBoardCell.setDirection(DoorDirection.RIGHT);
 						break;
 					}	
-				} else {tempBoardCell.setDoorWay(false);}
+				} 
+				
+				//Case for single char cells that are rooms
 				if(initial.length() == 1 && initial.charAt(0) != 'W') {
 					tempBoardCell.setRoom(true);
-				} else if (initial.length() == 1) {
+				} 
+				//Else it is a walkway
+				else if (initial.length() == 1) {
 					tempBoardCell.setWalkway(true);
 				}
+				
+				//Sets the initial for tempBoardCell
 				tempBoardCell.setInitial(initial.charAt(0));
+				
+				//Sets tempBoardCell to the right location in board
 				board[rows][localCols] = tempBoardCell;
+				
 				localCols++;
 			}
 			rows++;
+			firstFinished = true;
 		}
+		
+		// Sets numColumns and numRows
 		numColumns = cols; 
 		numRows = rows;
 				
