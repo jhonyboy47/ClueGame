@@ -72,6 +72,16 @@ public class Board {
 		return board[row][col];
 	}
 	
+	public Set<BoardCell> getAdjList(int row, int col){
+		return null;
+	}
+	
+	public void calcTargets(int row, int col, int pathLength) {}
+	
+	public Set<BoardCell> getTargets(){
+		return null;
+	}
+	
 	
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		FileReader reader = new FileReader("./data/" + roomConfigFile);
