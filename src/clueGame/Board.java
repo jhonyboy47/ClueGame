@@ -39,9 +39,7 @@ public class Board {
 	}
 	
 	public void calcAdjacencies() {}
-	
-	public void calcTargets(BoardCell cell, int pathLlength ) {}
-	
+		
 	private static Board theInstance = new Board();
 	
 	private Board() {}
