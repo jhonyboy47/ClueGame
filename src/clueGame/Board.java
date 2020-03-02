@@ -37,9 +37,7 @@ public class Board {
 			e.printStackTrace();
 		}
 		
-	
 		calcAdjacencies();
-		
 		
 	}
 	
@@ -52,7 +50,6 @@ public class Board {
 		    	  // Declare a temp set to hold the the adjacent cells for the given cell we are on in the for loop
 		    	  Set<BoardCell> tempSet = new HashSet<BoardCell>();
 		    	  BoardCell tempBoardCell = board[row][col];
-		    	  // System.out.println("Row: " + row + " Col: " + col + " Walkway: " + tempBoardCell.isWalkway());
 		    	  int lastCol = numColumns - 1;
 		    	  int lastRow = numRows - 1;
 		    	 
@@ -115,7 +112,6 @@ public class Board {
 		    	  
 		    	  //All other cases
 		    	  else if ( (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) && (tempBoardCell.getRow() > 0) && tempBoardCell.getRow() < lastRow ) {
-		    		  System.out.println("Error here");
 		    		  tempSet.add(board[row+1][col]);
 		    		  tempSet.add(board[row-1][col]);
 		    	  	  tempSet.add(board[row][col+1]);
@@ -244,32 +240,36 @@ public class Board {
 		return adjMtx.get(board[row][col]);
 	}
 	
+	// Boolean to describe if there has been more than one call to calcTargets
+	private Boolean firstCall = true;
 	
+	// Counter for calcTargets to reset targets, visited, firstCall to initial values
 	private int calcTargetsCounter = 0;
 	
-	private Boolean first = true;
+	// Function to calculate targets for a given row, column, and path length
 	public void calcTargets(int row, int col, int pathLength) {
+		// Declare start cell use the row and column that was passed in
 		BoardCell startCell = board[row][col];
 		
+		// If calculate targets counter is equal to zero, reset targets, visited, firstCall to initial values
+		// If calcTargetsCounter is zero then that means that all calcTargets recursive calls have finished
 		if(calcTargetsCounter == 0) {
 			targets.clear();
 			visited.clear();
-			first = true;
+			firstCall = true;
 			calcTargetsCounter = 0;
 		}
-	
-		
+		 
 		visited.add(startCell);
-		
-		System.out.println(row + " " + col + " " + pathLength);
-		
-		
+	
 		// This is a for loop to see if adjacent cells could be targets
-		if(!first && board[row][col].isDoorway()) {
+		if(!firstCall && board[row][col].isDoorway()) {
 			targets.add(board[row][col]);
 			return;
 		}
-		first = false;
+		
+		
+		
 		for(BoardCell cell : getAdjList(row, col)) {
 
 			// If we have already visited the cell it can't be a target 
@@ -281,15 +281,20 @@ public class Board {
 					targets.add(cell);
 				
 				} else {
-					// Recursive call of the calcTargets because pathlength is not 1 yet
+					// Add one to calcTargetsCounter because we are about to recursively calcTargets
 					calcTargetsCounter++;
+					// Recursive call of the calcTargets because pathlength is not 1 yet
 					calcTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+					// Subtract calcTargetsCounter by one because of recursive call of calcTargets has returned
 					calcTargetsCounter--;
 				}
 				visited.remove(cell);
 				
 			}
 		}
+		
+		// Set firstCall to zero because the first call of calculate targets has been completed
+		firstCall = false;
 	}
 	
 	public Set<BoardCell> getTargets(){
@@ -395,8 +400,7 @@ public class Board {
 				
 				//If we have a cell that has two characters it could be a door but it is definetly a room
 				if ( initial.length() == 2) {
-					// System.out.println("Row: " + rows + " Col: " + localCols + " Room " + initial);
-
+					
 					tempBoardCell.setRoom(true);
 					
 					
@@ -436,7 +440,6 @@ public class Board {
 				
 				//Sets tempBoardCell to the right location in board
 				board[rows][localCols] = tempBoardCell;
-				System.out.println("Row: " + rows + " Col: " + localCols + " " + board[rows][localCols].isWalkway() + " "+ initial);
 				localCols++;
 			}
 			rows++;
