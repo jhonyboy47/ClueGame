@@ -5,6 +5,7 @@
 *.project
 # Log file
 *.log
+gitlog.txt
 
 # BlueJ files
 *.ctxt
