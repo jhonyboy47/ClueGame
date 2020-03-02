@@ -18,7 +18,7 @@ public class Board {
 	private int numRows, numColumns;	
 	private BoardCell[][] board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE] ;
 	private Map<Character, String> legend = new HashMap<Character,String>();
-	
+	private Set<BoardCell> visited = new HashSet<BoardCell>();
 	// AdjMtx holds a map that contains a set of boardcell that are adjacent to any given cell inside the board
 	private Map<BoardCell, Set<BoardCell>> adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 	
@@ -113,7 +113,7 @@ public class Board {
 		    		  
 		    	  }
 		    	  
-		    	  
+		    	  //All other cases
 		    	  else if ( (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) && (tempBoardCell.getRow() > 0) && tempBoardCell.getRow() < lastRow ) {
 		    		  System.out.println("Error here");
 		    		  tempSet.add(board[row+1][col]);
@@ -123,16 +123,20 @@ public class Board {
 		    		  
 		    	  }
 		    	  
-		    	  System.out.println("Row: " + row + " Col: "+ col);
-		    	  System.out.println("Before set: " + tempSet);
 		    	  
+		    	  // If there are adjacency's
 		    	  if(!tempSet.isEmpty()) {
 		    		  Set<BoardCell> tempSet2 = new HashSet<BoardCell>(tempSet);
 			    	  
 		    		  
+		    		  //If it is a room it can't have adjacency's
 		    		  if(board[row][col].isRoom() && !board[row][col].isDoorway()){
 		    			  tempSet.clear();
-		    		  } else if(board[row][col].isDoorway()){
+		    	
+		    		  } 
+		    		  
+		    		  //If the cell is a doorway we must only have one adjacency
+		    		  else if(board[row][col].isDoorway()){
 		    			  DoorDirection direction = board[row][col].getDoorDirection();
 			    		  BoardCell keepCell = null;
 			    		  switch (direction) {
@@ -149,15 +153,19 @@ public class Board {
 				    			  keepCell = board[row][col + 1];
 			    				  break;
 			    		  }
-			    		  System.out.println("Keep Cell: " + keepCell);
+			    		  
+			    		  //Removes all other "adjacent" cells besides the one the room can exit to
 			    		  for(BoardCell tempCell : tempSet2) {
 			    			  if(!tempCell.equals(keepCell)) {
 			    				  tempSet.remove(tempCell);
 			    			  } 
 			    		  }
 		    		  } 
+		    		  
+		    		  //If the cell is a walkway we must only add walkways and doors to "adjancecy's"
 		    		  else if (board[row][col].isWalkway()) {
 		    			  
+		    			  //Makes sure we don't put door way as a "adjacency" for a cell that is not in the correct direction
 		    			  for (BoardCell tempCell : tempSet2){
 		    				  if (tempCell.isDoorway()) {
 				    			  DoorDirection direction = tempCell.getDoorDirection();
@@ -177,25 +185,26 @@ public class Board {
 					    			  newCol++;
 				    				  break;
 				    				  
-		    					  }	  
+		    					  }
+		    					  
 				    			if ( row != newRow || col != newCol) {
 				    				
 				    				tempSet.remove(tempCell);
 				    			}
 				    		  }
-		    				  if(tempCell.isRoom() && !tempCell.isDoorway()) {
+		    				  
+		    				  //Because doors are rooms also and we don't want to remove doors from adjacency
+		    				  else if (tempCell.isRoom()) {
 			    					 tempSet.remove(tempCell);
 		    				  }
 		    					    
 		    			  }
-		    		  }
+		    		 }
 		    		  
-		    		
-			    	  System.out.println("After set: " + tempSet);
 		    	  }
 		    	  
 		    	  
-		    	  
+		    	  //Put adjacency set in map for each cell
 		          adjMtx.put(tempBoardCell, tempSet);
 		       }
 		   }
@@ -235,10 +244,57 @@ public class Board {
 		return adjMtx.get(board[row][col]);
 	}
 	
-	public void calcTargets(int row, int col, int pathLength) {}
+	
+	private int calcTargetsCounter = 0;
+	
+	private Boolean first = true;
+	public void calcTargets(int row, int col, int pathLength) {
+		BoardCell startCell = board[row][col];
+		
+		if(calcTargetsCounter == 0) {
+			targets.clear();
+			visited.clear();
+			first = true;
+			calcTargetsCounter = 0;
+		}
+	
+		
+		visited.add(startCell);
+		
+		System.out.println(row + " " + col + " " + pathLength);
+		
+		
+		// This is a for loop to see if adjacent cells could be targets
+		if(!first && board[row][col].isDoorway()) {
+			targets.add(board[row][col]);
+			return;
+		}
+		first = false;
+		for(BoardCell cell : getAdjList(row, col)) {
+
+			// If we have already visited the cell it can't be a target 
+			if(!visited.contains(cell)) {
+				visited.add(cell);
+				if(pathLength == 1) {
+					
+					// Base case
+					targets.add(cell);
+				
+				} else {
+					// Recursive call of the calcTargets because pathlength is not 1 yet
+					calcTargetsCounter++;
+					calcTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+					calcTargetsCounter--;
+				}
+				visited.remove(cell);
+				
+			}
+		}
+	}
 	
 	public Set<BoardCell> getTargets(){
-		return null;
+		return targets;
+		
 	}
 	
 	

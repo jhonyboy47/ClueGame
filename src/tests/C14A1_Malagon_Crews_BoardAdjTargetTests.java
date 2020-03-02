@@ -11,7 +11,7 @@ import org.junit.Test;
 import clueGame.Board;
 import clueGame.BoardCell;
 
-public class C14A1_BoardAdjTargetTests {
+public class C14A1_Malagon_Crews_BoardAdjTargetTests {
 	
 	private static Board board;
 	@BeforeClass
@@ -211,7 +211,7 @@ public class C14A1_BoardAdjTargetTests {
 		//Calculates three steps away  
 		board.calcTargets(9,6,3);
 		targetList = board.getTargets();
-		assertEquals(11,targetList.size());
+		assertEquals(13,targetList.size());
 		assertTrue(targetList.contains(board.getCellAt(9, 7)));
 		assertTrue(targetList.contains(board.getCellAt(11, 7)));
 		assertTrue(targetList.contains(board.getCellAt(12, 6)));
@@ -223,6 +223,8 @@ public class C14A1_BoardAdjTargetTests {
 		assertTrue(targetList.contains(board.getCellAt(6, 6)));
 		assertTrue(targetList.contains(board.getCellAt(7, 7)));
 		assertTrue(targetList.contains(board.getCellAt(9, 5)));
+		assertTrue(targetList.contains(board.getCellAt(8, 6)));
+		assertTrue(targetList.contains(board.getCellAt(10, 6)));
 		
 		//Calculate 6 steps away only two targets due to placement of cell in board
 		board.calcTargets(0,13,6);
