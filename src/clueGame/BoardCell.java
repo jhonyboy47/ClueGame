@@ -38,6 +38,13 @@ public class BoardCell {
 		return doorWay;
 	}
 	
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", column=" + column + ", initial=" + initial + ", walkway=" + walkway
+				+ ", room=" + room + ", doorWay=" + doorWay + ", direction=" + direction + "]";
+	}
+
+
 	public DoorDirection getDoorDirection() {
 		
 		return direction;

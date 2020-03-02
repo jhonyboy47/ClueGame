@@ -35,7 +35,7 @@ public class C14A1_BoardAdjTargetTests {
 		assertTrue(adjList.contains(board.getCellAt(15,6)));
 		assertTrue(adjList.contains(board.getCellAt(17,6)));	
 		assertTrue(adjList.contains(board.getCellAt(16,7)));
-		assertTrue(adjList.contains(board.getCellAt(16,4)));
+		assertTrue(adjList.contains(board.getCellAt(16,5)));
 		
 		
 		
@@ -44,8 +44,8 @@ public class C14A1_BoardAdjTargetTests {
 		assertEquals(4,adjList.size());
 		assertTrue(adjList.contains(board.getCellAt(8,17)));
 		assertTrue(adjList.contains(board.getCellAt(10,17)));
-		assertTrue(adjList.contains(board.getCellAt(16,9)));
-		assertTrue(adjList.contains(board.getCellAt(18,9)));
+		assertTrue(adjList.contains(board.getCellAt(9,16)));
+		assertTrue(adjList.contains(board.getCellAt(9,18)));
 		
 		
 	}
@@ -93,8 +93,8 @@ public class C14A1_BoardAdjTargetTests {
 		//left edge
 		adjList = board.getAdjList(17, 0);
 		assertEquals(2, adjList.size());
-		assertTrue(adjList.contains(board.getCellAt(0,16)));
-		assertTrue(adjList.contains(board.getCellAt(1,17)));
+		assertTrue(adjList.contains(board.getCellAt(16,0)));
+		assertTrue(adjList.contains(board.getCellAt(17,1)));
 		
 		//Right edghe
 		adjList = board.getAdjList(7, 23);

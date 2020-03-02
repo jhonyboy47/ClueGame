@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import clueGame.BoardCell;
 
 public class Board {
 	public final static int MAX_BOARD_SIZE = 50;
@@ -18,7 +19,7 @@ public class Board {
 	private BoardCell[][] board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE] ;
 	private Map<Character, String> legend = new HashMap<Character,String>();
 	
-	// AdjMtx holds a map that contains a set of boardcell that are adjacent to any given cell inside the grid
+	// AdjMtx holds a map that contains a set of boardcell that are adjacent to any given cell inside the board
 	private Map<BoardCell, Set<BoardCell>> adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 	
 	// The targets set is used while calculating targets and it holds all cells that are targets
@@ -36,9 +37,169 @@ public class Board {
 			e.printStackTrace();
 		}
 		
+	
+		calcAdjacencies();
+		
+		
 	}
 	
-	public void calcAdjacencies() {}
+	public void calcAdjacencies() {
+		for (int row = 0; row < numRows; row++)
+		   {
+		       for (int col = 0; col < numColumns; col++)
+		       {	
+		    	  
+		    	  // Declare a temp set to hold the the adjacent cells for the given cell we are on in the for loop
+		    	  Set<BoardCell> tempSet = new HashSet<BoardCell>();
+		    	  BoardCell tempBoardCell = board[row][col];
+		    	  // System.out.println("Row: " + row + " Col: " + col + " Walkway: " + tempBoardCell.isWalkway());
+		    	  int lastCol = numColumns - 1;
+		    	  int lastRow = numRows - 1;
+		    	 
+		    	  //0,0 cell
+		    	  if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == 0)) {
+		    		  tempSet.add(board[row+1][col]);
+		    		  tempSet.add(board[row][col+1]);
+		    	  }
+		    	  
+		    	  //Checks for the first rows stuff
+		    	  else if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
+		    	  	  tempSet.add(board[row+1][col]);
+		    	  	  tempSet.add(board[row][col+1]);
+		    	  	  tempSet.add(board[row][col-1]);
+		    	  }
+		       
+		    	  //top right corner cell	  
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == 0)) {
+		    		  tempSet.add(board[row+1][col]);
+		    		  tempSet.add(board[row][col-1]);
+		    		  
+		    	  }
+
+		    	  //Checks for the Left Most column's case stuff
+		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
+		    		  tempSet.add(board[row-1][col]);
+		    		  tempSet.add(board[row+1][col]);
+		    		  tempSet.add(board[row][col+1]);
+
+		    	  }
+		    	  
+		    	  //Checks for the Right most column's case stuff
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
+		    		  tempSet.add(board[row-1][col]);
+		    		  tempSet.add(board[row+1][col]);
+		    		  tempSet.add(board[row][col-1]);
+
+		    	  }
+		    	  
+		    	  //bottom left corner
+		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == lastRow)) {
+		    		  
+		    		  tempSet.add(board[row-1][col]);
+		    		  tempSet.add(board[row][col+1]);
+		    	  }
+		    	  
+		    	  //bottom rows
+		    	  else if ((tempBoardCell.getRow() == lastRow) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
+		    	  	  tempSet.add(board[row-1][col]);
+		    	  	  tempSet.add(board[row][col+1]);
+		    	  	  tempSet.add(board[row][col-1]);
+		    	  }
+		    	  
+		    	  //bottom right corner
+		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == lastRow)) {
+		    		  tempSet.add(board[row-1][col]);
+		    		  tempSet.add(board[row][col-1]);
+		    		  
+		    	  }
+		    	  
+		    	  
+		    	  else if ( (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) && (tempBoardCell.getRow() > 0) && tempBoardCell.getRow() < lastRow ) {
+		    		  System.out.println("Error here");
+		    		  tempSet.add(board[row+1][col]);
+		    		  tempSet.add(board[row-1][col]);
+		    	  	  tempSet.add(board[row][col+1]);
+		    	  	  tempSet.add(board[row][col-1]);
+		    		  
+		    	  }
+		    	  
+		    	  System.out.println("Row: " + row + " Col: "+ col);
+		    	  System.out.println("Before set: " + tempSet);
+		    	  
+		    	  if(!tempSet.isEmpty()) {
+		    		  Set<BoardCell> tempSet2 = new HashSet<BoardCell>(tempSet);
+			    	  
+		    		  
+		    		  if(board[row][col].isRoom() && !board[row][col].isDoorway()){
+		    			  tempSet.clear();
+		    		  } else if(board[row][col].isDoorway()){
+		    			  DoorDirection direction = board[row][col].getDoorDirection();
+			    		  BoardCell keepCell = null;
+			    		  switch (direction) {
+				    		  case DOWN:
+			    				  keepCell = board[row + 1][col];
+			    				  break;
+				    		  case UP:
+				    			  keepCell = board[row - 1][col];
+			    				  break;
+				    		  case LEFT:
+			    				  keepCell = board[row][col - 1];
+			    				  break;
+				    		  case RIGHT:
+				    			  keepCell = board[row][col + 1];
+			    				  break;
+			    		  }
+			    		  System.out.println("Keep Cell: " + keepCell);
+			    		  for(BoardCell tempCell : tempSet2) {
+			    			  if(!tempCell.equals(keepCell)) {
+			    				  tempSet.remove(tempCell);
+			    			  } 
+			    		  }
+		    		  } 
+		    		  else if (board[row][col].isWalkway()) {
+		    			  
+		    			  for (BoardCell tempCell : tempSet2){
+		    				  if (tempCell.isDoorway()) {
+				    			  DoorDirection direction = tempCell.getDoorDirection();
+				    			  int newRow = tempCell.getRow();
+				    			  int newCol = tempCell.getColumn();
+		    					  switch (direction) {
+					    		  case DOWN:
+				    				  newRow++;
+				    				  break;
+					    		  case UP:
+					    			  newRow--;
+				    				  break;
+					    		  case LEFT:
+				    				  newCol--;
+				    				  break;
+					    		  case RIGHT:
+					    			  newCol++;
+				    				  break;
+				    				  
+		    					  }	  
+				    			if ( row != newRow || col != newCol) {
+				    				
+				    				tempSet.remove(tempCell);
+				    			}
+				    		  }
+		    				  if(tempCell.isRoom() && !tempCell.isDoorway()) {
+			    					 tempSet.remove(tempCell);
+		    				  }
+		    					    
+		    			  }
+		    		  }
+		    		  
+		    		
+			    	  System.out.println("After set: " + tempSet);
+		    	  }
+		    	  
+		    	  
+		    	  
+		          adjMtx.put(tempBoardCell, tempSet);
+		       }
+		   }
+	}
 		
 	private static Board theInstance = new Board();
 	
@@ -71,7 +232,7 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getAdjList(int row, int col){
-		return null;
+		return adjMtx.get(board[row][col]);
 	}
 	
 	public void calcTargets(int row, int col, int pathLength) {}
@@ -178,7 +339,10 @@ public class Board {
 				
 				//If we have a cell that has two characters it could be a door but it is definetly a room
 				if ( initial.length() == 2) {
+					// System.out.println("Row: " + rows + " Col: " + localCols + " Room " + initial);
+
 					tempBoardCell.setRoom(true);
+					
 					
 					//N is the only invalid direction for a door thus anything else makes it a door
 					if(directionChar != 'N') {
@@ -216,7 +380,7 @@ public class Board {
 				
 				//Sets tempBoardCell to the right location in board
 				board[rows][localCols] = tempBoardCell;
-				
+				System.out.println("Row: " + rows + " Col: " + localCols + " " + board[rows][localCols].isWalkway() + " "+ initial);
 				localCols++;
 			}
 			rows++;
