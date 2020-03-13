@@ -160,6 +160,7 @@ public class Board {
 			    		  }
 			    		  
 			    		  //Removes all other "adjacent" cells besides the one the room can exit to
+			    		  //Using a copy set of tempCell because you can't itterate through a set while deleting items in it
 			    		  for(BoardCell tempCell : tempSetCopy) {
 			    			  if(!tempCell.equals(keepCell)) {
 			    				  tempSet.remove(tempCell);
