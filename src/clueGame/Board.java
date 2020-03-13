@@ -31,7 +31,6 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 	}
 	
-	
 	public void initialize() {
 		// Surround loadRoomConfig and loadBoardConfig with a try catch statement because they could throw a FileNotFoundException or a BadConfigFormatException
 		try {
