@@ -1,3 +1,5 @@
+
+Most significant change:
 Before: Here is our original calcTargets Function
 	// Boolean to describe if there has been more than one call to calcTargets
 	private Boolean firstCall = true;
