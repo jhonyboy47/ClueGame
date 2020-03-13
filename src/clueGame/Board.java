@@ -42,6 +42,7 @@ public class Board {
 		} catch (Exception e) {
 			//Added once refactoring
 			e.getMessage();
+			
 			e.printStackTrace();
 		}
 		
