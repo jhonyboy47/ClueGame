@@ -1,0 +1,105 @@
+Before: Here is our original calcTargets Function
+	// Boolean to describe if there has been more than one call to calcTargets
+	private Boolean firstCall = true;
+
+	// Function to calculate targets for a given row, column, and path length
+	public void calcTargets(int row, int col, int pathLength) {
+		// Declare start cell use the row and column that was passed in
+		BoardCell startCell = board[row][col];
+		
+		// If calculate targets counter is equal to zero, reset targets, visited, firstCall to initial values
+		// If calcTargetsCounter is zero then that means that all calcTargets recursive calls have finished
+		if(calcTargetsCounter == 0) {
+			targets.clear();
+			visited.clear();
+			firstCall = true;
+			calcTargetsCounter = 0;
+		}
+		 
+		visited.add(startCell);
+	
+		// This is a for loop to see if adjacent cells could be targets
+		if(!firstCall && board[row][col].isDoorway()) {
+			targets.add(board[row][col]);
+			return;
+		}
+		
+		
+		
+		for(BoardCell cell : getAdjList(row, col)) {
+
+			// If we have already visited the cell it can't be a target 
+			if(!visited.contains(cell)) {
+				visited.add(cell);
+				if(pathLength == 1) {
+					
+					// Base case
+					targets.add(cell);
+				
+				} else {
+					// Add one to calcTargetsCounter because we are about to recursively calcTargets
+					calcTargetsCounter++;
+					// Recursive call of the calcTargets because pathlength is not 1 yet
+					calcTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+					// Subtract calcTargetsCounter by one because of recursive call of calcTargets has returned
+					calcTargetsCounter--;
+				}
+				visited.remove(cell);
+				
+			}
+		}
+		
+		// Set firstCall to zero because the first call of calculate targets has been completed
+		firstCall = false;
+	}
+
+
+After: Here is our new methods. We separated our original calcTargets method into two methods so that its easier to understand what is happening.
+
+
+	// Boolean to describe if there has been more than one call to calcTargets
+	private Boolean firstCall = true;
+
+	
+	public void calcTargets(int row, int col, int pathLength) {
+		visited.clear();
+		targets.clear();
+		firstCall = true;
+		visited.add(board[row][col]);
+		
+		findAllTargets(row, col, pathLength);
+	}
+	// Function to calculate targets for a given row, column, and path length
+	public void findAllTargets(int row, int col, int pathLength) {
+		// Declare start cell use the row and column that was passed in
+		BoardCell startCell = board[row][col];
+	
+		visited.add(startCell);
+	
+		// This is a for loop to see if adjacent cells could be targets
+		if(!firstCall && board[row][col].isDoorway()) {
+			targets.add(board[row][col]);
+			return;
+		}
+		
+		for(BoardCell cell : getAdjList(row, col)) {
+			// If we have already visited the cell it can't be a target 
+			if(!visited.contains(cell)) {
+				visited.add(cell);
+				if(pathLength == 1) {
+					
+					// Base case
+					targets.add(cell);
+				
+				} else {
+					// Recursive call of the calcTargets because pathlength is not 1 yet
+					findAllTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+				}
+				visited.remove(cell);
+				
+			}
+		}
+		// Set firstCall to false because the first call of calculate targets has been completed
+		firstCall = false;
+	}
+

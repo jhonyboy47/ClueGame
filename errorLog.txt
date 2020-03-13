@@ -1,3 +1,0 @@
-Wrong number of cols in file
-ERROR Board has a room that is not included in the legend file.
-Error reading in legend file: Third input per row must be a String ('Other' or 'Card')
