@@ -19,7 +19,7 @@ public class Board {
 	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	
 	// The targets set is used while calculating targets and it holds all cells that are targets
-	private Set<BoardCell> targets = new HashSet<BoardCell>();
+	private Set<BoardCell> targets;
 	
 	private String boardConfigFile, roomConfigFile;
 	
@@ -28,6 +28,7 @@ public class Board {
 		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		visited = new HashSet<BoardCell>();
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
+		targets = new HashSet<BoardCell>();
 	}
 	
 	
@@ -40,6 +41,8 @@ public class Board {
 			loadRoomConfig();
 			loadBoardConfig();
 		} catch (Exception e) {
+			//Added once refactoring
+			e.getMessage();
 			e.printStackTrace();
 		}
 		
@@ -59,27 +62,27 @@ public class Board {
 		    	  int lastCol = numColumns - 1;
 		    	  int lastRow = numRows - 1;
 		    	 
-		    	  //0,0 cell
+		    	  //Adds Adjacencies to the top left corner
 		    	  if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == 0)) {
 		    		  tempSet.add(board[row+1][col]);
 		    		  tempSet.add(board[row][col+1]);
 		    	  }
 		    	  
-		    	  //Checks for the first rows stuff
+		    	  //Adds Adjacencies for the first row
 		    	  else if ((tempBoardCell.getRow() == 0) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
 		    	  	  tempSet.add(board[row+1][col]);
 		    	  	  tempSet.add(board[row][col+1]);
 		    	  	  tempSet.add(board[row][col-1]);
 		    	  }
 		       
-		    	  //top right corner cell	  
+		    	  //Adds Adjacencies  to the top right corner cell
 		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == 0)) {
 		    		  tempSet.add(board[row+1][col]);
 		    		  tempSet.add(board[row][col-1]);
 		    		  
 		    	  }
 
-		    	  //Checks for the Left Most column's case stuff
+		    	  //Gives Adjacencies to the left most colomn's that are not corners
 		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
 		    		  tempSet.add(board[row-1][col]);
 		    		  tempSet.add(board[row+1][col]);
@@ -87,7 +90,7 @@ public class Board {
 
 		    	  }
 		    	  
-		    	  //Checks for the Right most column's case stuff
+		    	  //Gives Adjacencies to the right most colomn's that are not corners
 		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() > 0) && (tempBoardCell.getRow() < lastRow)) {
 		    		  tempSet.add(board[row-1][col]);
 		    		  tempSet.add(board[row+1][col]);
@@ -95,28 +98,28 @@ public class Board {
 
 		    	  }
 		    	  
-		    	  //bottom left corner
+		    	  //Adds Adjacencies  to the bottom right corner cell
 		    	  else if ( (tempBoardCell.getColumn() == 0) && (tempBoardCell.getRow() == lastRow)) {
 		    		  
 		    		  tempSet.add(board[row-1][col]);
 		    		  tempSet.add(board[row][col+1]);
 		    	  }
 		    	  
-		    	  //bottom rows
+		    	  //Adds adjacencies to the bottom row cells
 		    	  else if ((tempBoardCell.getRow() == lastRow) && (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) ) {
 		    	  	  tempSet.add(board[row-1][col]);
 		    	  	  tempSet.add(board[row][col+1]);
 		    	  	  tempSet.add(board[row][col-1]);
 		    	  }
 		    	  
-		    	  //bottom right corner
+		    	  //Adds adjacencies to the bottom right corner cell
 		    	  else if ( (tempBoardCell.getColumn() == lastCol) && (tempBoardCell.getRow() == lastRow)) {
 		    		  tempSet.add(board[row-1][col]);
 		    		  tempSet.add(board[row][col-1]);
 		    		  
 		    	  }
 		    	  
-		    	  //All other cases
+		    	  //Adds adacencies to cells that are not on a corner or edge 
 		    	  else if ( (tempBoardCell.getColumn() > 0) && (tempBoardCell.getColumn() < lastCol) && (tempBoardCell.getRow() > 0) && tempBoardCell.getRow() < lastRow ) {
 		    		  tempSet.add(board[row+1][col]);
 		    		  tempSet.add(board[row-1][col]);
