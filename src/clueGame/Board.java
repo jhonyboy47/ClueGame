@@ -12,16 +12,26 @@ import clueGame.BoardCell;
 public class Board {
 	public final static int MAX_BOARD_SIZE = 50;
 	private int numRows, numColumns;	
-	private BoardCell[][] board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE] ;
-	private Map<Character, String> legend = new HashMap<Character,String>();
-	private Set<BoardCell> visited = new HashSet<BoardCell>();
+	private BoardCell[][] board;
+	private Map<Character, String> legend;
+	private Set<BoardCell> visited;
 	// AdjMtx holds a map that contains a set of boardcell that are adjacent to any given cell inside the board
-	private Map<BoardCell, Set<BoardCell>> adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
+	private Map<BoardCell, Set<BoardCell>> adjMtx;
 	
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets = new HashSet<BoardCell>();
 	
 	private String boardConfigFile, roomConfigFile;
+	
+	private Board() {
+		legend = new HashMap<Character,String>();
+		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		visited = new HashSet<BoardCell>();
+		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
+	}
+	
+	
+	
 	
 	
 	public void initialize() {
@@ -204,7 +214,7 @@ public class Board {
 		
 	private static Board theInstance = new Board();
 	
-	private Board() {}
+	
 	
 	public static Board getInstance() {
 		return theInstance;
