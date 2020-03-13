@@ -131,7 +131,7 @@ public class Board {
 		    	  
 		    	  // If there are adjacency's
 		    	  if(!tempSet.isEmpty()) {
-		    		  Set<BoardCell> tempSet2 = new HashSet<BoardCell>(tempSet);
+		    		  Set<BoardCell> tempSetCopy = new HashSet<BoardCell>(tempSet);
 			    	  
 		    		  
 		    		  //If it is a room it can't have adjacency's
@@ -160,7 +160,7 @@ public class Board {
 			    		  }
 			    		  
 			    		  //Removes all other "adjacent" cells besides the one the room can exit to
-			    		  for(BoardCell tempCell : tempSet2) {
+			    		  for(BoardCell tempCell : tempSetCopy) {
 			    			  if(!tempCell.equals(keepCell)) {
 			    				  tempSet.remove(tempCell);
 			    			  } 
@@ -171,7 +171,7 @@ public class Board {
 		    		  else if (board[row][col].isWalkway()) {
 		    			  
 		    			  //Makes sure we don't put door way as a "adjacency" for a cell that is not in the correct direction
-		    			  for (BoardCell tempCell : tempSet2){
+		    			  for (BoardCell tempCell : tempSetCopy){
 		    				  if (tempCell.isDoorway()) {
 				    			  DoorDirection direction = tempCell.getDoorDirection();
 				    			  int newRow = tempCell.getRow();
