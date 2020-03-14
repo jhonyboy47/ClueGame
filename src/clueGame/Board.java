@@ -316,7 +316,7 @@ public class Board {
 			if(initialString.length() != 1) {
 				throw new BadConfigFormatException("Error reading in legend file: First input per row must be one character ");
 			} else {
-				initial = new Character(initialString.charAt(0));
+				initial = initialString.charAt(0);
 			}
 			String name = lineArray[1];
 			if(name.length() == 0) {
