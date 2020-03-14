@@ -1,3 +1,56 @@
+Authors: Michael Crews and Jhon Malagon
+We did this whole assignment on one computer
+
+Here is our git log. We chose not to submit our whole git log because that would be really long.
+
+commit 2be08a08e2acf716f118ce72cbbd6fc987d4c969 (HEAD -> master)
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 18:06:11 2020 -0600
+
+    We were not using autoboxing correctly for setting the room initial, so we fixed it
+
+commit 27f4915b171c82db860d75f6c6e8f2f5a1d3f022
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:53:37 2020 -0600
+
+    Added comment to explain why we needed tempSetCopy because we can't iterate through a set and delete from that set at the same time
+
+commit 9879a6be5036abc26ad78f3d121dd2e0442f00dc
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:52:16 2020 -0600
+
+    Changed the name of a variable, tempSet2, inside calcAdjances so that its clearer what the variable is for
+
+commit c7c95e746fa9c6eda9ff01c09e05dc7066df4d9b
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:50:18 2020 -0600
+
+    Updated the comments inside calcAdjancies so that they are more descriptive
+
+commit 02146d6e0891ded958abf1b83277cafcd2ccb285
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:48:45 2020 -0600
+
+    Added e.getMessage() inside of the initialize method inside the board class so that the error is clearer
+
+commit 497603981284362e9baad4c951f191b2d7a118b8
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:46:35 2020 -0600
+
+    Moved the allocation of space for boards instance variables into the constructor so the code is cleaner
+
+commit 2240c6174d3f7f59b9c71d3b72bc08c9cc7ed8a5 (origin/master, origin/HEAD)
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:41:54 2020 -0600
+
+    Reduced the amount of import statements in Board.java by using 'import java.util.*'
+
+commit 773a77775fe522f3949505f59616f428defe9c65
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:24:35 2020 -0600
+
+    Refactored calcTargets into to two methods so its easier to understand what is happening
+
 
 Most significant change:
 Before: Here is our original calcTargets Function
