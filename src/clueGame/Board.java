@@ -20,8 +20,10 @@ public class Board {
 	
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
+	private Set<Player> players;
 	
 	private String boardConfigFile, roomConfigFile;
+	private String playersConfigFile;
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -29,6 +31,7 @@ public class Board {
 		visited = new HashSet<BoardCell>();
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		targets = new HashSet<BoardCell>();
+		players = new HashSet<Player>();
 	}
 	
 	public void initialize() {
@@ -36,6 +39,7 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
+			loadPlayersConfig();
 		} catch (Exception e) {
 			//Added once refactoring
 			e.getMessage();
@@ -225,6 +229,9 @@ public class Board {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
 	}
+	public void setPlayersFile(String playerFile) {
+		// playersConfigFile
+	}
 	
 	public Map<Character, String> getLegend(){
 		return legend;
@@ -247,6 +254,9 @@ public class Board {
 		return adjMtx.get(board[row][col]);
 	}
 	
+	public Set<Player> getPlayersSet(){
+		return players;
+	}
 	// Boolean to describe if there has been more than one call to calcTargets
 	private Boolean firstCall = true;
 
@@ -298,7 +308,20 @@ public class Board {
 		
 	}
 	
-	
+	public void loadPlayersConfig() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader("./data/" + roomConfigFile);
+		Scanner in = new Scanner(reader);
+		while(in.hasNextLine()) {
+			String line = in.nextLine();
+			String[] lineArray = line.split(",");
+			
+			
+			// players.add()
+		}
+		
+		
+		
+	}
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		FileReader reader = new FileReader("./data/" + roomConfigFile);
 		Scanner in = new Scanner(reader);

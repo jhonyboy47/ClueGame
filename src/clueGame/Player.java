@@ -9,6 +9,26 @@ public class Player {
 	private Color color;
 	
 	public Card disproveSuggestion(Solution suggestion) {
+		return null;
 		
 	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+	
+	
+	
 }
