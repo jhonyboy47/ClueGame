@@ -1,5 +1,9 @@
 package clueGame;
 
-public class HumanPlayer extends Player{
+import java.awt.Color;
 
+public class HumanPlayer extends Player{
+	public HumanPlayer(String playerName, int row, int column, Color color) {
+		super(playerName, row, column, color);
+	}
 }

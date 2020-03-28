@@ -3,8 +3,10 @@
 
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Field;
 import java.util.*;
 
 import clueGame.BoardCell;
@@ -230,7 +232,7 @@ public class Board {
 		roomConfigFile = legend;
 	}
 	public void setPlayersFile(String playerFile) {
-		// playersConfigFile
+		playersConfigFile = playerFile;
 	}
 	
 	public Map<Character, String> getLegend(){
@@ -309,14 +311,26 @@ public class Board {
 	}
 	
 	public void loadPlayersConfig() throws FileNotFoundException, BadConfigFormatException {
-		FileReader reader = new FileReader("./data/" + roomConfigFile);
+		FileReader reader = new FileReader("./data/" + playersConfigFile);
 		Scanner in = new Scanner(reader);
 		while(in.hasNextLine()) {
 			String line = in.nextLine();
 			String[] lineArray = line.split(",");
+			if(lineArray.length != 5) {
+				throw new BadConfigFormatException("Error reading in players file: must have name, color, row, column, human/computer player each line");
+			}
+			String name = lineArray[0];
+			int row = Integer.getInteger(lineArray[1]);
+			int col = Integer.getInteger(lineArray[2]);
+			String stringColor = lineArray[3];
+			Color color = convertColor(stringColor);
+			String humanOrComputer = lineArray[4];
+			Player tempPlayer;
 			
+			if(humanOrComputer == "Human") {
+				tempPlayer = new HumanPlayer(name,row,col,color);
+			}
 			
-			// players.add()
 		}
 		
 		
@@ -471,6 +485,16 @@ public class Board {
 				
 	}
 
-	
+	public static Color convertColor(String strColor) {
+		 Color color;
+		 try {
+		 // We can use reflection to convert the string to a color
+		 Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+		 color = (Color)field.get(null);
+		 } catch (Exception e) {
+		 color = null; // Not defined
+		 }
+		 return color;
+	}
 	
 }

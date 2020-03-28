@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.HumanPlayer;
 import clueGame.Player;
+
 
 public class gameSetupTests {
 
@@ -25,24 +27,14 @@ public class gameSetupTests {
 		board.setPlayersFile("ClueGamePlayers.txt");
 		board.initialize();
 	}
-	public Color convertColor(String strColor) {
-		 Color color;
-		 try {
-		 // We can use reflection to convert the string to a color
-		 Field field = Class.forName("java.awt.Color").getField(strColor.trim());
-		 color = (Color)field.get(null);
-		 } catch (Exception e) {
-		 color = null; // Not defined
-		 }
-		 return color;
-		}
+	
 
 	
 	@Test
 	public void Test() {
 		Set<Player> players = board.getPlayersSet();
 		
-		assertTrue(players.contains(new Player("Bob", 12, 14, convertColor("blue"))));
+		assertTrue(players.contains(new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"))));
 		
 	}
 	
