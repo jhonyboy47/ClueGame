@@ -323,9 +323,10 @@ public class Board {
 				throw new BadConfigFormatException("Error reading in players file: must have name, color, row, column, human/computer player each line");
 			}
 			String name = lineArray[0];
-			Integer row = Integer.getInteger(lineArray[1]);
-			Integer col = Integer.getInteger(lineArray[2]);
+			Integer row = Integer.parseInt(lineArray[1]);
+			Integer col = Integer.parseInt(lineArray[2]);
 			String stringColor = lineArray[3];
+			System.out.println("Color: " + stringColor);
 			Color color = convertColor(stringColor);
 			String humanOrComputer = lineArray[4];
 			Player tempPlayer;
@@ -333,7 +334,14 @@ public class Board {
 				System.out.println("A third message");
 
 				tempPlayer = new HumanPlayer(name,row,col,color);
+				System.out.println(tempPlayer);
+				players.add(tempPlayer);
+			} else if (humanOrComputer.equals("Human")) {
+				tempPlayer = new ComputerPlayer(name,row,col,color);
+				players.add(tempPlayer);
 			}
+			
+			
 			
 		}
 		

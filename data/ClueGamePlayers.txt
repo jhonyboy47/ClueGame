@@ -1,1 +1,1 @@
-Bob,12,14,Blue,Human
+Bob,12,14,blue,Human
