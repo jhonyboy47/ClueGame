@@ -4,13 +4,13 @@ import java.awt.Color;
 
 public class Player {
 	private String playerName;
-	private int row;
-	private int column;
+	private Integer row;
+	private Integer column;
 	private Color color;
 	
 	
 	
-	public Player(String playerName, int row, int column, Color color) {
+	public Player(String playerName, Integer row, Integer column, Color color) {
 		super();
 		this.playerName = playerName;
 		this.row = row;
@@ -37,6 +37,11 @@ public class Player {
 
 	public Color getColor() {
 		return color;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "]";
 	}
 	
 	

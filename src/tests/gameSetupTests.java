@@ -33,7 +33,10 @@ public class gameSetupTests {
 	@Test
 	public void Test() {
 		Set<Player> players = board.getPlayersSet();
-		
+//		for(Player p : players) {
+//			
+//			System.out.println(p);
+//		}
 		assertTrue(players.contains(new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"))));
 		
 	}

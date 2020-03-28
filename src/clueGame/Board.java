@@ -41,7 +41,10 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
+			System.out.println("A MESSAGE");
 			loadPlayersConfig();
+			System.out.println("A 2ND MESSAGE");
+
 		} catch (Exception e) {
 			//Added once refactoring
 			e.getMessage();
@@ -320,14 +323,15 @@ public class Board {
 				throw new BadConfigFormatException("Error reading in players file: must have name, color, row, column, human/computer player each line");
 			}
 			String name = lineArray[0];
-			int row = Integer.getInteger(lineArray[1]);
-			int col = Integer.getInteger(lineArray[2]);
+			Integer row = Integer.getInteger(lineArray[1]);
+			Integer col = Integer.getInteger(lineArray[2]);
 			String stringColor = lineArray[3];
 			Color color = convertColor(stringColor);
 			String humanOrComputer = lineArray[4];
 			Player tempPlayer;
-			
-			if(humanOrComputer == "Human") {
+			if(humanOrComputer.equals("Human")) {
+				System.out.println("A third message");
+
 				tempPlayer = new HumanPlayer(name,row,col,color);
 			}
 			
