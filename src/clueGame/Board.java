@@ -247,12 +247,14 @@ public class Board {
 		//This while loop makes sure our code does not have any errors in set up of files being read in
 		while(in.hasNextLine()) {
 			String line = in.nextLine();
-			weapons.add(line);
+			
+			//Adding weapons to the deck
+			deck.add(new Card(line, CardType.WEAPON));
 		}
 		
 	}
 	public void setWeaponsFile(String file) {
-		
+		weaponsConfigFile = file;
 	}
 	public void setConfigFiles(String layout, String legend) {
 		boardConfigFile = layout;
@@ -371,8 +373,12 @@ public class Board {
 			}
 			
 			
+			//Adding person to deck
+			deck.add(new Card(name,CardType.PERSON));
+			
 			
 		}
+		
 		
 		
 		
@@ -408,6 +414,14 @@ public class Board {
 			name = name.substring(1);
 			//No errors were found in 'legend' file format thus, 'initial' key is mapped to name in legend map
 			legend.put(initial, name);
+			
+			
+			//Adds room cards
+			if (type.equals("Card")) {
+			Card tempCard = new Card(name,CardType.ROOM);
+			deck.add(tempCard);
+			}
+			
 		}
 	}
 	
@@ -514,6 +528,7 @@ public class Board {
 				
 				//Sets tempBoardCell to the right location in board
 				board[rows][localCols] = tempBoardCell;
+				
 				localCols++;
 			}
 			rows++;
@@ -524,6 +539,8 @@ public class Board {
 		numColumns = cols; 
 		numRows = rows;
 				
+		
+		
 	}
 
 	public static Color convertColor(String strColor) {

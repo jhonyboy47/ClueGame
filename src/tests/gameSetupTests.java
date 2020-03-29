@@ -11,14 +11,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import jdk.internal.net.http.frame.PingFrame;
 
 
 public class gameSetupTests {
 
 	private static Board board;
+	Card PingPongRoom, JesusRoom, Library, Bob, Sharkisha, Pillow, Car;
 	
 	@Before
 	public void beforeAll() {
@@ -26,13 +30,25 @@ public class gameSetupTests {
 		board = Board.getInstance();
 		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.txt");	
 		board.setPlayersFile("ClueGamePlayers.txt");
+		board.setWeaponsFile("ClueGameWeapons.txt");
 		board.initialize();
+		
+		//Room cards for testins
+		Card PingPongRoom = new Card("Ping Pong Room", CardType.ROOM);
+		Card JesusRoom = new Card("Jesus Room", CardType.ROOM);
+		Card Library = new Card("Library", CardType.ROOM);
+		
+		Card Bob = new Card("Bob", CardType.PERSON);
+		Card Sharkisha = new Card("Sharkisha", CardType.PERSON);
+
+		Card Pillow = new Card("Pillow", CardType.WEAPON);
+		Card Car = new Card("Car", CardType.WEAPON);
 	}
 	
 
 	
 	@Test
-	public void Test() {
+	public void LoadPeopleTest() {
 		Set<Player> players = board.getPlayersSet();
 		
 		Player Bob = new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"));	
@@ -44,9 +60,26 @@ public class gameSetupTests {
 		assertTrue(players.contains(Shark));
 		assertEquals(3, players.size());
 		
-
-		
 	}
+	
+	@Test
+	public void CreateCardsTest() {
+		ArrayList<Card> deck = board.getDeck();
+		System.out.println(deck);
+
+		assertTrue(deck.contains(PingPongRoom));
+		assertTrue(deck.contains(JesusRoom));
+		assertTrue(deck.contains(Library));
+		assertTrue(deck.contains(Bob));
+		assertTrue(deck.contains(Sharkisha));
+		assertTrue(deck.contains(Pillow));
+		assertTrue(deck.contains(Car));
+
+
+	}
+	
+	
+	
 	
 	
 	
