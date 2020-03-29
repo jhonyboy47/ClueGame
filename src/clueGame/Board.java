@@ -326,19 +326,24 @@ public class Board {
 			Integer row = Integer.parseInt(lineArray[1]);
 			Integer col = Integer.parseInt(lineArray[2]);
 			String stringColor = lineArray[3];
-			System.out.println("Color: " + stringColor);
+			
 			Color color = convertColor(stringColor);
 			String humanOrComputer = lineArray[4];
 			Player tempPlayer;
+			
 			if(humanOrComputer.equals("Human")) {
-				System.out.println("A third message");
 
 				tempPlayer = new HumanPlayer(name,row,col,color);
-				System.out.println(tempPlayer);
 				players.add(tempPlayer);
-			} else if (humanOrComputer.equals("Human")) {
+				
+			} else if (humanOrComputer.equals("Computer")) {
 				tempPlayer = new ComputerPlayer(name,row,col,color);
 				players.add(tempPlayer);
+			}
+			
+			else {
+				throw new BadConfigFormatException("Error reading in player file:  must specify if player is computer or human ");
+
 			}
 			
 			

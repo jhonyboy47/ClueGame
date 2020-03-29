@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 
@@ -34,9 +35,16 @@ public class gameSetupTests {
 	public void Test() {
 		Set<Player> players = board.getPlayersSet();
 		
-		HumanPlayer Bob = new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"));	
+		Player Bob = new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"));	
+		Player Jared = new ComputerPlayer("Jared", 15, 21, Board.convertColor("red"));	
+		Player Shark = new HumanPlayer("Sharkisha", 27, 30, Board.convertColor("purple"));	
+
 		assertTrue(players.contains(Bob));
+		assertTrue(players.contains(Jared));
+		assertTrue(players.contains(Shark));
+		assertEquals(3, players.size());
 		
+
 		
 	}
 	
