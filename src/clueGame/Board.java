@@ -23,9 +23,13 @@ public class Board {
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
 	private Set<Player> players;
+	private Set<String> weapons;
 	
 	private String boardConfigFile, roomConfigFile;
 	private String playersConfigFile;
+	private String weaponsConfigFile;
+	private ArrayList<Card> deck;
+	
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -34,6 +38,8 @@ public class Board {
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		targets = new HashSet<BoardCell>();
 		players = new HashSet<Player>();
+		deck = new ArrayList<Card>();
+		
 	}
 	
 	public void initialize() {
@@ -41,9 +47,9 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
-			System.out.println("A MESSAGE");
 			loadPlayersConfig();
-			System.out.println("A 2ND MESSAGE");
+			loadWeapons();
+
 
 		} catch (Exception e) {
 			//Added once refactoring
@@ -54,6 +60,9 @@ public class Board {
 		
 		calcAdjacencies();
 		
+	}
+	public ArrayList<Card> getDeck(){
+		return deck;
 	}
 	
 	public void calcAdjacencies() {
@@ -230,6 +239,21 @@ public class Board {
 		return theInstance;
 	}
 	
+	public void loadWeapons() throws FileNotFoundException, BadConfigFormatException {
+		FileReader reader = new FileReader("./data/" + weaponsConfigFile);
+		Scanner in = new Scanner(reader);
+		
+		
+		//This while loop makes sure our code does not have any errors in set up of files being read in
+		while(in.hasNextLine()) {
+			String line = in.nextLine();
+			weapons.add(line);
+		}
+		
+	}
+	public void setWeaponsFile(String file) {
+		
+	}
 	public void setConfigFiles(String layout, String legend) {
 		boardConfigFile = layout;
 		roomConfigFile = legend;
