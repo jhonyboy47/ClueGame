@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
@@ -16,33 +17,32 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
-import jdk.internal.net.http.frame.PingFrame;
 
 
 public class gameSetupTests {
 
 	private static Board board;
-	Card PingPongRoom, JesusRoom, Library, Bob, Sharkisha, Pillow, Car;
+	static Card PingPongRoom, JesusRoom, Library, BobCard, SharkishaCard, Pillow, Car;
 	
-	@Before
-	public void beforeAll() {
+	@BeforeClass
+	public static void beforeAll() {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.txt");	
-		board.setPlayersFile("ClueGamePlayers.txt");
+		board.setPlayersFile("ClueGamePlayers.csv");
 		board.setWeaponsFile("ClueGameWeapons.txt");
 		board.initialize();
 		
 		//Room cards for testins
-		Card PingPongRoom = new Card("Ping Pong Room", CardType.ROOM);
-		Card JesusRoom = new Card("Jesus Room", CardType.ROOM);
-		Card Library = new Card("Library", CardType.ROOM);
+		PingPongRoom = new Card("Ping Pong Room", CardType.ROOM);
+		JesusRoom = new Card("Jesus Room", CardType.ROOM);
+		Library = new Card("Library", CardType.ROOM);
 		
-		Card Bob = new Card("Bob", CardType.PERSON);
-		Card Sharkisha = new Card("Sharkisha", CardType.PERSON);
+		BobCard = new Card("Bob", CardType.PERSON);
+		SharkishaCard = new Card("Sharkisha", CardType.PERSON);
 
-		Card Pillow = new Card("Pillow", CardType.WEAPON);
-		Card Car = new Card("Car", CardType.WEAPON);
+		Pillow = new Card("Pillow", CardType.WEAPON);
+		Car = new Card("Car", CardType.WEAPON);
 	}
 	
 
@@ -65,17 +65,14 @@ public class gameSetupTests {
 	@Test
 	public void CreateCardsTest() {
 		ArrayList<Card> deck = board.getDeck();
-		System.out.println(deck);
-
+		assertEquals(16, deck.size());
 		assertTrue(deck.contains(PingPongRoom));
 		assertTrue(deck.contains(JesusRoom));
 		assertTrue(deck.contains(Library));
-		assertTrue(deck.contains(Bob));
-		assertTrue(deck.contains(Sharkisha));
+		assertTrue(deck.contains(BobCard));
+		assertTrue(deck.contains(SharkishaCard));
 		assertTrue(deck.contains(Pillow));
 		assertTrue(deck.contains(Car));
-
-
 	}
 	
 	
