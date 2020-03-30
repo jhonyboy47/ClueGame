@@ -80,6 +80,29 @@ public class gameSetupTests {
 		// Test if the deck size is the correct size
 		assertEquals(16, deck.size());
 		
+		//Variables for counting right amount of each type of card are generated
+		int personCount = 0, weaponCount = 0 , roomCount = 0;
+		for (Card card: deck) {
+			
+			
+			if (card.getCardType() == CardType.PERSON) {
+				personCount++;
+			}
+			
+			else if (card.getCardType() == CardType.WEAPON) {
+				weaponCount++;
+			}
+			
+			else if (card.getCardType() == CardType.ROOM) {
+				roomCount++;
+			}
+		}
+		
+		assertEquals(3, personCount);
+		assertEquals(4, weaponCount);
+		assertEquals(9, roomCount);
+		
+		
 		// Test if the deck contains some of the correct cards
 		assertTrue(deck.contains(PingPongRoom));
 		assertTrue(deck.contains(JesusRoom));
@@ -88,6 +111,8 @@ public class gameSetupTests {
 		assertTrue(deck.contains(SharkishaCard));
 		assertTrue(deck.contains(Pillow));
 		assertTrue(deck.contains(Car));
+		
+		
 	}
 	
 	

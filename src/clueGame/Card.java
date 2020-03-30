@@ -12,7 +12,9 @@ public class Card {
 	}
 
 
-
+	public CardType getCardType(){
+		return this.cardType;
+	}
 	
 	// This function is needed for testing
 	@Override

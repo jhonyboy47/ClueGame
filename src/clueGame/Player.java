@@ -1,12 +1,15 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player {
 	private String playerName;
 	private Integer row;
 	private Integer column;
 	private Color color;
+	private Set<Card> myCards = new HashSet<Card>();
 	
 	
 	
