@@ -29,6 +29,9 @@ public class Board {
 	private String weaponsConfigFile;
 	private ArrayList<Card> deck;
 	
+	private Boolean usingPlayerConfigFile;
+	private Boolean usingWeaponsConfigFile;
+	
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -38,6 +41,8 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 		players = new HashSet<Player>();
 		deck = new ArrayList<Card>();
+		usingPlayerConfigFile = false;
+		usingWeaponsConfigFile = false;
 		
 	}
 	private static Board theInstance = new Board();
@@ -51,8 +56,8 @@ public class Board {
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
-			loadPlayersConfig();
-			loadWeapons();
+			if(usingPlayerConfigFile) loadPlayersConfig();
+			if(usingWeaponsConfigFile) loadWeapons();
 
 
 		} catch (Exception e) {
@@ -250,6 +255,7 @@ public class Board {
 	}
 	
 	public void setWeaponsFile(String file) {
+		usingWeaponsConfigFile = true;
 		weaponsConfigFile = file;
 	}
 	public void setConfigFiles(String layout, String legend) {
@@ -257,6 +263,7 @@ public class Board {
 		roomConfigFile = legend;
 	}
 	public void setPlayersFile(String playerFile) {
+		usingPlayerConfigFile = true;
 		playersConfigFile = playerFile;
 	}
 	

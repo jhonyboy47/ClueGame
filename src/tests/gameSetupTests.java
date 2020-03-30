@@ -31,9 +31,9 @@ public class gameSetupTests {
 		board = Board.getInstance();
 		
 		// Set all the needed config files
-		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.txt");	
+		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.csv");	
 		board.setPlayersFile("ClueGamePlayers.csv");
-		board.setWeaponsFile("ClueGameWeapons.txt");
+		board.setWeaponsFile("ClueGameWeapons.csv");
 		board.initialize();
 		
 		// Players for testing 

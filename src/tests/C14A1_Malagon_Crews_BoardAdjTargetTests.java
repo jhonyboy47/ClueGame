@@ -19,7 +19,7 @@ public class C14A1_Malagon_Crews_BoardAdjTargetTests {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.txt");		
+		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.csv");		
 		// Initialize will load BOTH config files 
 		board.initialize();
 	}
