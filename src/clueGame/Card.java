@@ -12,14 +12,9 @@ public class Card {
 	}
 
 
-	public Boolean equals() {
-		// TODO remove null later
-		return null;
-		
-	}
 
 	
-
+	// This function is needed for testing
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -29,7 +24,7 @@ public class Card {
 		return result;
 	}
 
-
+	// This function is needed for testing
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -49,7 +44,7 @@ public class Card {
 		return true;
 	}
 
-
+	// This function is used for testing. May remove
 	@Override
 	public String toString() {
 		return "Card [cardName=" + cardName + ", cardType=" + cardType + "]" + "\n";

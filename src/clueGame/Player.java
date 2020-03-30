@@ -40,7 +40,7 @@ public class Player {
 	}
 	
 	
-	
+	// This function is needed for testing
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,7 +51,8 @@ public class Player {
 		result = prime * result + ((row == null) ? 0 : row.hashCode());
 		return result;
 	}
-
+	
+	// This function is needed for testing
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,7 +84,9 @@ public class Player {
 			return false;
 		return true;
 	}
-
+	
+	
+	// This function is helpful for testing
 	@Override
 	public String toString() {
 		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "]";

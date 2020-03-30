@@ -23,7 +23,6 @@ public class Board {
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
 	private Set<Player> players;
-	private Set<String> weapons;
 	
 	private String boardConfigFile, roomConfigFile;
 	private String playersConfigFile;
@@ -41,9 +40,14 @@ public class Board {
 		deck = new ArrayList<Card>();
 		
 	}
+	private static Board theInstance = new Board();
+	
+	public static Board getInstance() {
+		return theInstance;
+	}
 	
 	public void initialize() {
-		// Surround loadRoomConfig and loadBoardConfig with a try catch statement because they could throw a FileNotFoundException or a BadConfigFormatException
+		// Surround loadRoomConfig, loadBoardConfig, loadPlayersConfig,loadWeapons with a try catch statement because they could throw a FileNotFoundException or a BadConfigFormatException
 		try {
 			loadRoomConfig();
 			loadBoardConfig();
@@ -52,7 +56,6 @@ public class Board {
 
 
 		} catch (Exception e) {
-			//Added once refactoring
 			e.getMessage();
 			
 			e.printStackTrace();
@@ -61,6 +64,7 @@ public class Board {
 		calcAdjacencies();
 		
 	}
+	
 	public ArrayList<Card> getDeck(){
 		return deck;
 	}
@@ -230,29 +234,21 @@ public class Board {
 		       }
 		   }
 	}
-		
-	private static Board theInstance = new Board();
-	
-	
-	
-	public static Board getInstance() {
-		return theInstance;
-	}
 	
 	public void loadWeapons() throws FileNotFoundException, BadConfigFormatException {
 		FileReader reader = new FileReader("./data/" + weaponsConfigFile);
 		Scanner in = new Scanner(reader);
 		
 		
-		//This while loop makes sure our code does not have any errors in set up of files being read in
+		// Read in all weapons from file and load the weapons into the deck
 		while(in.hasNextLine()) {
 			String line = in.nextLine();
 			
 			//Adding weapons to the deck
 			deck.add(new Card(line, CardType.WEAPON));
 		}
-		
 	}
+	
 	public void setWeaponsFile(String file) {
 		weaponsConfigFile = file;
 	}
@@ -277,7 +273,6 @@ public class Board {
 	}
 	
 	public BoardCell getCellAt(int row, int col) {
-		
 		return board[row][col];
 	}
 	
@@ -288,6 +283,7 @@ public class Board {
 	public Set<Player> getPlayersSet(){
 		return players;
 	}
+	
 	// Boolean to describe if there has been more than one call to calcTargets
 	private Boolean firstCall = true;
 
@@ -342,23 +338,29 @@ public class Board {
 	public void loadPlayersConfig() throws FileNotFoundException, BadConfigFormatException {
 		FileReader reader = new FileReader("./data/" + playersConfigFile);
 		Scanner in = new Scanner(reader);
+		
+		// While loop to read in everything from file
 		while(in.hasNextLine()) {
 			String line = in.nextLine();
 			String[] lineArray = line.split(",");
 			if(lineArray.length != 5) {
 				throw new BadConfigFormatException("Error reading in players file: must have name, color, row, column, human/computer player each line");
 			}
+			// Order is name,row,col,stringColor, human/computer inside text file
 			String name = lineArray[0];
 			Integer row = Integer.parseInt(lineArray[1]);
 			Integer col = Integer.parseInt(lineArray[2]);
 			String stringColor = lineArray[3];
 			
+			// Convert color from name of color to RGB
 			Color color = convertColor(stringColor);
+			
 			String humanOrComputer = lineArray[4];
+			
+			// Declare tempPlayer which will be added to players set
 			Player tempPlayer;
 			
 			if(humanOrComputer.equals("Human")) {
-
 				tempPlayer = new HumanPlayer(name,row,col,color);
 				players.add(tempPlayer);
 				
@@ -367,11 +369,10 @@ public class Board {
 				players.add(tempPlayer);
 			}
 			
+			// Error if humanOrComputer value is not "Human" or "Computer"
 			else {
 				throw new BadConfigFormatException("Error reading in player file:  must specify if player is computer or human ");
-
 			}
-			
 			
 			//Adding person to deck
 			deck.add(new Card(name,CardType.PERSON));
