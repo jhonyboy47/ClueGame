@@ -67,7 +67,7 @@ public class Board {
 		}
 		
 		calcAdjacencies();
-		dealCards();
+		if(usingPlayerConfigFile && usingWeaponsConfigFile) dealCards();
 		
 	}
 	
@@ -82,8 +82,8 @@ public class Board {
 		
 		// For loop for dealing cards to players
 		for(int i = 0; i < deck.size(); i++) {
-			
-			players.get(i).addMyCards(deck.get(i));
+			int k = i % players.size();
+			players.get(k).addMyCards(deck.get(i));
 		}
 		
 	}

@@ -1,5 +1,5 @@
 package clueGame;
-
+///Authors: Jhonathan Malagon and Michael Crews
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
