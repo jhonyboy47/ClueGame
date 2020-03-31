@@ -1,6 +1,8 @@
+// Authors: Michael Crews and Jhon Malagon
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
@@ -39,7 +41,7 @@ public class gameSetupTests {
 		// Players for testing 
 		Bob = new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"));	
 		Jared = new ComputerPlayer("Jared", 15, 21, Board.convertColor("red"));	
-		Shark = new HumanPlayer("Sharkisha", 27, 30, Board.convertColor("purple"));	
+		Shark = new HumanPlayer("Sharkisha", 27, 30, Board.convertColor("yellow"));	
 		
 		//Room cards for testins
 		PingPongRoom = new Card("Ping Pong Room", CardType.ROOM);
@@ -60,7 +62,7 @@ public class gameSetupTests {
 	@Test
 	public void LoadPeopleTest() {
 		// player set for testing
-		Set<Player> players = board.getPlayersSet();
+		ArrayList<Player> players = board.getPlayersSet();
 		
 		// Test if the players set has all players from config file
 		assertTrue(players.contains(Bob));
@@ -115,26 +117,53 @@ public class gameSetupTests {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test
+	public void DealCardsTest() {
+		// player array list for testing
+		ArrayList<Player> players = board.getPlayersSet();
+		
+		// Counter to count how many cards have been dealt to players
+		int overallCardCount = 0;
+		
+		int cardCountForFirstPlayer = 0;
+		
+		// Variable to hold a the first card from the array list of players
+		Card firstCard = new Card();
+		
+		// Counter for how many times the first card is delt to players
+		int firstCardCount = 0;
+		
+		// Boolean to hold a true or false value if the first pass has happened in the for loop below
+		Boolean first = false;
+		
+		for(Player player : players) {
+			ArrayList<Card> playerCards = player.getMyCards();
+			
+			// Set the first player's card count and first card
+			if(first == false) {
+				cardCountForFirstPlayer = playerCards.size();
+				firstCard = playerCards.get(0);
+				first = true;
+			} 
+			
+			// If any of the playerCards are the first card, increment the firstCardCounter by 1 
+			for(Card card : playerCards) {
+				if(card.equals(firstCard)) {
+					firstCardCount++;
+				}
+			}
+			
+			// The first card should only be delt once
+			assertEquals(1, firstCardCount);
+			
+			overallCardCount = overallCardCount + playerCards.size();
+			
+			// Test if a player's card count is within 1 of the first player's card count 
+			assertEquals(cardCountForFirstPlayer, playerCards.size(), 1);
+		}
+		
+		// There should be 16 cards delt to players
+		assertEquals(16, overallCardCount);
+		
+	}
 }

@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,9 +10,16 @@ public class Player {
 	private Integer row;
 	private Integer column;
 	private Color color;
-	private Set<Card> myCards = new HashSet<Card>();
+	private ArrayList<Card> myCards = new ArrayList<Card>();
 	
+	public void addMyCards(Card card) {
+		myCards.add(card);
+	}
 	
+	// This function is for testing
+	public ArrayList<Card> getMyCards() {
+		return myCards;
+	}
 	
 	public Player(String playerName, Integer row, Integer column, Color color) {
 		super();
@@ -92,7 +100,7 @@ public class Player {
 	// This function is helpful for testing
 	@Override
 	public String toString() {
-		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "]";
+		return "Player [playerName=" + playerName + ", row=" + row + ", column=" + column + ", color=" + color + "] " + myCards + "\n";
 	}
 	
 	

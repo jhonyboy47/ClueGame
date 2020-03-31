@@ -22,7 +22,7 @@ public class Board {
 	
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
-	private Set<Player> players;
+	private ArrayList<Player> players;
 	
 	private String boardConfigFile, roomConfigFile;
 	private String playersConfigFile;
@@ -39,7 +39,7 @@ public class Board {
 		visited = new HashSet<BoardCell>();
 		adjMtx = new HashMap<BoardCell, Set<BoardCell>>();
 		targets = new HashSet<BoardCell>();
-		players = new HashSet<Player>();
+		players = new ArrayList<Player>();
 		deck = new ArrayList<Card>();
 		usingPlayerConfigFile = false;
 		usingWeaponsConfigFile = false;
@@ -67,11 +67,25 @@ public class Board {
 		}
 		
 		calcAdjacencies();
+		dealCards();
 		
 	}
 	
 	public ArrayList<Card> getDeck(){
 		return deck;
+	}
+	
+	public void dealCards() {
+		// Shuffle deck and players
+		Collections.shuffle(deck);
+		Collections.shuffle(players);
+		
+		// For loop for dealing cards to players
+		for(int i = 0; i < deck.size(); i++) {
+			
+			players.get(i).addMyCards(deck.get(i));
+		}
+		
 	}
 	
 	public void calcAdjacencies() {
@@ -287,7 +301,7 @@ public class Board {
 		return adjMtx.get(board[row][col]);
 	}
 	
-	public Set<Player> getPlayersSet(){
+	public ArrayList<Player> getPlayersSet(){
 		return players;
 	}
 	
