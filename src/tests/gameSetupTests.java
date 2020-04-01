@@ -2,14 +2,9 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.awt.Color;
-import java.lang.reflect.Field;
 import java.util.*;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -80,7 +75,7 @@ public class gameSetupTests {
 		ArrayList<Card> deck = board.getDeck();
 		
 		// Test if the deck size is the correct size
-		assertEquals(16, deck.size());
+		assertEquals(13, deck.size());
 		
 		//Variables for counting right amount of each type of card are generated
 		int personCount = 0, weaponCount = 0 , roomCount = 0;
@@ -100,21 +95,48 @@ public class gameSetupTests {
 			}
 		}
 		
-		assertEquals(3, personCount);
-		assertEquals(4, weaponCount);
-		assertEquals(9, roomCount);
+		assertEquals(2, personCount);
+		assertEquals(3, weaponCount);
+		assertEquals(8, roomCount);
 		
 		
 		// Test if the deck contains some of the correct cards
-		assertTrue(deck.contains(PingPongRoom));
-		assertTrue(deck.contains(JesusRoom));
-		assertTrue(deck.contains(Library));
-		assertTrue(deck.contains(BobCard));
-		assertTrue(deck.contains(SharkishaCard));
-		assertTrue(deck.contains(Pillow));
-		assertTrue(deck.contains(Car));
 		
+		int roomCounter = 0;
+		if(deck.contains(PingPongRoom)) roomCounter++;
+		if(deck.contains(JesusRoom)) roomCounter++;
+		if(deck.contains(Library)) roomCounter++;
 		
+		Boolean correctRoomCount = false;
+		if(roomCounter == 2 || roomCounter == 3) {
+			correctRoomCount = true;
+		}
+		
+		assertTrue(correctRoomCount);
+		
+		int personCounter = 0;
+		if(deck.contains(BobCard)) personCounter++;
+		if(deck.contains(SharkishaCard)) personCounter++;
+		
+		Boolean correctPersonCount = false;
+		
+		if(personCounter == 1 || personCounter == 2) {
+			correctPersonCount = true;
+		}
+		
+		assertTrue(correctPersonCount);
+	
+		int weaponCounter = 0;
+		if(deck.contains(Pillow)) weaponCounter++;
+		if(deck.contains(Car)) weaponCounter++;
+		
+		Boolean correctWeaponCount = false;
+		
+		if(weaponCounter == 1 || weaponCounter == 2) {
+			correctWeaponCount = true;
+		}
+		
+		assertTrue(correctWeaponCount);
 	}
 	
 	@Test
@@ -163,7 +185,7 @@ public class gameSetupTests {
 		}
 		
 		// There should be 16 cards delt to players
-		assertEquals(16, overallCardCount);
+		assertEquals(13, overallCardCount);
 		
 	}
 }

@@ -32,6 +32,8 @@ public class Board {
 	private Boolean usingPlayerConfigFile;
 	private Boolean usingWeaponsConfigFile;
 	
+	private Solution solution;
+	
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -79,6 +81,35 @@ public class Board {
 		// Shuffle deck and players
 		Collections.shuffle(deck);
 		Collections.shuffle(players);
+		
+		Boolean foundPerson = false;
+		Boolean foundRoom = false;
+		Boolean foundWeapon = false;
+		
+		String personSolutionName = "";
+		String weaponSolutionName = "";
+		String roomSolutionName = "";
+		
+		// Temp deck to iterate through so can remove the solution cards from the deck;
+		ArrayList<Card> tempDeck = new ArrayList<Card>(deck);
+		
+ 		for(Card card : tempDeck) {
+			if(card.getCardType() == CardType.PERSON && !foundPerson) { 
+				foundPerson = true;
+				personSolutionName = card.getCardName();
+				deck.remove(card);
+			} else if (card.getCardType() == CardType.WEAPON && !foundWeapon) {
+				foundWeapon = true;
+				weaponSolutionName = card.getCardName();
+				deck.remove(card);
+			} else if (card.getCardType() == CardType.ROOM && !foundRoom) { 
+				foundRoom = true;
+				roomSolutionName = card.getCardName();
+				deck.remove(card);
+			} 
+		}
+		solution = new Solution(personSolutionName, weaponSolutionName, roomSolutionName);
+		
 		
 		// For loop for dealing cards to players
 		for(int i = 0; i < deck.size(); i++) {

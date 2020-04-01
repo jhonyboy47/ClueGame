@@ -6,6 +6,7 @@ import java.util.*;
 
 public class ComputerPlayer extends Player{
 	
+	// visited list
 	public ComputerPlayer(String playerName, Integer row, Integer column, Color color) {
 		super(playerName, row, column, color);
 	}

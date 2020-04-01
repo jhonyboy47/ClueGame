@@ -6,5 +6,11 @@ public class Solution {
 	public String person;
 	public String weapon;
 	public String room;
+	
+	Solution(String tempPerson, String tempWeapon, String tempRoom){
+		person = tempPerson;
+		weapon = tempWeapon;
+		room = tempRoom;
+	}
 
 }
