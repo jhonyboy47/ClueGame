@@ -12,6 +12,10 @@ public class Player {
 	private Color color;
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	
+	
+	public Player() {
+		
+	}
 	public void addMyCards(Card card) {
 		myCards.add(card);
 	}
