@@ -47,6 +47,8 @@ public class Board {
 		usingWeaponsConfigFile = false;
 		
 	}
+	
+	
 	private static Board theInstance = new Board();
 	
 	public static Board getInstance() {
@@ -77,6 +79,10 @@ public class Board {
 		return deck;
 	}
 	
+	public Solution getSolution() {
+		return this.solution;
+		
+	}
 	public void dealCards() {
 		// Shuffle deck and players
 		Collections.shuffle(deck);
@@ -599,7 +605,7 @@ public class Board {
 	
 	public boolean checkAccusation(Solution accusation) {
 		
-		if(accusation != solution) {
+		if(!accusation.equals(solution)) {
 			return false;
 		}
 		return true;

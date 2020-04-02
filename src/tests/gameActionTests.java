@@ -11,6 +11,7 @@ import org.junit.Test;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.ComputerPlayer;
+import clueGame.Solution;
 
 public class gameActionTests {
 	
@@ -59,8 +60,30 @@ public class gameActionTests {
 	}
 	
 	@Test
-	public void TestMakeAccusation() {
-		assertEquals(1, 2);
+	public void TestCheckAccusation() {
+			 
+		
+			 //Tests solution that is correct
+		     Solution solution = board.getSolution();
+		     Solution testSolution = new Solution(solution.getPerson(),solution.getWeapon(),solution.getRoom());
+		     
+		     assertTrue(board.checkAccusation(testSolution));
+		     
+		     
+		     //Tests solution with wrong person
+		     testSolution = new Solution("wrongPerson",solution.getWeapon(),solution.getRoom());
+		     assertTrue(!board.checkAccusation(testSolution));
+		     
+		     //Test solution with a wrong weapon
+		     testSolution = new Solution(solution.getPerson(),"wrongWeapon",solution.getRoom());
+		     assertTrue(!board.checkAccusation(testSolution));
+
+
+		     //Test solution with a wrong room
+		     testSolution = new Solution(solution.getPerson(),solution.getWeapon(),"wrongRoom");
+		     assertTrue(!board.checkAccusation(testSolution));
+		     
+		
 	}
 	
 }
