@@ -48,7 +48,7 @@ public class Board {
 		
 	}
 	
-	
+
 	private static Board theInstance = new Board();
 	
 	public static Board getInstance() {
@@ -419,11 +419,11 @@ public class Board {
 			Player tempPlayer;
 			
 			if(humanOrComputer.equals("Human")) {
-				tempPlayer = new HumanPlayer(name,row,col,color);
+				tempPlayer = new HumanPlayer(name,board[row][col],color);
 				players.add(tempPlayer);
 				
 			} else if (humanOrComputer.equals("Computer")) {
-				tempPlayer = new ComputerPlayer(name,row,col,color);
+				tempPlayer = new ComputerPlayer(name, board[row][col],color);
 				players.add(tempPlayer);
 			}
 			

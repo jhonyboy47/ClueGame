@@ -34,9 +34,9 @@ public class gameSetupTests {
 		board.initialize();
 		
 		// Players for testing 
-		Bob = new HumanPlayer("Bob", 12, 14, Board.convertColor("blue"));	
-		Jared = new ComputerPlayer("Jared", 15, 21, Board.convertColor("red"));	
-		Shark = new HumanPlayer("Sharkisha", 27, 30, Board.convertColor("yellow"));	
+		Bob = new HumanPlayer("Bob",board.getCellAt(12, 14), Board.convertColor("blue"));	
+		Jared = new ComputerPlayer("Jared", board.getCellAt(15, 21), Board.convertColor("red"));	
+		Shark = new HumanPlayer("Sharkisha", board.getCellAt(10, 10), Board.convertColor("yellow"));	
 		
 		//Room cards for testins
 		PingPongRoom = new Card("Ping Pong Room", CardType.ROOM);

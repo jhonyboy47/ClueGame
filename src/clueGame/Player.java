@@ -10,6 +10,8 @@ public class Player {
 	private Integer row;
 	private Integer column;
 	private Color color;
+	private BoardCell currentCell;
+	
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	
 	
@@ -25,11 +27,11 @@ public class Player {
 		return myCards;
 	}
 	
-	public Player(String playerName, Integer row, Integer column, Color color) {
+	public Player(String playerName, BoardCell startingCell, Color color) {
 		super();
 		this.playerName = playerName;
-		this.row = row;
-		this.column = column;
+		this.row = startingCell.getRow();
+		this.column = startingCell.getColumn();
 		this.color = color;
 	}
 
