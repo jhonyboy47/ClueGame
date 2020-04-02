@@ -596,6 +596,14 @@ public class Board {
 		
 	}
 
+	
+	public boolean checkAccusation(Solution accusation) {
+		
+		if(accusation != solution) {
+			return false;
+		}
+		return true;
+	}
 	public static Color convertColor(String strColor) {
 		 Color color;
 		 try {

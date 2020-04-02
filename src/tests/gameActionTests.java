@@ -56,10 +56,11 @@ public class gameActionTests {
 		location = testComputerPlayer.pickLocation(targetSet);
 		
 		assertTrue(targetSet.contains(location));
-
-
-
-		
+	}
+	
+	@Test
+	public void TestMakeAccusation() {
+		assertEquals(1, 2);
 	}
 	
 }
