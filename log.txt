@@ -1,0 +1,523 @@
+commit c677260a95ba9f6f5bab8011272ee29e12746484
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Fri Apr 3 18:04:44 2020 -0500
+
+    Passing Test for 'Handling Suggestion' Test
+
+commit 7f93fae1118075db6e1ad7b77d2df72938f9f37c
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Fri Apr 3 18:01:46 2020 -0500
+
+    Passing test for
+    
+    `
+    
+    ''/git pull             //Room matches current location test
+    
+     li-oq
+    q
+    :q
+
+commit 34037ff90226ad91193a47108e9f3db3fced8ba3
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Apr 3 16:26:12 2020 -0600
+
+    failing handle suggestion - Board tests
+
+commit efa4df074ec61df594d88f0946aada4d6031e728
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Apr 2 22:30:48 2020 -0500
+
+    Passing 'Disprove suggestion - Player' tests
+
+commit c93371144b8ffc21884ca2c0fc603f2f5a4d6a90
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 2 20:32:41 2020 -0600
+
+    Failing Disprove suggestion tests
+
+commit a445191c11a1e7f25d555fbbed3586596df6da2b
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 2 19:04:32 2020 -0600
+
+    Passing Create suggestion tests
+
+commit fa96f9940865474dcc21188ca9130bfb3338681d
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Apr 2 18:52:29 2020 -0500
+
+    Failing 'Create suggestion' Tests
+
+commit f33dbfb09fca0d40602f3fa358ad7a62f0e6ec25
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Apr 2 13:17:02 2020 -0500
+
+    Passing Test's for 'Make and accusation'
+
+commit 9bba305664999e49ab9946307532e88d462b2e84
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 1 18:30:49 2020 -0600
+
+    Failing test for making a accusation
+
+commit 5e7475452b95a05a2fc4f8f5e8260ee147575377
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Wed Apr 1 19:12:15 2020 -0500
+
+    Passing 'Selecting a target location - Computer Player'
+
+commit d3f4b8164291763cd467c0f085bfc439b5412474
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 1 17:47:04 2020 -0600
+
+    Writing code for selecting a target
+
+commit 444925158612e601dc77219d2ee29a793954380d
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Wed Apr 1 18:20:32 2020 -0500
+
+    Failing test's for selecting a target
+
+commit 3a05eb7db9ad5863addc60d58a7105a80216140f
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 1 16:35:19 2020 -0600
+
+    Updated old test so that they work with the newer code
+
+commit 92fef2c7fc2e20a2ce23d81d96e062daadbd15a0
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Mar 30 18:12:55 2020 -0600
+
+    Dealing cards test passess
+
+commit aeb544ff3d41776a4b8d1f32cb4e589fd234573d
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Mar 30 18:04:56 2020 -0600
+
+    Dealing cards failing test
+
+commit e686671f5b2fddde143036a166aa9a0dcc0e76b9
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Mon Mar 30 17:34:46 2020 -0500
+
+    Added test's for checking that the right amount of card types are generated
+
+commit b4bb5bac24376afb8aba1e3c1ab3c0486f4761b2
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Mar 30 16:10:01 2020 -0600
+
+    Updated tests to use csv files instead of txt files
+
+commit d5eb70047c42c2db2c6c626875a6b42176161bc9
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Mar 30 13:32:17 2020 -0600
+
+    Added some more helpful comments
+
+commit 545dc416966502a2d4562146c2c6081db68314c5
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Mar 30 13:13:15 2020 -0600
+
+    Create Cards Test now passes
+
+commit 6f0560fadd56b156ef2fb45dc7a879a23d758f8d
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Mar 28 20:19:02 2020 -0500
+
+    Create Cards Failing Test
+
+commit 22d1c46af46c94484c406f5e9353315c68a3cb9d
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Mar 28 18:31:36 2020 -0600
+
+    Started adding stubs for loading/creating deck
+
+commit e38ee2ca24fc0d3d298379dafcfd263d72adb095
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Mar 28 19:02:49 2020 -0500
+
+    Finished implementing the load people test to pass
+
+commit 0855dad741957c8d46dcf5b6ca99e146749ed505
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Mar 28 17:48:35 2020 -0600
+
+    Loading people tests now pass
+
+commit be7c53a2894087b27384121bc144201181d1a466
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Mar 28 18:14:36 2020 -0500
+
+    Expanded on load people test implemenatation to pass
+
+commit 07dbc3894eaab866e7cb010e836c1dab1349a325
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Mar 28 16:57:20 2020 -0600
+
+    Added to LoadPlayersConfig in Board
+
+commit 47e54abd28c1397f667ed4376a37755ef3dc0634
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Mar 28 17:28:40 2020 -0500
+
+    Failing test for loading people
+
+commit c82f5bf6449dc4c9fe759f91209b9063837a3be9
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Mar 28 16:15:00 2020 -0600
+
+    Added more to @Before inside gameSetupTests
+
+commit b390530d2e39ee4c50784bd6ed68eb5ddf9e58e0
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Mar 28 16:51:27 2020 -0500
+
+    Added gameSetupTests class and Solution class
+
+commit 8dfe40d1bd34a75018a3e07719b59338e30fe840
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Mar 28 15:29:01 2020 -0600
+
+    Added classes/enum: Card, CardType, ComputerPlayer, HumanPlayer, Player
+
+commit a61d361cc4b949983e9f2fb978e4383101c95a62
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 18:10:03 2020 -0600
+
+    Updated C17A2_TextFile.txt
+
+commit 2be08a08e2acf716f118ce72cbbd6fc987d4c969
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 18:06:11 2020 -0600
+
+    We were not using autoboxing correctly for setting the room initial, so we fixed it
+
+commit 27f4915b171c82db860d75f6c6e8f2f5a1d3f022
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:53:37 2020 -0600
+
+    Added commit to explain why we needed tempSetCopy because we can't iterate through a set and delete from that set at the same time
+
+commit 9879a6be5036abc26ad78f3d121dd2e0442f00dc
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:52:16 2020 -0600
+
+    Changed the name of a variable, tempSet2, inside calcAdjances so that its clearer what the variable is for
+
+commit c7c95e746fa9c6eda9ff01c09e05dc7066df4d9b
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:50:18 2020 -0600
+
+    Updated the comments inside calcAdjancies so that they are more descriptive
+
+commit 02146d6e0891ded958abf1b83277cafcd2ccb285
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:48:45 2020 -0600
+
+    Added e.getMessage() inside of the initialize method inside the board class so that the error is clearer
+
+commit 497603981284362e9baad4c951f191b2d7a118b8
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:46:35 2020 -0600
+
+    Moved the allocation of space for boards instance variables into the constructor so the code is cleaner
+
+commit 2240c6174d3f7f59b9c71d3b72bc08c9cc7ed8a5
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:41:54 2020 -0600
+
+    Reduced the amount of import statements in Board.java by using 'import java.util.*'
+
+commit 773a77775fe522f3949505f59616f428defe9c65
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Mar 13 17:24:35 2020 -0600
+
+    Refactored calcTargets into to two methods so its easier to understand what is happening
+
+commit 6976995dabff9cee326ec90ea85f671d0514f9af
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Fri Mar 13 02:11:13 2020 -0600
+
+    Added comment's to outline the fact that we are using tempSetCopy since you can't itterate through tempSet while you delete values in it
+
+commit 039570f45817b955351a3fc8e149b9a3bea14998
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Fri Mar 13 02:09:19 2020 -0600
+
+    Added a more meaningfull name to the set that we used to itterate through while deleting items from another
+
+commit 764f4edc1f1d69efbb6803a0f2fc1337dbfa5a4b
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Mar 12 18:37:40 2020 -0600
+
+    Added more descriptive comments to calcAdjacencies functions had lazy comments before this refactoring
+
+commit 11d9aa9da115bdf6524e2bc7010e3f1cf55d29b5
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Mar 12 18:23:53 2020 -0600
+
+    Allocated space for the collections/DataStructures within the board constructor instead of at the head of our file
+
+commit 5dd3f49ada33ad4e388b2190834e2c004588982d
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Mar 12 12:01:30 2020 -0600
+
+    Reduced the amount of import statements by using 'import java.util.*'
+
+commit 02d4c0ca57cf838339492019722b126a63d3f65e
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Mar 1 19:50:03 2020 -0700
+
+    Updated .gitignore for gitlog.txt
+
+commit 59cdbf0941797df9c4ea2a0da08634e05848caf8
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Mar 1 19:44:17 2020 -0700
+
+    Added comments to calcTargets
+
+commit ead9964e120648f952af2b115e8b16ae09895609
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Mar 1 19:28:51 2020 -0700
+
+    Finished calcAdjacency, calcTargets and commented the calculateAdjacency function
+
+commit 1f28f913829da1bc879caaea222479782280499d
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Mar 1 17:00:11 2020 -0700
+
+    Passing all adjacency tests
+
+commit 8540a3f762b792d5d693820cb945812f77be864e
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 29 20:40:43 2020 -0700
+
+    Finalized color coded spreadsheet for C14A1
+
+commit 4b526920af830bca6f17f0ca8d1955cf11516709
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 29 20:37:56 2020 -0700
+
+    finalized all stub failling test for C14A1
+
+commit 23b99606ba3f8df7c1a23e40bb8b045163af265a
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 29 19:11:51 2020 -0700
+
+    Color Coded Adjacency Test on Spreadsheet
+
+commit 8fcaead5934b7757642dcf993f9538b61ddb4cdb
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 29 19:09:31 2020 -0700
+
+    Wrote adjacency tests for board
+
+commit 71696731c9e42201afc739677fed1de5addeff6a
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 29 17:57:54 2020 -0700
+
+    Added CTest_BoardAdjTargetTests.java and added stubs to board so that the tests run but fail
+
+commit 4c424b7079200037eb89100bf5eb015c4abf8ed8
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 27 18:55:36 2020 -0700
+
+    Added even more comments
+
+commit 1c98942e73f2a4f98333f9ab15670b7bce928539
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 27 18:52:52 2020 -0700
+
+    Finished C13A2 and added more comments
+
+commit ce33bee929080e1a2185154341fc3517dc934252
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 27 17:58:58 2020 -0700
+
+    Expanded board class to include no stubs
+
+commit 147f39943c78b20856d0682dd50461737abbd323
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 27 12:24:04 2020 -0700
+
+    Expanded the loadRoomConfig method in the board class and made custom exceptions for each case of an improper formatted config file
+
+commit f799c7e97a5be2672f6e2323fd613796624d2e6c
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Tue Feb 25 15:04:47 2020 -0700
+
+    Added author comments to files
+
+commit bc7fccf951308b2c857f4cf82648ff1dbc6df20f
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Tue Feb 25 15:01:32 2020 -0700
+
+    Finished tests and got failing tests that were desired
+
+commit b2e906e23630d03b12ba306eefac2fb16fbcae0a
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Tue Feb 25 13:55:16 2020 -0700
+
+    Started writing test's and created stubs
+
+commit 7322370e84c00ce8dba430595c3bbc7ee77d2d73
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Tue Feb 25 12:18:46 2020 -0700
+
+    Added BadConfigExceptions and Board
+
+commit 31554718a406042700dd23ad727f71e9ece572e4
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Tue Feb 25 11:38:40 2020 -0700
+
+    Added Baldwin's tests and his data files
+
+commit 582e876e6001e5d92c7b913272a96cec23645bf6
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Feb 23 15:34:11 2020 -0700
+
+    Final verison with more comments
+
+commit c8343240303c50bc5599414828f88adb414a1c97
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 18:57:21 2020 -0700
+
+    Fixed tests, all tests pass when they should
+
+commit 76139b371cafcbd4df0ca5985d75f3c77f004b58
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 18:47:49 2020 -0700
+
+    Improved calcTargets alglorithm
+
+commit 80e0d788f707d1c426e6ea81d5b7f0824899ab6c
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 18:16:21 2020 -0700
+
+    Added code to see if tempCell is in visited set
+
+commit e95a19f4293d6788f22540dbd93382699328cbcd
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 18:03:58 2020 -0700
+
+    Added code to further figure out how calcTargets is going to work
+
+commit e32a2430f0eb04ae29f7fae757c465d99c88709d
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 17:39:14 2020 -0700
+
+    Fixed calcTargets tests, had extra assertEquals
+
+commit 4461dcb27ef983178f675cfa2708b86b8808cfe8
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 17:32:44 2020 -0700
+
+    Modified calcAdjancces so it correctly fills the ajdMtx
+
+commit 489e09b3adf7e4d9c5a5b7db636666f748868805
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 17:12:39 2020 -0700
+
+    Modified calcAdjances so it updates adjMtx
+
+commit 113e776ebf8d9ecb08765d02eabdeae8560d36e8
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 17:04:44 2020 -0700
+
+    CalcAdjacencies Finalized
+
+commit f3c4f3e9eeadfe46effd6346b21dd235db839928
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 16:38:50 2020 -0700
+
+    Adding some target tests and fixed a bug in IntBoard
+
+commit d2ac6d266f06c7d7dbdcf5c814cb856c762afa3f
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 16:33:32 2020 -0700
+
+    Further implementation of the calcAdjacencies left boarder and top boarder
+
+commit d00d5457f03f1727783e67d52de3c2b08e47f7ff
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 16:12:16 2020 -0700
+
+    CalcAdj implementation check
+
+commit f949df6b48029cd67918129e07db64f87f8ec399
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 16:00:43 2020 -0700
+
+    Starting to figure ou thow calcAdjacencies work
+
+commit 241b862401cb1d9752645a287c7eb4be7cd55efa
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 15:23:45 2020 -0700
+
+    Added content to getAdjList
+
+commit 59cbcb4ada7b9059bb9ee4cd8ac47164371fdd5e
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 15:10:22 2020 -0700
+
+    Modified IntBoard so getAdjList takes in a variable of type boardcell
+
+commit 20a42fbd820381af165c710bedde1257a652b19b
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 15:03:08 2020 -0700
+
+    Modified IntBoardTest and IntBoard
+
+commit a8caddfab027b1123d048a154a9a83159e76f3c1
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 14:54:21 2020 -0700
+
+    Continuing to write tests
+
+commit 68987b945ce53cee40aa81038409d774aaaae770
+Author: Michael Crews <crews@mines.edu>
+Date:   Sat Feb 22 14:49:12 2020 -0700
+
+    Starting writing tests
+
+commit 9b44e087d3cd57ca001ccbca16be916af4347a79
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 14:46:49 2020 -0700
+
+    Expirement package creation pt2
+
+commit fadeba6ad1b5ccc55e4d1e1bc1ce444ffe24344d
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Sat Feb 22 14:43:16 2020 -0700
+
+    Expirement package made
+
+commit 19922840a617809f4f13955c58cb2cb4b2819662
+Author: Jhonathan Malagon <malagon@mines.edu>
+Date:   Thu Feb 20 13:05:24 2020 -0700
+
+    First commit with BoardCell Class created
+
+commit 54d8c338b3d48819f793476bc0231be4e800cee3
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 20 12:41:04 2020 -0700
+
+    Created packages
+
+commit 79ff1ea369daf3a1af1cccdf749bcbf5742f9f23
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 20 12:32:46 2020 -0700
+
+    Added board spreadsheet
+
+commit 418f464314d8a880e614f2b8ae233c9bb49c946e
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Feb 20 11:45:44 2020 -0700
+
+    Added ClueRooms text file
+
+commit 4389230e2c925fe38fb5f11aed9fe24a947d7f73
+Author: jhonyboy47 <57574852+jhonyboy47@users.noreply.github.com>
+Date:   Thu Feb 20 11:20:52 2020 -0700
+
+    Initial commit
