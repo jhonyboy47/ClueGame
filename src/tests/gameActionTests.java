@@ -12,6 +12,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.ComputerPlayer;
 import clueGame.Solution;
+import clueGame.Suggestion;
 
 public class gameActionTests {
 	
@@ -83,6 +84,61 @@ public class gameActionTests {
 		     testSolution = new Solution(solution.getPerson(),solution.getWeapon(),"wrongRoom");
 		     assertTrue(!board.checkAccusation(testSolution));
 		     
+		
+	}
+	
+	@Test
+	public void CreateSuggestionTest() {
+		ComputerPlayer player = new ComputerPlayer();
+		
+		ArrayList<String> unSeenPersonCards = new ArrayList<String>();
+		unSeenPersonCards.add("Bob");
+		unSeenPersonCards.add("Shark");
+		player.setSeenPersonCards(unSeenPersonCards);
+		
+		ArrayList<String> unSeenWeaponCards = new ArrayList<String>();
+		unSeenWeaponCards.add("Pillow");
+		unSeenWeaponCards.add("Car");
+		player.setSeenWeaponsCards(unSeenWeaponCards);
+		
+		Suggestion suggestion = player.createSuggestion(board.getCellAt(5, 18));
+		
+		assertEquals('M', suggestion.room);
+		
+		int bobCounter = 0;
+		int sharkCounter = 0;
+		int pillowCounter = 0;
+		int carCounter = 0;
+		for(int i = 0; i < 500; i++) {
+			suggestion = player.createSuggestion(board.getCellAt(5, 18));
+			if(suggestion.person.equals("Bob")) {
+				bobCounter++;
+			} else if (suggestion.person.equals("Shark")) {
+				sharkCounter++;
+			}
+			if(suggestion.weapon.equals("Pillow")) {
+				pillowCounter++;
+			} else if(suggestion.weapon.equals("Car")) {
+				carCounter++;
+			}
+		}
+		
+		assertEquals(bobCounter, 250, 50);
+		assertEquals(sharkCounter, 250, 50);
+		assertEquals(pillowCounter, 250, 50);
+		assertEquals(carCounter, 250, 50);
+		
+		
+		unSeenPersonCards.remove("Shark");
+		unSeenWeaponCards.remove("Car");
+		
+		player.setSeenPersonCards(unSeenPersonCards);
+		player.setSeenWeaponsCards(unSeenWeaponCards);
+		
+		suggestion = player.createSuggestion(board.getCellAt(5, 18));
+		
+		assertEquals("Bob", suggestion.person);
+		assertEquals("Pillow", suggestion.weapon);
 		
 	}
 	

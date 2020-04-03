@@ -6,14 +6,27 @@ import java.util.*;
 
 public class ComputerPlayer extends Player{
 	private Set<Character> visitedRooms = new HashSet<Character>();
-	
+	private static ArrayList<String> unSeenWeaponCards;
+	private static ArrayList<String> unSeenPersonCards;
 
 	public ComputerPlayer() {
 		
 	}
 	
+	
+	
+	// For testing
+	public void setSeenWeaponsCards(ArrayList<String> seenWeapons) {
+		unSeenWeaponCards = seenWeapons;
+	}
+	public void setSeenPersonCards(ArrayList<String> seenPeople) {
+		unSeenPersonCards = seenPeople;
+	}
+	
+	
+	
 	// visited list
-	public ComputerPlayer(String playerName,BoardCell startingCell, Color color) {
+	public ComputerPlayer(String playerName, BoardCell startingCell, Color color) {
 		super(playerName, startingCell, color);
 	}
 	public BoardCell pickLocation(Set<BoardCell> targets) {
@@ -44,7 +57,25 @@ public class ComputerPlayer extends Player{
 		
 	}
 	
-	public void createSuggestion() {
+	public Suggestion createSuggestion(BoardCell currentCell){
+		try {
+			if(!currentCell.isRoom()) {
+				throw new Exception("The input boardCell is not a room which is not valid for making a suggestion");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		Collections.shuffle(unSeenPersonCards);
+		Collections.shuffle(unSeenWeaponCards);
+		
+		Suggestion suggestion = new Suggestion(currentCell.getInitial(), unSeenWeaponCards.get(0), unSeenPersonCards.get(0));
+		
+
+		return suggestion;
+		
+		
 		
 	}
 }

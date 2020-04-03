@@ -14,6 +14,7 @@ import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Suggestion;
 
 
 public class gameSetupTests {
@@ -188,4 +189,5 @@ public class gameSetupTests {
 		assertEquals(13, overallCardCount);
 		
 	}
+	
 }
