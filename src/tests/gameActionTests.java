@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.Solution;
 import clueGame.Suggestion;
@@ -90,10 +92,12 @@ public class gameActionTests {
 	@Test
 	public void CreateSuggestionTest() {
 		ComputerPlayer player = new ComputerPlayer();
+		player.changeMyCards(new Card("Jared", CardType.PERSON));
 		
 		ArrayList<String> unSeenPersonCards = new ArrayList<String>();
 		unSeenPersonCards.add("Bob");
 		unSeenPersonCards.add("Shark");
+		unSeenPersonCards.add("Jared");
 		player.setSeenPersonCards(unSeenPersonCards);
 		
 		ArrayList<String> unSeenWeaponCards = new ArrayList<String>();
@@ -139,6 +143,11 @@ public class gameActionTests {
 		
 		assertEquals("Bob", suggestion.person);
 		assertEquals("Pillow", suggestion.weapon);
+	}
+	
+	
+	@Test
+	public void TestDisproveSuggestion() {
 		
 	}
 	

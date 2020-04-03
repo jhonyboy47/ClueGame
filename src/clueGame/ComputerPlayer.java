@@ -65,12 +65,18 @@ public class ComputerPlayer extends Player{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	
+		ArrayList<String> tempUnSeenPersonCards = new ArrayList(unSeenPersonCards);
+		ArrayList<String> tempUnSeenWeaponCards = new ArrayList(unSeenWeaponCards);
+		for(Card card : myCards) {
+			tempUnSeenPersonCards.remove(card.getCardName());
+			tempUnSeenWeaponCards.remove(card.getCardName());
+		}
+	
+		Collections.shuffle(tempUnSeenPersonCards);
+		Collections.shuffle(tempUnSeenWeaponCards);
 		
-		
-		Collections.shuffle(unSeenPersonCards);
-		Collections.shuffle(unSeenWeaponCards);
-		
-		Suggestion suggestion = new Suggestion(currentCell.getInitial(), unSeenWeaponCards.get(0), unSeenPersonCards.get(0));
+		Suggestion suggestion = new Suggestion(currentCell.getInitial(), tempUnSeenWeaponCards.get(0), tempUnSeenPersonCards.get(0));
 		
 
 		return suggestion;

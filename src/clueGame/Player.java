@@ -2,7 +2,9 @@ package clueGame;
 ///Authors: Jhonathan Malagon and Michael Crews
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Player {
@@ -12,7 +14,7 @@ public class Player {
 	private Color color;
 	private BoardCell currentCell;
 	
-	private ArrayList<Card> myCards = new ArrayList<Card>();
+	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	
 	
 	public Player() {
@@ -27,6 +29,11 @@ public class Player {
 		return myCards;
 	}
 	
+	public void changeMyCards(Card card) {
+		myCards.clear();
+		myCards.add(card);
+	}
+	
 	public Player(String playerName, BoardCell startingCell, Color color) {
 		super();
 		this.playerName = playerName;
@@ -35,9 +42,22 @@ public class Player {
 		this.color = color;
 	}
 
-	public Card disproveSuggestion(Solution suggestion) {
-		return null;
-		
+	public Card disproveSuggestion(Suggestion suggestion, Board board) {
+		ArrayList<Card> tempCardList = new ArrayList<Card>();
+		Map<Character, String> legend = board.getLegend();
+		for(Card card : myCards) {
+			String cardName = card.getCardName();
+			if(legend.get(suggestion.room).equals(cardName) || cardName.equals(suggestion.person) || cardName.equals(suggestion.weapon)) {
+				tempCardList.add(card);
+			}
+			
+		}
+		if(tempCardList.size() == 0) {
+			return null;
+		}
+		Collections.shuffle(tempCardList);
+		System.out.println(tempCardList.get(0));
+		return tempCardList.get(0);
 	}
 
 	public String getPlayerName() {
