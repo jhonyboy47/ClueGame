@@ -1,3 +1,5 @@
+// Authors: Michael Crews and Jhon Malagon
+
 package tests;
 
 import static org.junit.Assert.assertEquals;
@@ -93,6 +95,7 @@ public class gameActionTests {
 	
 	@Test
 	public void CreateSuggestionTest() {
+		
 		ComputerPlayer player = new ComputerPlayer();
 		player.changeMyCards(new Card("Jared", CardType.PERSON));
 		
@@ -102,6 +105,7 @@ public class gameActionTests {
 		unSeenPersonCards.add("Jared");
 		player.setSeenPersonCards(unSeenPersonCards);
 		
+		
 		ArrayList<String> unSeenWeaponCards = new ArrayList<String>();
 		unSeenWeaponCards.add("Pillow");
 		unSeenWeaponCards.add("Car");
@@ -109,12 +113,16 @@ public class gameActionTests {
 		
 		Suggestion suggestion = player.createSuggestion(board.getCellAt(5, 18));
 		
+		//Room matches current location test
 		assertEquals('M', suggestion.room);
 		
+
 		int bobCounter = 0;
 		int sharkCounter = 0;
 		int pillowCounter = 0;
 		int carCounter = 0;
+		
+		//Used to ensured there was an even randomization of results for suggestions
 		for(int i = 0; i < 500; i++) {
 			suggestion = player.createSuggestion(board.getCellAt(5, 18));
 			if(suggestion.person.equals("Bob")) {
@@ -129,8 +137,11 @@ public class gameActionTests {
 			}
 		}
 		
+		//If multiple persons not seen, one of them is randomly selected
 		assertEquals(bobCounter, 250, 50);
 		assertEquals(sharkCounter, 250, 50);
+		
+		//If multiple weapons not seen, one of them is randomly selected
 		assertEquals(pillowCounter, 250, 50);
 		assertEquals(carCounter, 250, 50);
 		
@@ -143,7 +154,10 @@ public class gameActionTests {
 		
 		suggestion = player.createSuggestion(board.getCellAt(5, 18));
 		
+		//One person not seen, it's selected test
 		assertEquals("Bob", suggestion.person);
+
+		//If only one weapon not seen, it's selected test
 		assertEquals("Pillow", suggestion.weapon);
 	}
 	
@@ -191,6 +205,8 @@ public class gameActionTests {
 	
 	@Test
 	public void handleSuggestionTest() {
+		
+		//Test setup 
 		Card sharkishaCard = new Card("Sharkisha", CardType.PERSON);
 		Card bobCard = new Card("Bob", CardType.PERSON);
 		Card gameRoomCard = new Card("Game Room", CardType.ROOM);
@@ -214,6 +230,7 @@ public class gameActionTests {
 		
 		humanPlayer.addMyCards(libraryRoom);
 		humanPlayer.addMyCards(gummyBearsCard);
+		//End of test set up
 		
 		
 		// Suggestion no one can disprove returns null

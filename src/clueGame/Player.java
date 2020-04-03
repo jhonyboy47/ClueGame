@@ -42,9 +42,16 @@ public class Player {
 		this.color = color;
 	}
 
+	
 	public Card disproveSuggestion(Suggestion suggestion, Board board) {
 		ArrayList<Card> tempCardList = new ArrayList<Card>();
+		
+		//Legend is used to convert back and forth from a character 
+		//that maps to a room name 
 		Map<Character, String> legend = board.getLegend();
+		
+		//Here player checks their cards with the suggestion made and a list
+		//Is populated based off of what a player may show to disprove suggestion
 		for(Card card : myCards) {
 			String cardName = card.getCardName();
 			
@@ -53,9 +60,13 @@ public class Player {
 			}
 			
 		}
+		
+		//If player can't disprove we return null
 		if(tempCardList.size() == 0) {
 			return null;
 		}
+		
+		//picks a random card from "disprovable" list
 		Collections.shuffle(tempCardList);
 		return tempCardList.get(0);
 	}

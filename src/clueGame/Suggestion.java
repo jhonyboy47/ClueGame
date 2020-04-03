@@ -1,5 +1,9 @@
+// Authors: Michael Crews and Jhon Malagon
+
 package clueGame;
 
+
+//Suggestion class each player calls on when making a suggestion
 public class Suggestion {
 	public char room;
 	public String weapon, person;

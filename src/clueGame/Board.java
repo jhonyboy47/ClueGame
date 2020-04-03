@@ -604,7 +604,7 @@ public class Board {
 
 	
 	public boolean checkAccusation(Solution accusation) {
-		
+		//Checks if accusation is valid
 		if(!accusation.equals(solution)) {
 			return false;
 		}
@@ -615,8 +615,12 @@ public class Board {
 	public Card handleSuggestion(ArrayList<Player> queryPlayers, Suggestion suggestion) {
 		
 		Card disproveCard;
+		
+		//Goes through players except accuser to check if they can disprove the suggestion
 		for(Player player : queryPlayers) {
 			disproveCard = player.disproveSuggestion(suggestion, theInstance);
+			
+			//If 'disproveCard' is null current player can't disprove
 			if(disproveCard != null) {
 				return disproveCard;
 			}
