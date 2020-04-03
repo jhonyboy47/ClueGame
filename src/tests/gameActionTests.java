@@ -13,6 +13,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 import clueGame.Suggestion;
@@ -185,8 +186,95 @@ public class gameActionTests {
 		
 		assertEquals(null, testPlayer.disproveSuggestion(testSuggestion, board));
 		
-		
 			
+	}
+	
+	@Test
+	public void handleSuggestionTest() {
+		Card sharkishaCard = new Card("Sharkisha", CardType.PERSON);
+		Card bobCard = new Card("Bob", CardType.PERSON);
+		Card gameRoomCard = new Card("Game Room", CardType.ROOM);
+		Card pingPongRoomCard = new Card("Ping Pong Room", CardType.ROOM);
+		Card libraryRoom = new Card("Library", CardType.ROOM);
+		Card carCard = new Card("Car", CardType.WEAPON);
+		Card pillowCard = new Card("Pillow", CardType.WEAPON);
+		Card gummyBearsCard = new Card("Gummy Bears", CardType.WEAPON);
+		
+		ComputerPlayer computerPlayer1 = new ComputerPlayer();
+		ComputerPlayer computerPlayer2 = new ComputerPlayer();
+		HumanPlayer humanPlayer = new HumanPlayer();
+		
+		computerPlayer1.addMyCards(sharkishaCard);
+		computerPlayer1.addMyCards(gameRoomCard);
+		computerPlayer1.addMyCards(carCard);
+		
+		computerPlayer2.addMyCards(bobCard);
+		computerPlayer2.addMyCards(pingPongRoomCard);
+		computerPlayer2.addMyCards(pillowCard);
+		
+		humanPlayer.addMyCards(libraryRoom);
+		humanPlayer.addMyCards(gummyBearsCard);
+		
+		
+		// Suggestion no one can disprove returns null
+		// Computer Player 1 is the accuser
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		playerList.add(humanPlayer);
+		playerList.add(computerPlayer2);
+		
+		Suggestion suggestion = new Suggestion('J', "Marshmellow", "Jared");
+		
+		Card responseCard = board.handleSuggestion(playerList,suggestion);
+		
+		assertEquals(null, responseCard);
+		
+		// Suggestion only accusing player can disprove returns null
+		// Computer Player 1 is the accuser
+		suggestion = new Suggestion('G', "Marshmellow", "Jared");
+		
+		responseCard = board.handleSuggestion(playerList,suggestion);
+		
+		assertEquals(null, responseCard);
+		
+		
+		// Suggestion only human can disprove, but human is accuser, returns null
+		// human player is the accuser
+		playerList.clear();
+		playerList.add(computerPlayer1);
+		playerList.add(computerPlayer2);
+		suggestion = new Suggestion('L', "Marshmellow", "Jared");
+	
+		responseCard = board.handleSuggestion(playerList,suggestion);
+		
+		assertEquals(null, responseCard);
+		
+		// Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
+		// Computer player 1 is the accuser
+		playerList.clear();
+		playerList.add(computerPlayer2);
+		playerList.add(humanPlayer);
+		
+		responseCard = board.handleSuggestion(playerList,suggestion);
+		
+		assertEquals(libraryRoom, responseCard);
+		
+		// Suggestion that human and another player can disprove, other player is next in list, ensure other player returns answer
+		// Computer player 1 is the accuser
+		suggestion = new Suggestion('L', "Pillow", "Jared");
+		
+		responseCard = board.handleSuggestion(playerList, suggestion);
+		
+		assertEquals(pillowCard, responseCard);
+		
+		// Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
+		// Human player is the accuser
+		playerList.clear();
+		playerList.add(computerPlayer1);
+		playerList.add(computerPlayer2);
+		suggestion = new Suggestion('G', "Pillow", "Jared");
+		responseCard = board.handleSuggestion(playerList, suggestion);
+		assertEquals(gameRoomCard, responseCard);
+	
 	}
 	
 }

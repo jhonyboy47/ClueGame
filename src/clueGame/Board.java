@@ -610,6 +610,22 @@ public class Board {
 		}
 		return true;
 	}
+	
+	
+	public Card handleSuggestion(ArrayList<Player> queryPlayers, Suggestion suggestion) {
+		
+		Card disproveCard;
+		for(Player player : queryPlayers) {
+			disproveCard = player.disproveSuggestion(suggestion, theInstance);
+			if(disproveCard != null) {
+				return disproveCard;
+			}
+		}
+		
+		
+		return null;
+	}
+	
 	public static Color convertColor(String strColor) {
 		 Color color;
 		 try {

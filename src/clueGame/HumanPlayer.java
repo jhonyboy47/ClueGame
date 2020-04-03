@@ -4,7 +4,11 @@ package clueGame;
 import java.awt.Color;
 
 public class HumanPlayer extends Player{
+	public HumanPlayer() {
+		
+	}
 	public HumanPlayer(String playerName, BoardCell startingCell, Color color) {
 		super(playerName,startingCell, color);
 	}
+
 }

@@ -47,7 +47,7 @@ public class Player {
 		Map<Character, String> legend = board.getLegend();
 		for(Card card : myCards) {
 			String cardName = card.getCardName();
-
+			
 			if(legend.get(suggestion.room).equals(cardName) || cardName.equals(suggestion.person) || cardName.equals(suggestion.weapon)) {
 				tempCardList.add(card);
 			}
