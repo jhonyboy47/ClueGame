@@ -13,6 +13,7 @@ import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.Player;
 import clueGame.Solution;
 import clueGame.Suggestion;
 
@@ -145,10 +146,47 @@ public class gameActionTests {
 		assertEquals("Pillow", suggestion.weapon);
 	}
 	
-	
 	@Test
 	public void TestDisproveSuggestion() {
 		
+		//If player has only one matching card it should be returned
+		Player testPlayer = new Player();
+		Card weaponCard = new Card("Gummy Bears", CardType.WEAPON);
+		Card roomCard = new Card("Jesus Room", CardType.ROOM);
+		testPlayer.addMyCards(roomCard);
+		testPlayer.addMyCards(weaponCard);
+		
+		Suggestion testSuggestion = new Suggestion('L',"Gummy Bears", "Shark");
+		
+		assertEquals(weaponCard, testPlayer.disproveSuggestion(testSuggestion, board));
+		
+		//If players has >1 matching card, returned card should be chosen randomly
+		testSuggestion = new Suggestion('J',"Gummy Bears", "Bob");
+		
+		int gummyCounter = 0, jesusCounter = 0;
+		// System.out.println(testPlayer.getMyCards());
+		for (int i = 0; i < 500; i++) {
+			Card disproveCard = testPlayer.disproveSuggestion(testSuggestion, board);
+			if (disproveCard.equals(weaponCard) ) {
+				gummyCounter++;
+			}
+			else if (disproveCard.equals(roomCard) ) {
+				jesusCounter++;
+			}
+			
+		}
+		
+		assertEquals(250,gummyCounter, 50);
+		assertEquals(250, jesusCounter, 50);
+		
+		
+		//If player has no matching cards, null is returned
+		testSuggestion = new Suggestion('K',"Pillow", "Bob");
+		
+		assertEquals(null, testPlayer.disproveSuggestion(testSuggestion, board));
+		
+		
+			
 	}
 	
 }
