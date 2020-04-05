@@ -254,6 +254,7 @@ public class C14A1_Malagon_Crews_BoardAdjTargetTests {
 		//Shortcut case to get into a door
 		board.calcTargets(1,17, 2);
 		targetList= board.getTargets();
+		System.out.println(targetList);
 		assertEquals(2, targetList.size());
 		
 		assertTrue(targetList.contains(board.getCellAt(1,16)));

@@ -377,6 +377,9 @@ public class Board {
 					targets.add(cell);
 				
 				} else {
+					// Set firstCall to false because the first call of calculate targets has been completed
+					firstCall = false;
+					
 					// Recursive call of the calcTargets because pathlength is not 1 yet
 					findAllTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
 				}
@@ -384,8 +387,6 @@ public class Board {
 				
 			}
 		}
-		// Set firstCall to false because the first call of calculate targets has been completed
-		firstCall = false;
 	}
 	
 	public Set<BoardCell> getTargets(){
