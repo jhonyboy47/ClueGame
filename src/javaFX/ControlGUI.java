@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -39,6 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
@@ -209,8 +211,19 @@ public class ControlGUI extends Application{
 	    pane.setLeft(dieRollGrid);
 	    pane.setCenter(guessGrid);
 		
+	    
+	    BorderPane bigPane = new BorderPane();
+	    
+	    bigPane.setBottom(pane);
+	    
+	    Circle circle = new Circle();
+	    circle.setRadius(100.0f); 
+	    bigPane.setTop(circle);
+	    
+	    
 	    // Create a scene and pass in pane and the correct dimensions for the scene 
-		Scene scene = new Scene(pane, 1000, 250);
+		Scene scene = new Scene(bigPane, 1000, 800);
+		
 		
 		// Set the window to the scene we just created
 		window.setScene(scene);
