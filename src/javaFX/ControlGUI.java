@@ -43,7 +43,7 @@ import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 
-public class javaFXStart extends Application{
+public class ControlGUI extends Application{
 	
 	
 	public static void main(String[] args) {
@@ -120,8 +120,8 @@ public class javaFXStart extends Application{
 		
 		// Use css to set a border color for the dieRollHbox
 		dieRollHbox.setStyle("-fx-border-color: gray");
-		
-		Label showDieRoll = new Label();
+	
+		Label showDieRoll = new Label("");
 		
 		showDieRoll.setMinSize(60, 0);
 		showDieRoll.setFont(new Font(20));
