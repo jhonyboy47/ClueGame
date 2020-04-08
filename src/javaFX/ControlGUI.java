@@ -38,9 +38,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
@@ -216,9 +219,41 @@ public class ControlGUI extends Application{
 	    
 	    bigPane.setBottom(pane);
 	    
+	    GridPane boardPane = new GridPane();
+	    boardPane.setHgap(100);
+	    boardPane.setVgap(100);
+	    boardPane.setPadding(new Insets(0, 30, 0, 20));
+	    
 	    Circle circle = new Circle();
 	    circle.setRadius(100.0f); 
-	    bigPane.setTop(circle);
+	    
+	    
+	    Rectangle box2 = new Rectangle(100,100);
+	    Region testRegion = new Region();
+	    testRegion.setStyle("-fx-background-color: black, red; -fx-background-insets: 0, 0 5 0 0; -fx-min-width: 100; -fx-min-height:100;");
+	    
+	    StackPane stackPane = new StackPane();
+	    Label helloLabel = new Label("Hello");
+	    helloLabel.setFont(new Font(100));
+	    
+	    stackPane.getChildren().addAll(testRegion, helloLabel);
+	    Rectangle box = new Rectangle(100,100);
+	    box.setStyle("-fx-fill: grey;");
+	   
+	    boardPane.add(stackPane, 0, 1);
+	    
+	    /*
+	    Region region = new Region();
+	    StackPane tempPane = new StackPane();
+	    tempPane.setStyle("-fx-border-color: grey blue red green; -fx-border-width : 10 10 10 10;");
+	    tempPane.getChildren().add(box);
+	    */
+	    // boardPane.add(tempPane, 0, 1);
+	    
+	    // region.setStyle("-fx-border-style: solid solid none solid; -fx-border-width: 5; -fx-border-color: red;");
+	    // boardPane.add(region, 2, 1);
+	    
+	    bigPane.setTop(boardPane);
 	    
 	    
 	    // Create a scene and pass in pane and the correct dimensions for the scene 
@@ -227,6 +262,12 @@ public class ControlGUI extends Application{
 		
 		// Set the window to the scene we just created
 		window.setScene(scene);
+		
+		
+		window.setMinWidth(1000);
+		window.setMinHeight(800);
+		
+		
 		// Show the window to the user
 		window.show();
 	}
