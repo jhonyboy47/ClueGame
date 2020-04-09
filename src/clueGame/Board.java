@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -458,6 +459,8 @@ public class Board {
 			Integer col = Integer.parseInt(lineArray[2]);
 			String stringColor = lineArray[3];
 			
+			
+			
 			// Convert color from name of color to RGB
 			Color color = convertColor(stringColor);
 			
@@ -474,11 +477,14 @@ public class Board {
 				tempPlayer = new ComputerPlayer(name, board[row][col],color);
 				players.add(tempPlayer);
 			}
+		
 			
 			// Error if humanOrComputer value is not "Human" or "Computer"
 			else {
 				throw new BadConfigFormatException("Error reading in player file:  must specify if player is computer or human ");
 			}
+			
+			tempPlayer.setStringColor(stringColor);
 			
 			//Adding person to deck
 			deck.add(new Card(name,CardType.PERSON));
@@ -771,6 +777,28 @@ public class Board {
 	    
 		
 	}
+	
+	public BorderPane drawPlayers(BorderPane pane) {
+		BorderPane pane2 = new BorderPane();
+	    
+	    Group group = new Group();
+	   
+	    group.getChildren().add(pane);
+	    
+	    
+	    
+	    for(Player player: players) {
+	    	System.out.println(player);
+	    	Circle circle = new Circle(player.getColumn()*25 + 12.5, player.getRow()*25 + 12.5, 10.5);
+	    	circle.setStyle(player.getColorStyle());
+	    	group.getChildren().add(circle);
+	    	
+	    }
+	    
+	    pane2.setTop(group);
+	    return pane2;
+	}
+	
 	public static Color convertColor(String strColor) {
 		 Color color;
 		 try {

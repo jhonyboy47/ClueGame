@@ -60,7 +60,7 @@ public class ClueGameStart extends Application{
 		board = Board.getInstance();
 		// Board board = Board.getInstance();
 		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.csv");	
-		board.setPlayersFile("ClueGamePlayers.csv");
+		board.setPlayersFile("NewClueGamePlayers.csv");
 		board.setWeaponsFile("ClueGameWeapons.csv");
 		board.initialize();
 		launch(args);
@@ -89,6 +89,9 @@ public class ClueGameStart extends Application{
 	    
 	    BorderPane pane2 = board.drawRoomNames(pane);
 	   
+	    
+	    
+	    pane2 = board.drawPlayers(pane2);
 	    
 	    pane2.setBottom(controlGUIPane);
 	    

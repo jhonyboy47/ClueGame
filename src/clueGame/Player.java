@@ -12,6 +12,7 @@ public class Player {
 	private Integer row;
 	private Integer column;
 	private Color color;
+	private String colorStyle;
 	private BoardCell currentCell;
 	
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
@@ -40,7 +41,20 @@ public class Player {
 		this.row = startingCell.getRow();
 		this.column = startingCell.getColumn();
 		this.color = color;
+		
 	}
+	
+	public void setStringColor(String colorName) {
+		this.colorStyle = "-fx-fill: " + colorName + "; -fx-stroke: black; -fx-stroke-width: 2;";
+	}
+	
+	public String getColorStyle() {
+		return colorStyle;
+	}
+	
+	
+	
+	
 
 	
 	public Card disproveSuggestion(Suggestion suggestion, Board board) {
