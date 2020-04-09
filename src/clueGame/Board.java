@@ -700,7 +700,9 @@ public class Board {
 	    	    
 	    	    String doorwayInsets = "";
 	    	    
-	    	    if(cell.isDoorway() && cell.getDoorDirection() == DoorDirection.LEFT) {
+	    	    if (!cell.isRoom()){
+	    			testRegion.setStyle("-fx-background-color: black, royalblue; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.LEFT) {
 	    	    	doorwayInsets = "0 0 0 3";	
 	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.RIGHT) {
 	    			doorwayInsets = "0 3 0 0";
@@ -708,15 +710,26 @@ public class Board {
 	    			doorwayInsets = "3 0 0 0";
 	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.DOWN) {
 	    			doorwayInsets = "0 0 3 0";
-	    		} else if (cell.isRoom()) {
-	    			testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
 	    		} else {
-	    			testRegion.setStyle("-fx-background-color: black, royalblue; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
-	    		}
+	    			testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+	    		} 
 	    	    
 	    	    if(cell.isDoorway()) {
 	    	    	testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, "+ doorwayInsets + "; -fx-min-width: 25; -fx-min-height:25;");
 	    	    }
+	    	    if(!cell.isRoom() || cell.isDoorway()) {
+	    	    	testRegion.setOnMouseEntered(e -> {
+		    	    	String determinedStyle1 = testRegion.getStyle();
+		    	    	testRegion.setStyle("-fx-background-color: yellow, red; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+		    	    	
+		    	    	testRegion.setOnMouseExited(e1 -> {
+		    	    		testRegion.setStyle(determinedStyle1);
+			    	    });
+			    	    
+		    	    });
+	    	    }
+	    	    
+	    	    
 	    	    boardPane.add(testRegion, col, row);
 	    	    
 	    	    
