@@ -6,7 +6,7 @@ public class BoardCell {
 	// Declare two instance variables that every boardcell has
 	int row, column;
 	char initial = ' ';
-	boolean walkway = false, room = false, doorWay = false;
+	boolean walkway = false, room = false, doorWay = false, displayNameBool = false;
 	DoorDirection direction = DoorDirection.NONE;
 	// This is a parameterized constructor for boardcell to pass in the row and column
 	public BoardCell(int row, int column) {
@@ -25,6 +25,13 @@ public class BoardCell {
 
 	public void setRoom(boolean room) {
 		this.room = room;
+	}
+	
+	public void setDisplayNameHere(boolean displayNameBool) {
+		this.displayNameBool = displayNameBool;
+	}
+	public boolean displayNameHere() {
+		return displayNameBool;
 	}
 	public boolean isWalkway() {
 		return walkway;

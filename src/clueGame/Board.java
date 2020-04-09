@@ -9,6 +9,53 @@ import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.WeakInvalidationListener;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotResult;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
+
+
 import clueGame.BoardCell;
 
 public class Board {
@@ -482,6 +529,7 @@ public class Board {
 			deck.add(tempCard);
 			}
 			
+			
 		}
 	}
 	
@@ -555,6 +603,8 @@ public class Board {
 					//N is the only invalid direction for a door thus anything else makes it a door
 					if(directionChar != 'N') {
 						tempBoardCell.setDoorWay(true);
+					} else {
+						tempBoardCell.setDisplayNameHere(true);
 					}
 					
 					// Sets direction of door in tempBoardCell created
@@ -631,6 +681,83 @@ public class Board {
 		return null;
 	}
 	
+	
+	public void drawBoard(BorderPane bigPane) {
+	    GridPane boardPane = new GridPane();
+	    // boardPane.setHgap(100);
+	    // boardPane.setVgap(100);
+	    // boardPane.setPadding(new Insets(10, 10, 0, 10));
+	    
+	    for (int row = 0; row < numRows; row++) {
+	    	for (int col = 0; col < numColumns;col++ ) {
+	    		BoardCell cell = getCellAt(row, col);
+	    		
+	    	    // System.out.println(cell.isRoom());
+	    	    // Rectangle box2 = new Rectangle(1000,100);
+	    		// System.out.println(row);
+	    	    Region testRegion = new Region();
+	    	   
+	    	    
+	    	    String doorwayInsets = "";
+	    	    
+	    	    if(cell.isDoorway() && cell.getDoorDirection() == DoorDirection.LEFT) {
+	    	    	doorwayInsets = "0 0 0 3";	
+	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.RIGHT) {
+	    			doorwayInsets = "0 3 0 0";
+	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.UP) {
+	    			doorwayInsets = "3 0 0 0";
+	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.DOWN) {
+	    			doorwayInsets = "0 0 3 0";
+	    		} else if (cell.isRoom()) {
+	    			testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+	    		} else {
+	    			testRegion.setStyle("-fx-background-color: black, royalblue; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+	    		}
+	    	    
+	    	    if(cell.isDoorway()) {
+	    	    	testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, "+ doorwayInsets + "; -fx-min-width: 25; -fx-min-height:25;");
+	    	    }
+	    	    boardPane.add(testRegion, col, row);
+	    	    
+	    	    
+
+	    		
+	    	}
+	    }
+	    
+	    
+	    bigPane.setTop(boardPane);
+	    
+	   
+	}
+	
+	public BorderPane drawRoomNames(BorderPane pane) {
+		BorderPane pane2 = new BorderPane();
+	    
+	    Group group = new Group();
+	   
+	    group.getChildren().add(pane);
+	    
+	    
+	    for (int row = 0; row < numRows; row++) {
+	    	for (int col = 0; col < numColumns;col++ ) {
+	    		BoardCell cell = getCellAt(row, col);
+	    		if(cell.displayNameHere()) {
+	    			
+	    			String nameRoom = legend.get(cell.getInitial());
+	    			Text text = new Text(25*col + 7,25*(row+1),nameRoom);
+	    			text.setFont(new Font(16));
+	    			group.getChildren().add(text);
+	    		}
+	    		
+	    	}
+	    }
+	    pane2.setTop(group);
+	    
+	    return pane2;
+	    
+		
+	}
 	public static Color convertColor(String strColor) {
 		 Color color;
 		 try {
