@@ -71,6 +71,8 @@ public class Board {
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
 	private ArrayList<Player> players;
+	private ArrayList<String> weapons;
+	private ArrayList<String> rooms;
 	
 	private String boardConfigFile, roomConfigFile;
 	private String playersConfigFile;
@@ -91,6 +93,8 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 		players = new ArrayList<Player>();
 		deck = new ArrayList<Card>();
+		weapons = new ArrayList<String>();
+		rooms = new ArrayList<String>();
 		usingPlayerConfigFile = false;
 		usingWeaponsConfigFile = false;
 		
@@ -127,14 +131,24 @@ public class Board {
 		return deck;
 	}
 	
+	public ArrayList<String> getRooms(){
+		return rooms;
+	}
+	
+	public ArrayList<String> getWeapons(){
+		return weapons;
+	}
+	
 	public Solution getSolution() {
 		return this.solution;
 		
 	}
 	public void dealCards() {
-		// Shuffle deck and players
+		// Shuffle
 		Collections.shuffle(deck);
 		Collections.shuffle(players);
+		Collections.shuffle(weapons);
+		Collections.shuffle(rooms);
 		
 		Boolean foundPerson = false;
 		Boolean foundRoom = false;
@@ -350,6 +364,8 @@ public class Board {
 			
 			//Adding weapons to the deck
 			deck.add(new Card(line, CardType.WEAPON));
+			
+			weapons.add(line);
 		}
 	}
 	
@@ -531,8 +547,10 @@ public class Board {
 			
 			//Adds room cards
 			if (type.equals("Card")) {
-			Card tempCard = new Card(name,CardType.ROOM);
-			deck.add(tempCard);
+				Card tempCard = new Card(name,CardType.ROOM);
+				deck.add(tempCard);
+				
+				rooms.add(name);
 			}
 			
 			
@@ -690,17 +708,11 @@ public class Board {
 	
 	public void drawBoard(BorderPane bigPane) {
 	    GridPane boardPane = new GridPane();
-	    // boardPane.setHgap(100);
-	    // boardPane.setVgap(100);
-	    // boardPane.setPadding(new Insets(10, 10, 0, 10));
 	    
 	    for (int row = 0; row < numRows; row++) {
 	    	for (int col = 0; col < numColumns;col++ ) {
 	    		BoardCell cell = getCellAt(row, col);
-	    		
-	    	    // System.out.println(cell.isRoom());
-	    	    // Rectangle box2 = new Rectangle(1000,100);
-	    		// System.out.println(row);
+
 	    	    Region testRegion = new Region();
 	    	   
 	    	    
@@ -771,7 +783,7 @@ public class Board {
 	    		
 	    	}
 	    }
-	    pane2.setTop(group);
+	    pane2.setCenter(group);
 	    
 	    return pane2;
 	    
@@ -788,14 +800,14 @@ public class Board {
 	    
 	    
 	    for(Player player: players) {
-	    	System.out.println(player);
+	    	// System.out.println(player);
 	    	Circle circle = new Circle(player.getColumn()*25 + 12.5, player.getRow()*25 + 12.5, 10.5);
 	    	circle.setStyle(player.getColorStyle());
 	    	group.getChildren().add(circle);
 	    	
 	    }
 	    
-	    pane2.setTop(group);
+	    pane2.setLeft(group);
 	    return pane2;
 	}
 	

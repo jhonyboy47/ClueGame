@@ -15,6 +15,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -95,6 +99,28 @@ public class ClueGameStart extends Application{
 	    
 	    pane2.setBottom(controlGUIPane);
 	    
+	    Menu menu = new Menu("_File");
+	    menu.setStyle(("-fx-font-size: 20;"));
+	    MenuItem exitItem = new MenuItem("Exit");
+	    exitItem.setOnAction(e ->{
+	    	window.close();
+	    });
+	    MenuItem detectiveNotesItem = new MenuItem("Detective Notes");
+	    
+	    DetectiveNotes notes = new DetectiveNotes();
+	    
+	    detectiveNotesItem.setOnAction(e ->{
+	    	notes.displayDetectiveNotes();
+	    });
+	    
+	    
+	    menu.getItems().add(detectiveNotesItem);
+	    menu.getItems().add(new SeparatorMenuItem());
+	    menu.getItems().add(exitItem);
+	    
+	    MenuBar menuBar = new MenuBar();
+	    menuBar.getMenus().addAll(menu);
+	    pane2.setTop(menuBar);
 	    // board.drawRoomNames(pane);
 	   
 	    
