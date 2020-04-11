@@ -1,3 +1,71 @@
+commit 5f50bd9a6ce483637e5c47bab03386f3fe113c70
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Apr 10 18:15:03 2020 -0600
+
+    Added comments and refined the menu bar and detective notes
+
+commit 4be69309a7715d3357fd4a0730b1d0741938e4c1
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Apr 10 16:44:13 2020 -0600
+
+    Added Detective Notes and file menu
+
+commit 1a96021fb7961b36d8ec37ebbaf7d40805da8f55
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 9 13:51:03 2020 -0600
+
+    Board now shows player
+
+commit 870ccd2c1d50d696336a70f82b3e12b09136b6fc
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 8 23:39:37 2020 -0600
+
+    If the cell is a walkway or doorway, the cell will highlight when hovered over by the mouse
+
+commit 3a2563c2c360683e275be14c6d1844bf7593f7fa
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 8 22:54:34 2020 -0600
+
+     Displays the grid of rooms, including room names
+    q
+    wq
+
+commit fa917f2f66de362534a713406b417470112c9fe9
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 8 16:36:02 2020 -0600
+
+    Continued testing with showing the board
+
+commit 16f96790d71727a78152107fee0907d0b1e6119c
+Author: Michael Crews <crews@mines.edu>
+Date:   Tue Apr 7 12:14:18 2020 -0600
+
+    Starting to add board layout
+
+commit fea558c31280a2919d7c5df199f6ab86bc52a366
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Apr 6 20:09:04 2020 -0600
+
+    Changed name of JavaFXStart to ControlGUI
+
+commit 15279a3b6611bde33add1946e728df837c873cae
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Apr 6 19:30:03 2020 -0600
+
+    Added control panel GUI written in JavaFX
+
+commit e03ecb1c03e73e578340900e37e3ae98d82ee4cb
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Apr 5 17:47:51 2020 -0600
+
+    Found and fixed error found after updating jdk
+
+commit d988c3c2c05bc7d0f3981006ba1e120c27bbd87c
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Fri Apr 3 18:07:00 2020 -0500
+
+    added gitlog
+
 commit c677260a95ba9f6f5bab8011272ee29e12746484
 Author: jhonyboy47 <malagon@mymail.mines.edu>
 Date:   Fri Apr 3 18:04:44 2020 -0500
