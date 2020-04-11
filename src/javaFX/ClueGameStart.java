@@ -62,7 +62,6 @@ public class ClueGameStart extends Application{
 	
 	public static void  main(String[] args) {
 		board = Board.getInstance();
-		// Board board = Board.getInstance();
 		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.csv");	
 		board.setPlayersFile("NewClueGamePlayers.csv");
 		board.setWeaponsFile("ClueGameWeapons.csv");
@@ -81,58 +80,67 @@ public class ClueGameStart extends Application{
 			window.close();
 		});
 		
-
-	    BorderPane pane = new BorderPane();
+		// Temporary Pane for drawing board and room Names
+	    BorderPane tempPane = new BorderPane();
 	    
+	    // BorderPane for the Control GUI at the bottom of the page
 	    BorderPane controlGUIPane = ControlGUI.drawControlGUI();
 	    
+	    // Update tempPane to include the board drawing
+	    board.drawBoard(tempPane);
 	    
-	    
-	    
-	    board.drawBoard(pane);
-	    
-	    BorderPane pane2 = board.drawRoomNames(pane);
+	    // Main border pane
+	    BorderPane pane = board.drawRoomNames(tempPane);
 	   
+	    // Update pane with the players drawn on
+	    pane = board.drawPlayers(pane);
 	    
+	    // Set the comtrol GUI to the bottom of pane
+	    pane.setBottom(controlGUIPane);
 	    
-	    pane2 = board.drawPlayers(pane2);
-	    
-	    pane2.setBottom(controlGUIPane);
-	    
+	    // Menu at the top of the screen
 	    Menu menu = new Menu("_File");
 	    menu.setStyle(("-fx-font-size: 20;"));
+	    
+	    // Buttom to exit out of the game inside the top menu
 	    MenuItem exitItem = new MenuItem("Exit");
 	    exitItem.setOnAction(e ->{
 	    	window.close();
 	    });
+	    
+	    // Menu item for accessing the Detective Notes
 	    MenuItem detectiveNotesItem = new MenuItem("Detective Notes");
 	    
+	    // DetectiveNotes object to keep track of users button clickes inside of the notes window
 	    DetectiveNotes notes = new DetectiveNotes();
 	    
+	    // Display detective notes when detective notes menu item is clicked
 	    detectiveNotesItem.setOnAction(e ->{
 	    	notes.displayDetectiveNotes();
 	    });
 	    
-	    
+	    // Add menu items to menu
 	    menu.getItems().add(detectiveNotesItem);
 	    menu.getItems().add(new SeparatorMenuItem());
 	    menu.getItems().add(exitItem);
 	    
+	    // Menu bar at the top of the screen
 	    MenuBar menuBar = new MenuBar();
 	    menuBar.getMenus().addAll(menu);
-	    pane2.setTop(menuBar);
-	    // board.drawRoomNames(pane);
-	   
+	    
+	    // Set the menuBar to the top of the screen
+	    pane.setTop(menuBar);
+	
 	    
 	    // Create a scene and pass in pane and the correct dimensions for the scene 
-		Scene scene = new Scene(pane2, 1200, 900);
+		Scene scene = new Scene(pane, 1200, 900);
 		
 		
 		// Set the window to the scene we just created
 		window.setScene(scene);
 		
-		
-		window.setMinWidth(1200);
+		// Set minimum window dimensions so everything looks okay still when the window is downsized
+		window.setMinWidth(1000);
 		window.setMinHeight(900);
 		
 		

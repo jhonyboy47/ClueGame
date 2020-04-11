@@ -707,19 +707,25 @@ public class Board {
 	
 	
 	public void drawBoard(BorderPane bigPane) {
-	    GridPane boardPane = new GridPane();
+		
+		// Grid Pane for holding e
+	    GridPane gridPane = new GridPane();
 	    
+	    // Double for loop to load in cells into gridPane
 	    for (int row = 0; row < numRows; row++) {
 	    	for (int col = 0; col < numColumns;col++ ) {
+	    		// Current cell
 	    		BoardCell cell = getCellAt(row, col);
-
-	    	    Region testRegion = new Region();
+	    		
+	    		// region that will contain the background color and borders for the cell
+	    	    Region cellRegion = new Region();
 	    	   
-	    	    
+	    	    // String to contain which sides should have borders
 	    	    String doorwayInsets = "";
 	    	    
+	    	    // Set the doorwayInsets and style background for non doorway rooms and non room cells
 	    	    if (!cell.isRoom()){
-	    			testRegion.setStyle("-fx-background-color: black, royalblue; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+	    			cellRegion.setStyle("-fx-background-color: black, royalblue; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
 	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.LEFT) {
 	    	    	doorwayInsets = "0 0 0 3";	
 	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.RIGHT) {
@@ -729,52 +735,56 @@ public class Board {
 	    		} else if (cell.isDoorway() && cell.getDoorDirection() == DoorDirection.DOWN) {
 	    			doorwayInsets = "0 0 3 0";
 	    		} else {
-	    			testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+	    			cellRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
 	    		} 
 	    	    
+	    	    // Set the style for the doorways
 	    	    if(cell.isDoorway()) {
-	    	    	testRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, "+ doorwayInsets + "; -fx-min-width: 25; -fx-min-height:25;");
+	    	    	cellRegion.setStyle("-fx-background-color: yellow, grey; -fx-background-insets: 0, "+ doorwayInsets + "; -fx-min-width: 25; -fx-min-height:25;");
 	    	    }
+	    	    
+	    	    // Add event listeners for highlighting the walkway the mouse is currently over
 	    	    if(!cell.isRoom() || cell.isDoorway()) {
-	    	    	testRegion.setOnMouseEntered(e -> {
-		    	    	String determinedStyle1 = testRegion.getStyle();
-		    	    	testRegion.setStyle("-fx-background-color: yellow, red; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+	    	    	cellRegion.setOnMouseEntered(e -> {
+		    	    	String oldStyle = cellRegion.getStyle();
+		    	    	cellRegion.setStyle("-fx-background-color: yellow, red; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
 		    	    	
-		    	    	testRegion.setOnMouseExited(e1 -> {
-		    	    		testRegion.setStyle(determinedStyle1);
+		    	    	cellRegion.setOnMouseExited(e1 -> {
+		    	    		cellRegion.setStyle(oldStyle);
 			    	    });
 			    	    
 		    	    });
 	    	    }
 	    	    
-	    	    
-	    	    boardPane.add(testRegion, col, row);
-	    	    
-	    	    
-
-	    		
+	    	    // Add the region to gridpane in the correct spot
+	    	    gridPane.add(cellRegion, col, row);
 	    	}
 	    }
 	    
-	    
-	    bigPane.setTop(boardPane);
-	    
-	   
+	    // Set the grid pane to the top of the big pane
+	    bigPane.setTop(gridPane);
 	}
 	
 	public BorderPane drawRoomNames(BorderPane pane) {
-		BorderPane pane2 = new BorderPane();
+		
+		// Make a new pane to avoid errors
+		BorderPane newPane = new BorderPane();
 	    
+		// Make a group so text can be overlayed
 	    Group group = new Group();
 	   
+	    // Add the old pane to the group
 	    group.getChildren().add(pane);
 	    
-	    
+	    // Go through every cell to determine if a room name should be displayed there
 	    for (int row = 0; row < numRows; row++) {
 	    	for (int col = 0; col < numColumns;col++ ) {
+	    		
+	    		// Get the current cell
 	    		BoardCell cell = getCellAt(row, col);
+	    		
+	    		// Add the room name where appropriate to the group
 	    		if(cell.displayNameHere()) {
-	    			
 	    			String nameRoom = legend.get(cell.getInitial());
 	    			Text text = new Text(25*col + 7,25*(row+1),nameRoom);
 	    			text.setFont(new Font(16));
@@ -783,32 +793,34 @@ public class Board {
 	    		
 	    	}
 	    }
-	    pane2.setCenter(group);
+	    // Set the center of the new pane to group
+	    newPane.setCenter(group);
 	    
-	    return pane2;
-	    
-		
+	
+	    return newPane;
 	}
 	
 	public BorderPane drawPlayers(BorderPane pane) {
-		BorderPane pane2 = new BorderPane();
+		
+		// Make another new Pane to avoid errors
+		BorderPane newPane = new BorderPane();
 	    
+		// Make a group so you can overlay players
 	    Group group = new Group();
-	   
+	    
+	    // Add pane to group
 	    group.getChildren().add(pane);
-	    
-	    
-	    
+	   
+	    // Add each player to the group
 	    for(Player player: players) {
-	    	// System.out.println(player);
 	    	Circle circle = new Circle(player.getColumn()*25 + 12.5, player.getRow()*25 + 12.5, 10.5);
 	    	circle.setStyle(player.getColorStyle());
 	    	group.getChildren().add(circle);
-	    	
 	    }
 	    
-	    pane2.setLeft(group);
-	    return pane2;
+	    // Set the group to the left side of the pane because this will be its final position
+	    newPane.setLeft(group);
+	    return newPane;
 	}
 	
 	public static Color convertColor(String strColor) {

@@ -53,35 +53,50 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 public class DetectiveNotes {
+	// Variables to hold what the size of the scene should be
 	public static double largestWidth = 0;
 	public static double overallHeight = 0;
+	
+	// ArrayLists to hold which buttons are pressed
 	public ArrayList<String> peoplePressedNames = new ArrayList<String>();
 	public ArrayList<String> weaponPressedNames = new ArrayList<String>();
 	public ArrayList<String> roomPressedNames = new ArrayList<String>();
 	
+
 	public void displayDetectiveNotes() {
+		// Get the board instance
 		Board board = Board.getInstance();
 		
 		Stage window = new Stage();
+		
+		// Set correct window close
 		window.setOnCloseRequest(e ->{
 			overallHeight = 0;
+			window.close();
 		});
 		
 		window.setTitle("Detective Notes");
+		
+		// Get the names lists
 		ArrayList<Player> players = board.getPlayersSet();
 		ArrayList<String> playerNames = new ArrayList<String>();
 		ArrayList<String> weaponNames = board.getWeapons();
 		ArrayList<String> roomNames = board.getRooms();
 		
+		// Get the player names
 		for(Player player : players) {
 			playerNames.add(player.getPlayerName());
 		}
 		
+		// Get the initial hboxs
 		HBox peopleHbox = drawSection(playerNames, "People", false);
 		
 		HBox weaponsHbox = drawSection(weaponNames, "Weapons", false);
 		
 		HBox roomHbox = drawSection(roomNames, "Rooms", false);
+		
+		
+		// Get the final hboxs
 		
 		peopleHbox = drawSection(playerNames, "People", true);
 		
@@ -89,11 +104,13 @@ public class DetectiveNotes {
 		
 		roomHbox = drawSection(roomNames, "Rooms", true);
 		
+	
 		VBox mainVbox = new VBox();
 		
+		// Add all final hboxs to mainVbox
 		mainVbox.getChildren().addAll(peopleHbox,weaponsHbox,roomHbox);
 		
-		System.out.println(largestWidth*2 + " " + overallHeight);
+		// Declare scene and initialize using correct values
 		Scene scene = new Scene(mainVbox, largestWidth*2, overallHeight);
 		
 		window.setScene(scene);
@@ -104,6 +121,10 @@ public class DetectiveNotes {
 	
 	
 	public HBox drawSection(ArrayList<String> names, String type, Boolean knowLargestWidth) {
+		// Left means left part of scene
+		// Right means right part of scene
+		
+		// Main hbox for a section of the scene
 		HBox mainHbox = new HBox();
 		
 		VBox leftVbox = new VBox();
@@ -137,18 +158,25 @@ public class DetectiveNotes {
 		ComboBox<String> comboBox = new  ComboBox<>();
 		
 		
-		
+		// Counters for checkboxs into their correct spots
 		int rowCounter = 0;
 		int colCounter = 0;
-		
 	
 		for(String name : names) {
+			
+			// Add name to comboBox
 			comboBox.getItems().add(name);
+			
+			// Make checkbox for the name
 			CheckBox box = new CheckBox(name);
+			
+			// If theres already a value of the checkbox, load it in
 			setBoxWhenOpeningNotes(box, type, comboBox);
 			box.setFont(new Font(20));
+			
+			// Set events when the user clicks the box
 			box.setOnMouseReleased(e ->{
-				System.out.println(peoplePressedNames);
+				// Will handle the event differently if type is People, Weapons, or Rooms
 				if(type.equals("People")) {
 					if(peoplePressedNames.contains(name)) {
 						comboBox.getItems().add(name);
@@ -184,9 +212,12 @@ public class DetectiveNotes {
 					}
 				}
 				
-				
 			});
+			
+			// Add checkbox to the checkboxpane in correct location
 			checkBoxPane.add(box, colCounter, rowCounter);
+			
+			// Set the counters 
 			if(colCounter == 1) {
 				colCounter = 0;
 				rowCounter++;
@@ -200,32 +231,28 @@ public class DetectiveNotes {
 		
 		checkBoxPane.setHgap(20);
 	    checkBoxPane.setVgap(20);
-		// peopleBoxPane.add();
 		
 		leftVbox.getChildren().addAll(leftLabel,checkBoxPane);
-		
-		
+	
 		leftPane.add(leftVbox, 0, 0);
 		
-		
-		
-		
+		// testScene for calculating how much space the checkboxes will take up on screen
 		Scene testScene = new Scene(leftPane,1000,1000);
 		
+		// calculate how much space the checkboxes will take up on screen
 		leftPane.applyCss();
 		leftPane.layout();
 		
-		// rightVbox.setMaxSize(leftVbox.getWidth(), leftVbox.getHeight());
 		
+		// Set the largestWidth variable from the results of the calculation above
 		if(leftVbox.getWidth() > largestWidth) {
 			largestWidth = leftVbox.getWidth();
 		}
 		
+		// divide the height by 2 because this function will run 6 times
 		overallHeight += leftVbox.getHeight()/2;
-		// peopleComboBox.setMinSize(peopleVbox.getWidth(), peopleVbox.getHeight());
 		
-		
-		
+
 		comboBox.setStyle("-fx-font-size: 25");
 		
 		
@@ -233,10 +260,9 @@ public class DetectiveNotes {
 		comboBox.setMaxWidth(Double.MAX_VALUE);
 		comboBox.setMaxHeight(Double.MAX_VALUE);
 		
-		
-		
 		rightVbox.getChildren().addAll(rightLabel,comboBox);
 		
+		// Add the ability for the comboBox to grow in size
 		HBox.setHgrow(rightVbox, Priority.ALWAYS);
 		rightVbox.setMaxWidth(Double.MAX_VALUE);
 		rightVbox.setMaxHeight(leftVbox.getHeight() - 1);
@@ -254,6 +280,7 @@ public class DetectiveNotes {
 	}
 	
 	private void setBoxWhenOpeningNotes(CheckBox box, String type, ComboBox<String> comboBox) {
+		// Load in know information about the checkBoxes
 		if(type == "People") {
 			for(String name : peoplePressedNames) {
 				if(box.getText().equals(name)) {
