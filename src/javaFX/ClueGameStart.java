@@ -74,10 +74,6 @@ public class ClueGameStart extends Application{
 	public void start(Stage window) throws Exception {
 		
 		ArrayList<Player> players = board.getPlayersSet();
-		for(Player player : players) {
-			System.out.println(player.getPlayerName());
-			System.out.println(player.getMyCards());
-		}
 		
 		// Display dialog that tells player which player they are
 		WelcomeDialog.displayWelcomeDialog(board.getHumanPlayer().getPlayerName());
