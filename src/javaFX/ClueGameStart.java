@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clueGame.Board;
+import clueGame.Player;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -62,9 +63,9 @@ public class ClueGameStart extends Application{
 	
 	public static void  main(String[] args) {
 		board = Board.getInstance();
-		board.setConfigFiles("ClueGameBoardCSV.csv", "ClueRooms.csv");	
+		board.setConfigFiles("ClueGameBoardCSV.csv", "NewClueRooms.csv");	
 		board.setPlayersFile("NewClueGamePlayers.csv");
-		board.setWeaponsFile("ClueGameWeapons.csv");
+		board.setWeaponsFile("NewClueGameWeapons.csv");
 		board.initialize();
 		launch(args);
 	}
@@ -72,10 +73,14 @@ public class ClueGameStart extends Application{
 	@Override
 	public void start(Stage window) throws Exception {
 		
+		ArrayList<Player> players = board.getPlayersSet();
+		for(Player player : players) {
+			System.out.println(player.getPlayerName());
+			System.out.println(player.getMyCards());
+		}
 		
-		
-		// WelcomeDialog.displayWelcomeDialog(board.getHumanPlayerName());
-		
+		// Display dialog that tells player which player they are
+		WelcomeDialog.displayWelcomeDialog(board.getHumanPlayer().getPlayerName());
 		
 		// Set the title of the window to "Clue Game"
 		window.setTitle("Clue Game");
@@ -91,9 +96,6 @@ public class ClueGameStart extends Application{
 	    
 	    // BorderPane for the Control GUI at the bottom of the page
 	    BorderPane controlGUIPane = ControlGUI.drawControlGUI();
-	    
-	    VBox myCardsVbox = MyCards.DisplayMyCards(board.getHumanPlayer());
-	    
 	    
 	    // Update tempPane to include the board drawing
 	    board.drawBoard(tempPane);
@@ -140,11 +142,15 @@ public class ClueGameStart extends Application{
 	    // Set the menuBar to the top of the screen
 	    pane.setTop(menuBar);
 	    
+	    // Get the Vbox that displays the players cards
+	    VBox myCardsVbox = MyCards.DisplayMyCards(board.getHumanPlayer());
+	    
+	    // Set the my Cards Vbox to the right section of the screen
 	    pane.setRight(myCardsVbox);
 	
 	    
 	    // Create a scene and pass in pane and the correct dimensions for the scene 
-		Scene scene = new Scene(pane, 1200, 900);
+		Scene scene = new Scene(pane, 1000, 820);
 		
 		
 		// Set the window to the scene we just created

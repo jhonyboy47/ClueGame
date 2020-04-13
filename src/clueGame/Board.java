@@ -147,6 +147,8 @@ public class Board {
 	public void dealCards() {
 		// Shuffle
 		Collections.shuffle(deck);
+		
+		// Testing randomness with shuffling players, weapons, and rooms
 		// Collections.shuffle(players);
 		// Collections.shuffle(weapons);
 		// Collections.shuffle(rooms);
@@ -186,7 +188,6 @@ public class Board {
 			players.get(k).addMyCards(deck.get(i));
 		}
 		
-		orderedListPlayers = new ArrayList<Player>(players);
 		
 	}
 	
@@ -826,7 +827,15 @@ public class Board {
 	}
 	
 	public Player getHumanPlayer() {
-		Player player = orderedListPlayers.get(0);
+		
+		
+		for(Player player : players) {
+			if(player instanceof HumanPlayer) {
+				return player;
+			}
+		}
+		return null;
+		/*
 		try {
 			if(!(player instanceof HumanPlayer)) {
 				throw new BadConfigFormatException("Human player is not the first player in player config file");
@@ -834,8 +843,9 @@ public class Board {
 		} catch(BadConfigFormatException e){
 			e.printStackTrace();
 		}
+		*/
 		
-		return player;
+		
 		
 	}
 	
