@@ -71,6 +71,7 @@ public class Board {
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
 	private ArrayList<Player> players;
+	private ArrayList<Player> orderedListPlayers;
 	private ArrayList<String> weapons;
 	private ArrayList<String> rooms;
 	
@@ -146,9 +147,9 @@ public class Board {
 	public void dealCards() {
 		// Shuffle
 		Collections.shuffle(deck);
-		Collections.shuffle(players);
-		Collections.shuffle(weapons);
-		Collections.shuffle(rooms);
+		// Collections.shuffle(players);
+		// Collections.shuffle(weapons);
+		// Collections.shuffle(rooms);
 		
 		Boolean foundPerson = false;
 		Boolean foundRoom = false;
@@ -184,6 +185,8 @@ public class Board {
 			int k = i % players.size();
 			players.get(k).addMyCards(deck.get(i));
 		}
+		
+		orderedListPlayers = new ArrayList<Player>(players);
 		
 	}
 	
@@ -510,7 +513,6 @@ public class Board {
 		
 		
 		
-		
 	}
 	public void loadRoomConfig() throws FileNotFoundException, BadConfigFormatException {
 		FileReader reader = new FileReader("./data/" + roomConfigFile);
@@ -823,6 +825,20 @@ public class Board {
 	    return newPane;
 	}
 	
+	public Player getHumanPlayer() {
+		Player player = orderedListPlayers.get(0);
+		try {
+			if(!(player instanceof HumanPlayer)) {
+				throw new BadConfigFormatException("Human player is not the first player in player config file");
+			}
+		} catch(BadConfigFormatException e){
+			e.printStackTrace();
+		}
+		
+		return player;
+		
+	}
+	
 	public static Color convertColor(String strColor) {
 		 Color color;
 		 try {
@@ -834,5 +850,6 @@ public class Board {
 		 }
 		 return color;
 	}
+	
 	
 }

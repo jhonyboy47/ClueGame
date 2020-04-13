@@ -71,6 +71,12 @@ public class ClueGameStart extends Application{
 	
 	@Override
 	public void start(Stage window) throws Exception {
+		
+		
+		
+		// WelcomeDialog.displayWelcomeDialog(board.getHumanPlayerName());
+		
+		
 		// Set the title of the window to "Clue Game"
 		window.setTitle("Clue Game");
 		
@@ -85,6 +91,9 @@ public class ClueGameStart extends Application{
 	    
 	    // BorderPane for the Control GUI at the bottom of the page
 	    BorderPane controlGUIPane = ControlGUI.drawControlGUI();
+	    
+	    VBox myCardsVbox = MyCards.DisplayMyCards(board.getHumanPlayer());
+	    
 	    
 	    // Update tempPane to include the board drawing
 	    board.drawBoard(tempPane);
@@ -130,6 +139,8 @@ public class ClueGameStart extends Application{
 	    
 	    // Set the menuBar to the top of the screen
 	    pane.setTop(menuBar);
+	    
+	    pane.setRight(myCardsVbox);
 	
 	    
 	    // Create a scene and pass in pane and the correct dimensions for the scene 
