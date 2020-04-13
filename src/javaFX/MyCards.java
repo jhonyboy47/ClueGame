@@ -99,6 +99,7 @@ public class MyCards {
 		Label typeNameLabel = new Label(type);
 		typeNameLabel.setFont(new Font(20));
 	
+		
 		// Add label to vbox
 		vbox.getChildren().add(typeNameLabel);
 		
@@ -138,6 +139,7 @@ public class MyCards {
 					largestCardWidth = cardName.getWidth();
 				}
 			} 
+			
 		}
 	
 		

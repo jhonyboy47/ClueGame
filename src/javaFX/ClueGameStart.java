@@ -94,6 +94,7 @@ public class ClueGameStart extends Application{
 		// Temporary Pane for drawing board and room Names
 	    BorderPane tempPane = new BorderPane();
 	    
+	    
 	    // BorderPane for the Control GUI at the bottom of the page
 	    BorderPane controlGUIPane = ControlGUI.drawControlGUI();
 	    
