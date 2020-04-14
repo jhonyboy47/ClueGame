@@ -92,7 +92,7 @@ public class ClueGameStart extends Application{
 	    
 	    
 	    // BorderPane for the Control GUI at the bottom of the page
-	    BorderPane controlGUIPane = ControlGUI.drawControlGUI();
+	    BorderPane controlGUIPane = ControlGUI.drawControlGUI(board);
 	    
 	    // Update tempPane to include the board drawing
 	    board.drawBoard(tempPane);

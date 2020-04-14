@@ -71,7 +71,6 @@ public class Board {
 	// The targets set is used while calculating targets and it holds all cells that are targets
 	private Set<BoardCell> targets;
 	private ArrayList<Player> players;
-	private ArrayList<Player> orderedListPlayers;
 	private ArrayList<String> weapons;
 	private ArrayList<String> rooms;
 	
@@ -85,6 +84,12 @@ public class Board {
 	
 	private Solution solution;
 	
+	private Player nextPlayer;
+	
+	private Random random;
+	
+	private int dieRoll;
+	
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -96,6 +101,7 @@ public class Board {
 		deck = new ArrayList<Card>();
 		weapons = new ArrayList<String>();
 		rooms = new ArrayList<String>();
+		random = new Random(); 
 		usingPlayerConfigFile = false;
 		usingWeaponsConfigFile = false;
 		
@@ -834,19 +840,30 @@ public class Board {
 				return player;
 			}
 		}
-		return null;
-		/*
-		try {
-			if(!(player instanceof HumanPlayer)) {
-				throw new BadConfigFormatException("Human player is not the first player in player config file");
-			}
-		} catch(BadConfigFormatException e){
-			e.printStackTrace();
+		return null;	
+	}
+	
+	public void setNextPlayer() {
+		if(nextPlayer == null) {
+			nextPlayer = getHumanPlayer();
+		} else if (players.indexOf(nextPlayer) < (players.size() - 1)) {
+			nextPlayer = players.get(players.indexOf(nextPlayer) + 1);
+		} else {
+			nextPlayer = getHumanPlayer();
 		}
-		*/
-		
-		
-		
+	}
+	
+	public Player getNextPlayer() {
+		return nextPlayer;
+	}
+	
+	public void setNextDieRoll() {
+		dieRoll = random.nextInt(6) + 1;
+	}
+	
+	public String getDieRollString() {
+		System.out.println(String.valueOf(dieRoll));
+		return String.valueOf(dieRoll);
 	}
 	
 	public static Color convertColor(String strColor) {

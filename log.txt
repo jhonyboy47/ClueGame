@@ -1,3 +1,33 @@
+commit 5034cae1c0c9892dda30ad941024c24f0bb059f4
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Apr 13 16:58:44 2020 -0600
+
+    Removed uneeded print statements
+
+commit ab0bacb36574b93dda57f0ed52776a54e3e4f6b0
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Mon Apr 13 17:56:46 2020 -0500
+
+    Polished up for C22A
+
+commit 5a0c07596ede877e2be3ecd870baa813cff04805
+Author: Michael Crews <crews@mines.edu>
+Date:   Mon Apr 13 15:05:52 2020 -0600
+
+    Added a welcome display message to the beginning of the game that tells the user which player they are
+
+commit 957c8fc8bb8a760787ef62d9b6340fc3d8a3b8e0
+Author: Michael Crews <crews@mines.edu>
+Date:   Sun Apr 12 22:40:02 2020 -0600
+
+    Starting to work on displaying the user's cards
+
+commit a0cf30f5c51ccfb78f4e9e2cb1e37e92486ceccc
+Author: Michael Crews <crews@mines.edu>
+Date:   Fri Apr 10 18:18:04 2020 -0600
+
+    Updated log.txt
+
 commit 5f50bd9a6ce483637e5c47bab03386f3fe113c70
 Author: Michael Crews <crews@mines.edu>
 Date:   Fri Apr 10 18:15:03 2020 -0600
