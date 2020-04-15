@@ -786,7 +786,13 @@ public class Board {
 	    	    				
 	    	    				nextPlayer.setNewLocation(newRow, newCol);
 	    	    				
-	    	    				
+	    	    				for(Pair<Player, Circle> pair : playerCircles) {
+	    	    					if(pair.getKey() == nextPlayer) {
+	    	    						pair.getValue().setCenterX(newCol *25 + 12.5);
+	    	    						pair.getValue().setCenterY(newRow *25 + 12.5);
+	    	    						
+	    	    					}
+	    	    				}
 	    	    				
 	    	    			} else {
 	    	    				System.out.println("Error");
