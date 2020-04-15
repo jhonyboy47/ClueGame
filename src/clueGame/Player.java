@@ -54,7 +54,6 @@ public class Player {
 	
 	
 	
-	
 
 	
 	public Card disproveSuggestion(Suggestion suggestion, Board board) {
@@ -99,6 +98,11 @@ public class Player {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public void setNewLocation(Integer row, Integer col) {
+		this.row = row;
+		this.column = col;
 	}
 	
 	

@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.WeakInvalidationListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -97,9 +98,11 @@ public class ClueGameStart extends Application{
 	    // Update tempPane to include the board drawing
 	    board.drawBoard(tempPane);
 	    
+	    
 	    // Main border pane
 	    BorderPane pane = board.drawRoomNames(tempPane);
 	   
+	    
 	    // Update pane with the players drawn on
 	    pane = board.drawPlayers(pane);
 	    

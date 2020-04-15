@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.WeakInvalidationListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -55,8 +54,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
-
-
+import javafx.util.Pair;
 import clueGame.BoardCell;
 
 public class Board {
@@ -90,6 +88,13 @@ public class Board {
 	
 	private int dieRoll;
 	
+	private GridPane boardGridPane;
+	
+	ArrayList<Pair<Node, String>> highlightedNodes;
+	
+	ArrayList<Pair<Player, Circle>> playerCircles;
+	
+	
 	
 	private Board() {
 		legend = new HashMap<Character,String>();
@@ -102,6 +107,9 @@ public class Board {
 		weapons = new ArrayList<String>();
 		rooms = new ArrayList<String>();
 		random = new Random(); 
+		playerCircles = new ArrayList<Pair<Player, Circle>>();
+		
+		highlightedNodes = new ArrayList<Pair<Node, String>>();
 		usingPlayerConfigFile = false;
 		usingWeaponsConfigFile = false;
 		
@@ -756,13 +764,35 @@ public class Board {
 	    	    if(!cell.isRoom() || cell.isDoorway()) {
 	    	    	cellRegion.setOnMouseEntered(e -> {
 		    	    	String oldStyle = cellRegion.getStyle();
-		    	    	cellRegion.setStyle("-fx-background-color: yellow, red; -fx-background-insets: 0, 0 0 0 0; -fx-min-width: 25; -fx-min-height:25;");
+		    	    	
+		    	    	if(cellRegion.getStyle() == "-fx-background-color: black, seagreen; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;") {
+		    	    		cellRegion.setStyle("-fx-background-color: black, lime; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+		    	    	} 
+		    	    	else {
+		    	    		cellRegion.setStyle("-fx-background-color: black, navy; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+		    	    	}
+	
 		    	    	
 		    	    	cellRegion.setOnMouseExited(e1 -> {
 		    	    		cellRegion.setStyle(oldStyle);
 			    	    });
 			    	    
 		    	    });
+	    	    	cellRegion.setOnMouseClicked(e -> {
+	    	    		if(nextPlayer instanceof HumanPlayer) {
+	    	    			if(cellRegion.getStyle() == "-fx-background-color: black, lime; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;") {
+	    	    				Integer newRow = GridPane.getRowIndex(cellRegion);
+	    	    				Integer newCol = GridPane.getColumnIndex(cellRegion);
+	    	    				
+	    	    				nextPlayer.setNewLocation(newRow, newCol);
+	    	    				
+	    	    				
+	    	    				
+	    	    			} else {
+	    	    				System.out.println("Error");
+	    	    			}
+	    	    		}
+	    	    	});
 	    	    }
 	    	    
 	    	    // Add the region to gridpane in the correct spot
@@ -770,8 +800,52 @@ public class Board {
 	    	}
 	    }
 	    
-	    // Set the grid pane to the top of the big pane
-	    bigPane.setTop(gridPane);
+	    boardGridPane = gridPane;
+	    // Set the grid pane to the center of the big pane
+	    bigPane.setCenter(gridPane);
+	    
+	}
+	
+	public GridPane getBoardGridPane() {
+		return boardGridPane;
+	}
+	
+	public void highlightTargetsIfHuman() {
+		if(nextPlayer instanceof HumanPlayer) {
+			ObservableList<Node> childrens = boardGridPane.getChildren();
+			int nextPlayerRow = nextPlayer.getRow();
+			int nextPlayerCol = nextPlayer.getColumn();
+			// System.out.println(nextPlayerRow + " " + nextPlayer );
+			
+			calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
+			
+			Set<BoardCell> targets = getTargets();
+			ArrayList<Pair<Integer, Integer>> targetPairs = new ArrayList<Pair<Integer, Integer>>();
+			
+			for(BoardCell target : targets) {
+				targetPairs.add(new Pair(target.getRow(), target.getColumn()));
+			}
+			
+		    for (Node node : childrens) {
+		        if(targetPairs.contains(new Pair(GridPane.getRowIndex(node), GridPane.getColumnIndex(node)))) {
+		        	highlightedNodes.add(new Pair(node, node.getStyle()));
+		        	node.setStyle("-fx-background-color: black, seagreen; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+		        	
+		        }
+		    }
+		}
+	    
+	}
+	
+	public void unHighligthTargerts() {
+		
+		if(!highlightedNodes.isEmpty()) {
+			for(Pair<Node, String> pair : highlightedNodes) {
+				pair.getKey().setStyle(pair.getValue());
+			}
+			highlightedNodes.clear();
+		}
+
 	}
 	
 	public BorderPane drawRoomNames(BorderPane pane) {
@@ -824,6 +898,7 @@ public class Board {
 	    for(Player player: players) {
 	    	Circle circle = new Circle(player.getColumn()*25 + 12.5, player.getRow()*25 + 12.5, 10.5);
 	    	circle.setStyle(player.getColorStyle());
+	    	playerCircles.add(new Pair(player, circle));
 	    	group.getChildren().add(circle);
 	    }
 	    
@@ -833,8 +908,6 @@ public class Board {
 	}
 	
 	public Player getHumanPlayer() {
-		
-		
 		for(Player player : players) {
 			if(player instanceof HumanPlayer) {
 				return player;

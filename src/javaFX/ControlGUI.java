@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import clueGame.Board;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import javafx.application.*;
 import javafx.event.ActionEvent;
@@ -91,13 +92,18 @@ public class ControlGUI{
 		Button nextPlayerButton = new Button("Next Player");
 		
 		nextPlayerButton.setOnAction(e ->{
+			board.unHighligthTargerts();
 			
 			board.setNextDieRoll();
 			showDieRoll.setText(board.getDieRollString());
 		
 			board.setNextPlayer();
+			
 			Player nextPlayer = board.getNextPlayer();
 			showWhoseTurn.setText(nextPlayer.getPlayerName());
+			
+			board.highlightTargetsIfHuman();
+			
 			
 		});
 		
