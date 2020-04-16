@@ -808,7 +808,7 @@ public class Board {
 
 					});
 
-					//
+					//Listener for valid locations to move to on a board
 					cellRegion.setOnMouseClicked(e -> {
 						if (nextPlayer instanceof HumanPlayer) {
 							if (cellRegion
@@ -818,11 +818,13 @@ public class Board {
 
 								nextPlayer.setNewLocation(newRow, newCol);
 								
+								
+								//Where we change boolean to true (indicates to program that player has moved)
 								((HumanPlayer) nextPlayer).setJustMoved(true);
 								
 								//Refactored code to adjust were next player is drawn
 								drawPlayer();
-
+								
 							} else {
 								InvalidCellSelection.displayInvalidSelection();
 							}
@@ -849,61 +851,58 @@ public class Board {
 		ObservableList<Node> childrens = boardGridPane.getChildren();
 		int nextPlayerRow = nextPlayer.getRow();
 		int nextPlayerCol = nextPlayer.getColumn();
-		// System.out.println(nextPlayerRow + " " + nextPlayer );
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
 		
 		Set<BoardCell> targets = getTargets();
 		
+		//Making sure there is not a null pointer exception when getting the target list
 		if(targets.size() != 0) {
+		
 			ArrayList<Pair<Integer, Integer>> targetPairs = new ArrayList<Pair<Integer, Integer>>();
-
+			
+			//Pairing columns and rows of target into a pair that represents a individual cell
 			for (BoardCell target : targets) {
 				targetPairs.add(new Pair(target.getRow(), target.getColumn()));
 			}
-
+			
+			
+			//Goes through the cells and highlights them 
 			for (Node node : childrens) {
 				if (targetPairs.contains(new Pair(GridPane.getRowIndex(node), GridPane.getColumnIndex(node)))) {
+					//Used to keep track of highlited cells to unhighlight later 
 					highlightedNodes.add(new Pair(node, node.getStyle()));
 					node.setStyle(
 							"-fx-background-color: black, seagreen; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
 
 				}
 			}
+			
+			// Used to ensure a human player moves and accounts for the situation where player has nowhere to move
+			((HumanPlayer) nextPlayer).setJustMoved(false);
+
 		}
-		
-		((HumanPlayer) nextPlayer).setJustMoved(false);
-		
-		
+	
 	}
 
 	// (5) Computer player selects a valid target and moves to it
 
 	public void makeComputerPlayerMove() {
 
-		ObservableList<Node> childrens = boardGridPane.getChildren();
 		int nextPlayerRow = nextPlayer.getRow();
 		int nextPlayerCol = nextPlayer.getColumn();
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
 		
+		//Makes sure ther is not a null pointer error when accessing the targets list
 		if(getTargets().size() != 0) {
 			ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
 			
-			
 			BoardCell targetCell = computerPlayer.pickLocation(targets);
-			
 			nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
-			
 			drawPlayer();
 		}
 
-		
-		
-		
-		
-		
-		 
 
 	}
 	

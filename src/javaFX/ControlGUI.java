@@ -95,6 +95,8 @@ public class ControlGUI{
 		nextPlayerButton.setOnAction(e ->{
 			Player nextPlayer = board.getNextPlayer();
 			
+			//handles situation where player has not moved from the position
+			// human player was at the start of players turn
 			if(nextPlayer instanceof HumanPlayer) {
 				if(((HumanPlayer) nextPlayer).getJustMoved() == false) {
 					return;
