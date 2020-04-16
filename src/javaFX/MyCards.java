@@ -63,6 +63,8 @@ public class MyCards {
 		if(!roomCards.isEmpty()) {
 			VBox roomVbox = DisplayCardsOfSameType(roomCards, "Rooms",false);
 		}
+		
+		
 		if(!weaponCards.isEmpty()) {
 			VBox weaponVbox = DisplayCardsOfSameType(weaponCards, "Weapons",false);
 		}

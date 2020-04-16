@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import clueGame.Board;
+import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 import javafx.application.*;
@@ -96,13 +97,20 @@ public class ControlGUI{
 			
 			board.setNextDieRoll();
 			showDieRoll.setText(board.getDieRollString());
-		
-			board.setNextPlayer();
 			
+			board.setNextPlayer();
 			Player nextPlayer = board.getNextPlayer();
 			showWhoseTurn.setText(nextPlayer.getPlayerName());
 			
-			board.highlightTargetsIfHuman();
+			//Movements based off of computer or human player
+			if ( nextPlayer instanceof HumanPlayer) {
+				board.highlightTargetsIfHuman();
+			}
+			
+			else if (nextPlayer instanceof ComputerPlayer) {
+				
+				board.makeMove();
+			}
 			
 			
 		});
