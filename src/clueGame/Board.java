@@ -56,6 +56,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import clueGame.BoardCell;
+import javaFX.InvalidCellSelection;
 
 public class Board {
 	public final static int MAX_BOARD_SIZE = 50;
@@ -817,11 +818,13 @@ public class Board {
 
 								nextPlayer.setNewLocation(newRow, newCol);
 								
+								((HumanPlayer) nextPlayer).setJustMoved(true);
+								
 								//Refactored code to adjust were next player is drawn
 								drawPlayer();
 
 							} else {
-								System.out.println("Error");
+								InvalidCellSelection.displayInvalidSelection();
 							}
 						}
 					});
@@ -867,9 +870,9 @@ public class Board {
 
 				}
 			}
-		} else {
-			System.out.println("Zero");
 		}
+		
+		((HumanPlayer) nextPlayer).setJustMoved(false);
 		
 		
 	}

@@ -93,13 +93,23 @@ public class ControlGUI{
 		Button nextPlayerButton = new Button("Next Player");
 		
 		nextPlayerButton.setOnAction(e ->{
+			Player nextPlayer = board.getNextPlayer();
+			
+			if(nextPlayer instanceof HumanPlayer) {
+				if(((HumanPlayer) nextPlayer).getJustMoved() == false) {
+					return;
+				}
+			}
+			
+			
 			board.unHighlightTargets();
 			
 			board.setNextDieRoll();
 			showDieRoll.setText(board.getDieRollString());
 			
 			board.setNextPlayer();
-			Player nextPlayer = board.getNextPlayer();
+			
+			nextPlayer = board.getNextPlayer();
 			showWhoseTurn.setText(nextPlayer.getPlayerName());
 			
 			//Movements based off of computer or human player
