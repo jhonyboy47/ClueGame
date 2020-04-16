@@ -815,7 +815,10 @@ public class Board {
 									.getStyle() == "-fx-background-color: black, lime; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;") {
 								Integer newRow = GridPane.getRowIndex(cellRegion);
 								Integer newCol = GridPane.getColumnIndex(cellRegion);
-
+								
+								// If a player is already in a room, they should be moved
+								checkIfPlayerAlreadyInRoom(newRow, newCol);
+								
 								nextPlayer.setNewLocation(newRow, newCol);
 								
 								
@@ -847,14 +850,90 @@ public class Board {
 		return boardGridPane;
 	}
 
+	public void checkIfPlayerAlreadyInRoom(int row, int col) {
+		
+		// Loop through the list of players
+		for(Player player : players) {
+			// If a player's row and col matches the input row and col then the player needs to be moved
+			if(player.getRow() == row && player.getColumn() == col) {
+				// Make a list of potential locations to move the player and call movePlayerAlreadyInRoom to the potential locations
+				ArrayList<Pair<Integer, Integer>> potentialMoveLocations = movePlayerAlreadyInRoom(board[row][col].getInitial());
+				
+				// Get a random number to pick from the potential move locations
+				int randomNumber = random.nextInt(potentialMoveLocations.size());
+				
+				// Using the random number, pick a potential move location
+				Pair<Integer, Integer> moveLocation = potentialMoveLocations.get(randomNumber);
+				
+				player.setNewDisplayLocation(moveLocation.getKey(), moveLocation.getValue());
+				updatePlayerCircle(player);
+			}
+		}
+	}
+	
+	public ArrayList<Pair<Integer, Integer>> movePlayerAlreadyInRoom(char initial) {
+		// Make a list of potential locations to move the player
+		ArrayList<Pair<Integer, Integer>> potentialMoveLocations = new ArrayList<Pair<Integer, Integer>>();
+		
+		// Loop through the board cells to find potential locations
+		for(int row = 0; row < numRows; row++) {
+			for(int col = 0; col < numColumns; col++) {
+				
+				// Don't check the cell if isn't not in the inputed room
+				if(board[row][col].getInitial() == initial) {
+					
+					// Boolean to keep track if a player has been found for that given row and col
+					Boolean playerFound = false;
+					
+					for(Player player : players) {
+						if(player.getDisplayRow() == row && player.getDisplayColumn() == col) {
+							playerFound = true;
+						}
+					}
+					
+					// If no players is on the row and col, then add the row and col to the potential move locations
+					if(playerFound == false) {
+						potentialMoveLocations.add(new Pair(row, col));
+					}
+				}
+			}
+		}
+		return potentialMoveLocations;
+	}
+	
 	public void highlightTargetsIfHuman() {
+		// Get every grid cell from boardGridPane
 		ObservableList<Node> childrens = boardGridPane.getChildren();
+		
 		int nextPlayerRow = nextPlayer.getRow();
 		int nextPlayerCol = nextPlayer.getColumn();
-
-		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
 		
-		Set<BoardCell> targets = getTargets();
+		Set<BoardCell> targets = new HashSet<BoardCell>();
+		
+		
+		// If the player is going into a room there could be multiple doors to exit through
+		if(board[nextPlayerRow][nextPlayerCol].isRoom()) {
+			char roomInitial = board[nextPlayerRow][nextPlayerCol].getInitial();
+			
+			// Go through all the room cells to see if their are multiple rooms
+			for (int row = 0; row < numRows; row++) {
+				for (int col = 0; col < numColumns; col++) {
+					BoardCell tempBoardCell = board[row][col];
+					
+					// If there is a doorway in the correct room, do calcTargets and merge the resulting targets to targets
+					if(tempBoardCell.isDoorway() && tempBoardCell.getInitial() == roomInitial) {
+						calcTargets(row, col, dieRoll);
+						targets.addAll(getTargets());
+					}
+				}
+			}
+		} else {
+			calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
+			targets = getTargets();
+		}
+		
+		
+		
 		
 		//Making sure there is not a null pointer exception when getting the target list
 		if(targets.size() != 0) {
@@ -894,11 +973,39 @@ public class Board {
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
 		
-		//Makes sure ther is not a null pointer error when accessing the targets list
+		// Make a tempTargets so that multiple targets lists can be merged together 
+		Set<BoardCell> tempTargets = new HashSet<BoardCell>();
+		
+		// If the computer player is going into a room there could be multiple doors to exit through
+		if(board[nextPlayerRow][nextPlayerCol].isRoom()) {
+			char roomInitial = board[nextPlayerRow][nextPlayerCol].getInitial();
+			
+			// Go through all the room cells to see if their are multiple rooms
+			for (int row = 0; row < numRows; row++) {
+				for (int col = 0; col < numColumns; col++) {
+					
+					// If there is a doorway in the correct room, do calcTargets and merge the resulting targets to tempTargets
+					BoardCell tempBoardCell = board[row][col];
+					if(tempBoardCell.isDoorway() && tempBoardCell.getInitial() == roomInitial) {
+						calcTargets(row, col, dieRoll);
+						tempTargets.addAll(getTargets());
+					}
+				}
+			}
+		} else {
+			calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
+			tempTargets = getTargets();
+		}
+		
+		targets = tempTargets;
+		
+		//Makes sure there is not a null pointer error when accessing the targets list
 		if(getTargets().size() != 0) {
 			ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
 			
 			BoardCell targetCell = computerPlayer.pickLocation(targets);
+			
+			checkIfPlayerAlreadyInRoom(targetCell.getRow(), targetCell.getColumn());
 			nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
 			drawPlayer();
 		}
@@ -918,6 +1025,20 @@ public class Board {
 		
 		}
 	}
+	
+	
+	public void updatePlayerCircle(Player player) {
+		for (Pair<Player, Circle> pair : playerCircles) {
+			if (pair.getKey() == player) {
+				pair.getValue().setCenterX(player.getDisplayColumn() * 25 + 12.5);
+				pair.getValue().setCenterY(player.getDisplayRow() * 25 + 12.5);
+
+			}
+		}
+	}
+		
+	
+	
 
 	public void unHighlightTargets() {
 
@@ -983,8 +1104,7 @@ public class Board {
 			group.getChildren().add(circle);
 		}
 
-		// Set the group to the left side of the pane because this will be its final
-		// position
+		// Set the group to the left side of the pane because this will be its final position
 		newPane.setLeft(group);
 		return newPane;
 	}
@@ -1018,7 +1138,6 @@ public class Board {
 	}
 
 	public String getDieRollString() {
-		System.out.println(String.valueOf(dieRoll));
 		return String.valueOf(dieRoll);
 	}
 

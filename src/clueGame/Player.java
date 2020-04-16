@@ -13,7 +13,9 @@ public class Player {
 	private Integer column;
 	private Color color;
 	private String colorStyle;
-	private BoardCell currentCell;
+	private Integer displayRow;
+	private Integer displayColumn;
+	
 	
 	protected ArrayList<Card> myCards = new ArrayList<Card>();
 	
@@ -40,6 +42,8 @@ public class Player {
 		this.playerName = playerName;
 		this.row = startingCell.getRow();
 		this.column = startingCell.getColumn();
+		this.displayRow = startingCell.getRow();
+		this.displayColumn = startingCell.getColumn();
 		this.color = color;
 		
 	}
@@ -95,6 +99,19 @@ public class Player {
 	public int getColumn() {
 		return column;
 	}
+	
+	public int getDisplayRow() {
+		return displayRow;
+	}
+
+	public int getDisplayColumn() {
+		return displayColumn;
+	}
+	
+	public void setNewDisplayLocation(Integer row, Integer col) {
+		this.displayRow = row;
+		this.displayColumn = col;
+	}
 
 	public Color getColor() {
 		return color;
@@ -103,6 +120,8 @@ public class Player {
 	public void setNewLocation(Integer row, Integer col) {
 		this.row = row;
 		this.column = col;
+		this.displayRow = row;
+		this.displayColumn = col;
 	}
 	
 	

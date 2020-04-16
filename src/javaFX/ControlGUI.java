@@ -120,7 +120,6 @@ public class ControlGUI{
 			}
 			
 			else if (nextPlayer instanceof ComputerPlayer) {
-				
 				board.makeComputerPlayerMove();
 			}
 			

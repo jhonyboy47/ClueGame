@@ -31,7 +31,7 @@ public class InvalidCellSelection{
 		// Set the main text of the alert window
 		alert.setContentText("Sorry, you can't move to that cell");
 
-		// Show the window and wait until window closes before continuing in ClueGameStart
+		// Show the window and wait until window closes before continuing
 		alert.showAndWait();
 	}
 	
