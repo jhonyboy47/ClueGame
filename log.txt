@@ -1,3 +1,57 @@
+commit 9dcb6ce59802762252cfd285f26cc8d701ca4ee5
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 16 17:19:21 2020 -0600
+
+    Added some helpful comments
+
+commit 993d023d917b64ed5354446a546e2cea32551eae
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Thu Apr 16 13:27:57 2020 -0500
+
+    Comments for InvalidCellSelection, makeComputerPlayerMove and highlightIfHuman Player
+
+commit 28caffeb60b654d8d2814e1ae9ee1afaef06ac54
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 16 12:01:24 2020 -0600
+
+    Ensure human is done with there turn before going to next player
+
+commit d74a97a8455f7dd513e1eadb6a44f74cee839a5d
+Author: Michael Crews <crews@mines.edu>
+Date:   Thu Apr 16 00:18:14 2020 -0600
+
+    Players may now not move on one another or through one another
+
+commit f5310ab2f02e5584ba5fcac72f5d4c736093bebc
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 15 20:20:18 2020 -0600
+
+    Computer players now move correctly when its there turn
+
+commit c3c4f31f4c22ec4180bbeeafdfb018bd21b92766
+Author: jhonyboy47 <malagon@mymail.mines.edu>
+Date:   Wed Apr 15 20:23:40 2020 -0500
+
+    makeMove function created for computer player to move randomly must implement the pick location method correctly and refactored the code that draws the players to drawPlayer function in Board
+
+commit 8aca533d3f6754d1351b3e61f4c9bd3c31dc24d6
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 15 15:53:40 2020 -0600
+
+    Human player now moves when the use selects a valid spot
+
+commit a3fe10bd0a38d4c5affd84d2891b647f862d7525
+Author: Michael Crews <crews@mines.edu>
+Date:   Wed Apr 15 15:47:51 2020 -0600
+
+    The targets for the human player now shows up on board
+
+commit a16a76e6cfefff176f652f53820e98b39de7be02
+Author: Michael Crews <crews@mines.edu>
+Date:   Tue Apr 14 12:21:47 2020 -0600
+
+    The game now shows whose turn it is and the die roll
+
 commit 5034cae1c0c9892dda30ad941024c24f0bb059f4
 Author: Michael Crews <crews@mines.edu>
 Date:   Mon Apr 13 16:58:44 2020 -0600
