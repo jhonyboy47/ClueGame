@@ -460,17 +460,39 @@ public class Board {
 			if (!visited.contains(cell)) {
 				visited.add(cell);
 				if (pathLength == 1) {
-
-					// Base case
-					targets.add(cell);
+					
+					Boolean moveOnPlayerCheck = false;
+					for(Player player : players) {
+						if(player != nextPlayer && player.getRow() == cell.getRow() && player.getColumn() == cell.getColumn() && cell.isWalkway()) {
+							moveOnPlayerCheck = true;
+						}
+					}
+					
+					if(moveOnPlayerCheck == false) {
+						// Base case
+						targets.add(cell);
+					}
+					
+					
 
 				} else {
 					// Set firstCall to false because the first call of calculate targets has been
 					// completed
 					firstCall = false;
+					
+					Boolean moveOnPlayerCheck = false;
+					for(Player player : players) {
+						if(player != nextPlayer && player.getRow() == cell.getRow() && player.getColumn() == cell.getColumn() && cell.isWalkway()) {
+							moveOnPlayerCheck = true;
+						}
+					}
+					
+					if(moveOnPlayerCheck == false) {
+						// Recursive call of the calcTargets because pathlength is not 1 yet
+						findAllTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+					}
 
-					// Recursive call of the calcTargets because pathlength is not 1 yet
-					findAllTargets(cell.getRow(), cell.getColumn(), pathLength - 1);
+					
 				}
 				visited.remove(cell);
 
@@ -827,22 +849,29 @@ public class Board {
 		// System.out.println(nextPlayerRow + " " + nextPlayer );
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
-
+		
 		Set<BoardCell> targets = getTargets();
-		ArrayList<Pair<Integer, Integer>> targetPairs = new ArrayList<Pair<Integer, Integer>>();
+		
+		if(targets.size() != 0) {
+			ArrayList<Pair<Integer, Integer>> targetPairs = new ArrayList<Pair<Integer, Integer>>();
 
-		for (BoardCell target : targets) {
-			targetPairs.add(new Pair(target.getRow(), target.getColumn()));
-		}
-
-		for (Node node : childrens) {
-			if (targetPairs.contains(new Pair(GridPane.getRowIndex(node), GridPane.getColumnIndex(node)))) {
-				highlightedNodes.add(new Pair(node, node.getStyle()));
-				node.setStyle(
-						"-fx-background-color: black, seagreen; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
-
+			for (BoardCell target : targets) {
+				targetPairs.add(new Pair(target.getRow(), target.getColumn()));
 			}
+
+			for (Node node : childrens) {
+				if (targetPairs.contains(new Pair(GridPane.getRowIndex(node), GridPane.getColumnIndex(node)))) {
+					highlightedNodes.add(new Pair(node, node.getStyle()));
+					node.setStyle(
+							"-fx-background-color: black, seagreen; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;");
+
+				}
+			}
+		} else {
+			System.out.println("Zero");
 		}
+		
+		
 	}
 
 	// (5) Computer player selects a valid target and moves to it
@@ -854,15 +883,23 @@ public class Board {
 		int nextPlayerCol = nextPlayer.getColumn();
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
+		
+		if(getTargets().size() != 0) {
+			ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
+			
+			
+			BoardCell targetCell = computerPlayer.pickLocation(targets);
+			
+			nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
+			
+			drawPlayer();
+		}
 
-		ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
 		
 		
-		BoardCell targetCell = computerPlayer.pickLocation(targets);
 		
-		nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
 		
-		drawPlayer();
+		
 		 
 
 	}
@@ -880,7 +917,7 @@ public class Board {
 		}
 	}
 
-	public void unHighligthTargerts() {
+	public void unHighlightTargets() {
 
 		if (!highlightedNodes.isEmpty()) {
 			for (Pair<Node, String> pair : highlightedNodes) {

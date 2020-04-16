@@ -93,7 +93,7 @@ public class ControlGUI{
 		Button nextPlayerButton = new Button("Next Player");
 		
 		nextPlayerButton.setOnAction(e ->{
-			board.unHighligthTargerts();
+			board.unHighlightTargets();
 			
 			board.setNextDieRoll();
 			showDieRoll.setText(board.getDieRollString());
