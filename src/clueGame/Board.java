@@ -847,37 +847,22 @@ public class Board {
 
 	// (5) Computer player selects a valid target and moves to it
 
-	public void makeMove() {
+	public void makeComputerPlayerMove() {
 
 		ObservableList<Node> childrens = boardGridPane.getChildren();
 		int nextPlayerRow = nextPlayer.getRow();
 		int nextPlayerCol = nextPlayer.getColumn();
-		// System.out.println(nextPlayerRow + " " + nextPlayer );
 
 		calcTargets(nextPlayerRow, nextPlayerCol, dieRoll);
 
-		Set<BoardCell> targets = getTargets();
-		ArrayList<Pair<Integer, Integer>> targetPairs = new ArrayList<Pair<Integer, Integer>>();
-
-		Random rand = new Random();
-		// Generate random integers in range 0 to target size
-		int rand_int1 = rand.nextInt(targets.size());
-		/*
-		 * BoardCell location = nextPlayer.pickLocation(targets); }
-		 */
-		
-		  int counter = 0; 
-		  for (BoardCell target : targets) {
-		  
-		  if (counter == rand_int1) {
-		  
-		  nextPlayer.setNewLocation(target.getRow(), target.getColumn()); }
-		  
-		  counter++; }
-		 
+		ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
 		
 		
-		  drawPlayer();
+		BoardCell targetCell = computerPlayer.pickLocation(targets);
+		
+		nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
+		
+		drawPlayer();
 		 
 
 	}

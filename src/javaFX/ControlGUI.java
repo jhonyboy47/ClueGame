@@ -109,7 +109,7 @@ public class ControlGUI{
 			
 			else if (nextPlayer instanceof ComputerPlayer) {
 				
-				board.makeMove();
+				board.makeComputerPlayerMove();
 			}
 			
 			
