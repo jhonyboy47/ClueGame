@@ -57,6 +57,7 @@ import javafx.util.Callback;
 import javafx.util.Pair;
 import clueGame.BoardCell;
 import javaFX.InvalidCellSelection;
+import javaFX.SuggestionMenu;
 
 public class Board {
 	public final static int MAX_BOARD_SIZE = 50;
@@ -811,8 +812,7 @@ public class Board {
 					//Listener for valid locations to move to on a board
 					cellRegion.setOnMouseClicked(e -> {
 						if (nextPlayer instanceof HumanPlayer) {
-							if (cellRegion
-									.getStyle() == "-fx-background-color: black, lime; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;") {
+							if (cellRegion.getStyle() == "-fx-background-color: black, lime; -fx-background-insets: 0, 1 1 1 1; -fx-min-width: 25; -fx-min-height:25;") {
 								Integer newRow = GridPane.getRowIndex(cellRegion);
 								Integer newCol = GridPane.getColumnIndex(cellRegion);
 								
@@ -827,6 +827,10 @@ public class Board {
 								
 								//Refactored code to adjust were next player is drawn
 								drawPlayer();
+								
+								if(board[newRow][newCol].isRoom()) {
+									SuggestionMenu.makeSuggestionMenu(legend.get(board[newRow][newCol].getInitial()));
+								}
 								
 							} else {
 								InvalidCellSelection.displayInvalidSelection();

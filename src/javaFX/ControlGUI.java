@@ -58,7 +58,7 @@ import javafx.util.Callback;
 
 public class ControlGUI{
 	
-	static BorderPane drawControlGUI(Board board) {
+	public static BorderPane drawControlGUI(Board board) {
 	
 		// BorderPane to hold all labels and buttons
 		BorderPane pane = new BorderPane();
