@@ -56,6 +56,8 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import clueGame.BoardCell;
+import javaFX.AccusationWindow;
+import javaFX.ControlGUI;
 import javaFX.InvalidCellSelection;
 import javaFX.SuggestionMenu;
 
@@ -84,6 +86,7 @@ public class Board {
 	private Boolean usingPlayerConfigFile;
 	private Boolean usingWeaponsConfigFile;
 
+	
 	private Solution solution;
 
 	private Player nextPlayer;
@@ -144,7 +147,8 @@ public class Board {
 		calcAdjacencies();
 		if (usingPlayerConfigFile && usingWeaponsConfigFile)
 			dealCards();
-
+		
+		setComputerPlayerUnseenCards();
 	}
 
 	public ArrayList<Card> getDeck() {
@@ -163,7 +167,20 @@ public class Board {
 		return this.solution;
 
 	}
-
+	
+	public void setComputerPlayerUnseenCards() {
+		ArrayList<String> playerNames = new ArrayList<String>();
+		
+		for(Player player : players) {
+			playerNames.add(player.getPlayerName());
+		}
+		
+		// Need to set the unseenCards with copies to avoid deleting the wrong version of the cards
+		ComputerPlayer.setUnseenPersonCards(playerNames);
+		ComputerPlayer.setUnseenWeaponsCards(new ArrayList<String>(weapons));
+		
+	}
+	
 	public void dealCards() {
 		// Shuffle
 		Collections.shuffle(deck);
@@ -730,7 +747,7 @@ public class Board {
 		return true;
 	}
 
-	public Card handleSuggestion(ArrayList<Player> queryPlayers, Suggestion suggestion) {
+	public Card handleSuggestion(ArrayList<Player> queryPlayers, Suggestion suggestion, Player accuser) {
 
 		Card disproveCard;
 
@@ -741,7 +758,15 @@ public class Board {
 
 			// If 'disproveCard' is null current player can't disprove
 			if (disproveCard != null) {
+				
+				if(player instanceof ComputerPlayer) {
+					ComputerPlayer.removeSeenCard(disproveCard);
+				} else {
+					((ComputerPlayer) accuser).addAdditionalSeenCard(disproveCard);
+				}
+				
 				return disproveCard;
+
 			}
 		}
 
@@ -828,9 +853,11 @@ public class Board {
 								//Refactored code to adjust were next player is drawn
 								drawPlayer();
 								
+								
 								if(board[newRow][newCol].isRoom()) {
 									SuggestionMenu.makeSuggestionMenu(legend.get(board[newRow][newCol].getInitial()));
 								}
+								
 								
 							} else {
 								InvalidCellSelection.displayInvalidSelection();
@@ -903,6 +930,48 @@ public class Board {
 			}
 		}
 		return potentialMoveLocations;
+	}
+	
+	public void movePlayerToSuggestedRoom(Player inputPlayer, char initial, int inputRow, int inputCol) {
+		// Make a list of potential locations to move the player
+		ArrayList<Pair<Integer, Integer>> potentialMoveLocations = new ArrayList<Pair<Integer, Integer>>();
+		
+		// Loop through the board cells to find potential locations
+		for(int row = 0; row < numRows; row++) {
+			for(int col = 0; col < numColumns; col++) {
+				
+				// Don't check the cell if isn't not in the inputed room
+				if(board[row][col].getInitial() == initial) {
+					
+					// Boolean to keep track if a player has been found for that given row and col
+					Boolean playerFound = false;
+					
+					for(Player player : players) {
+						if(player.getDisplayRow() == row && player.getDisplayColumn() == col) {
+							playerFound = true;
+						}
+					}
+					
+					// If no players is on the row and col, then add the row and col to the potential move locations
+					if(playerFound == false) {
+						potentialMoveLocations.add(new Pair(row, col));
+					}
+				}
+			}
+		}
+		
+		// Get a random number to pick from the potential move locations
+		int randomNumber = random.nextInt(potentialMoveLocations.size());
+		
+		// Using the random number, pick a potential move location
+		Pair<Integer, Integer> moveLocation = potentialMoveLocations.get(randomNumber);
+		
+		inputPlayer.setNewDisplayLocation(moveLocation.getKey(), moveLocation.getValue());
+		
+		updatePlayerCircle(inputPlayer);
+		
+		inputPlayer.setNewLocation(inputRow, inputCol);
+		
 	}
 	
 	public void highlightTargetsIfHuman() {
@@ -1003,8 +1072,20 @@ public class Board {
 		
 		targets = tempTargets;
 		
+		
+		BoardCell lastVisitedCell = ((ComputerPlayer) nextPlayer).getLastVisitedCell();
+		if(lastVisitedCell != null) {
+			char lastVisitedRoomInitial = lastVisitedCell.getInitial();
+			ArrayList<BoardCell> targetsCopy = new ArrayList<BoardCell>(targets);
+			for(BoardCell target : targetsCopy) {
+				if(target.isRoom() && target.getInitial() == lastVisitedRoomInitial) {
+					targets.remove(target);
+				}
+			}
+		}
+		
 		//Makes sure there is not a null pointer error when accessing the targets list
-		if(getTargets().size() != 0) {
+		if(targets.size() != 0) {
 			ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
 			
 			BoardCell targetCell = computerPlayer.pickLocation(targets);
@@ -1012,9 +1093,62 @@ public class Board {
 			checkIfPlayerAlreadyInRoom(targetCell.getRow(), targetCell.getColumn());
 			nextPlayer.setNewLocation(targetCell.getRow(), targetCell.getColumn());
 			drawPlayer();
+			
+			if(targetCell.isRoom()) {
+				computerPlayer.setLasVisitedRoom(targetCell);
+			}
 		}
 
 
+	}
+	
+	
+	public void makeComputerPlayerSuggestion() {
+		ComputerPlayer computerPlayer = (ComputerPlayer) nextPlayer;
+		
+		// Get the suggestion
+		Suggestion suggestion = computerPlayer.createSuggestion(board[nextPlayer.getRow()][nextPlayer.getColumn()]);
+		
+		Player suggestedPlayer = new Player();
+		
+		// Get the player that is suggested
+		for(Player player : players) {
+			if(player.getPlayerName() == suggestion.person) {
+				suggestedPlayer = player;
+			}
+		}
+		
+		// Move the suggested player to the suggested room
+		movePlayerToSuggestedRoom(suggestedPlayer, board[nextPlayer.getRow()][nextPlayer.getColumn()].getInitial(), nextPlayer.getRow(), nextPlayer.getColumn());
+		
+		// Index used to calculate the query of players in the handle suggestion method
+		int startingIndex = players.indexOf(nextPlayer) + 1;
+		
+		ArrayList<Player> queryPlayers = new ArrayList<Player>();
+		
+		for(int i = startingIndex; i < players.size(); i++) {
+			queryPlayers.add(players.get(i));
+		}
+		
+		if(queryPlayers.size() < (players.size() - 1)) {
+			for(int i = 0; i < startingIndex - 1; i++) {
+				queryPlayers.add(players.get(i));
+			}
+		}
+	
+		Card disproveCard = handleSuggestion(queryPlayers, suggestion, nextPlayer);
+		
+		ControlGUI.setGuess(legend.get(suggestion.room), suggestion.weapon, suggestion.person);
+		
+		ControlGUI.setGuessResult(disproveCard);
+		
+		// The suggestion generated might be the solution so the next computer might want to make an accusation
+		if(disproveCard == null && !computerPlayer.getMyCardsAsStrings().contains(legend.get(suggestion.room))) {
+			ComputerPlayer.setMakeAccusation(true);
+			ComputerPlayer.setAccusation(suggestion);
+		} else {
+			ComputerPlayer.setMakeAccusation(false);
+		}
 	}
 	
 	//Draws the player on the grid

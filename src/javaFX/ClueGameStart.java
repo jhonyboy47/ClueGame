@@ -60,7 +60,11 @@ import javafx.util.Callback;
 
 public class ClueGameStart extends Application{
 	
+	private static Stage mainWindow;
 	static Board board;
+	
+	// DetectiveNotes object to keep track of users button clickes inside of the notes window
+    public static DetectiveNotes notes = new DetectiveNotes();
 	
 	public static void  main(String[] args) {
 		board = Board.getInstance();
@@ -74,6 +78,8 @@ public class ClueGameStart extends Application{
 	@Override
 	public void start(Stage window) throws Exception {
 		
+		mainWindow = window;
+		
 		ArrayList<Player> players = board.getPlayersSet();
 		
 		// Display dialog that tells player which player they are
@@ -85,7 +91,7 @@ public class ClueGameStart extends Application{
 		// Close the program properly if the user tries to close the program
 		window.setOnCloseRequest(e ->{
 			e.consume();
-			window.close();
+	    	closeGame();
 		});
 		
 		// Temporary Pane for drawing board and room Names
@@ -116,7 +122,7 @@ public class ClueGameStart extends Application{
 	    // Buttom to exit out of the game inside the top menu
 	    MenuItem exitItem = new MenuItem("Exit");
 	    exitItem.setOnAction(e ->{
-	    	window.close();
+	    	closeGame();
 	    });
 	    
 	    // Menu item for accessing the Detective Notes
@@ -163,6 +169,12 @@ public class ClueGameStart extends Application{
 		
 		// Show the window to the user
 		window.show();
+	
+	}
+	
+	// Method to close program
+	public static void closeGame() {
+		System.exit(0);
 	}
 }
 	

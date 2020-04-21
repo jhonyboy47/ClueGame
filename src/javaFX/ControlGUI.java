@@ -5,11 +5,15 @@ package javaFX;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 
 import clueGame.Board;
+import clueGame.Card;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Solution;
+import clueGame.Suggestion;
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -51,6 +55,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -58,10 +63,17 @@ import javafx.util.Callback;
 
 public class ControlGUI{
 	
-	public static BorderPane drawControlGUI(Board board) {
 	
-		// BorderPane to hold all labels and buttons
-		BorderPane pane = new BorderPane();
+	private static Label showGuess = new Label();
+	
+	// BorderPane to hold all labels and buttons
+	private static BorderPane pane = new BorderPane();
+	
+	private static Label showGuessResult = new Label();
+	private static Button nextPlayerButton = new Button("Next Player");
+	
+	
+	public static BorderPane drawControlGUI(Board board) {
 
 		Label showDieRoll = new Label("");
 		
@@ -90,9 +102,14 @@ public class ControlGUI{
 		// HBox to hold next player and make accusation buttons
 		HBox playerButtonHbox = new HBox();
 		
-		Button nextPlayerButton = new Button("Next Player");
 		
 		nextPlayerButton.setOnAction(e ->{
+			
+			// Resest the guess/guess result labels
+			showGuess.setText("");
+			showGuessResult.setText("");
+			
+			
 			Player nextPlayer = board.getNextPlayer();
 			
 			//handles situation where player has not moved from the position
@@ -102,7 +119,6 @@ public class ControlGUI{
 					return;
 				}
 			}
-			
 			
 			board.unHighlightTargets();
 			
@@ -120,13 +136,42 @@ public class ControlGUI{
 			}
 			
 			else if (nextPlayer instanceof ComputerPlayer) {
-				board.makeComputerPlayerMove();
+				// If statement for it the ComputerPlayers think they should make an accusation
+				if(ComputerPlayer.getMakeAccusation()) {
+					// Get the accusation that the ComputerPlayers think is correct
+					Suggestion suggestion = ComputerPlayer.getAccusation();
+					Solution accusation = new Solution(suggestion.person, suggestion.weapon, board.getLegend().get(suggestion.room));
+					
+					// If the accusation is false, any ComputerPlayer shouldn't make an accusation until another good accusation is found
+					ComputerPlayer.setMakeAccusation(board.checkAccusation(accusation));
+
+					// Show the results of the accusation
+					AccusationWindow.showWindow(nextPlayer, accusation, board.checkAccusation(accusation));
+				} else {
+					
+					// Do normal computerPlayer movements and suggestions
+					board.makeComputerPlayerMove();
+					
+					if(board.getCellAt(nextPlayer.getRow(), nextPlayer.getColumn()).isRoom()) {
+						board.makeComputerPlayerSuggestion();
+					}
+				}	
 			}
-			
-			
 		});
+	
 		
 		Button makeAccusationButton = new Button("Make Accusation");
+		
+		makeAccusationButton.setOnAction(e ->{
+			Player nextPlayer = board.getNextPlayer();
+			// If statement to show invalid selection and to show Accusation Menu if the Human Player is allowed to
+			if(!(nextPlayer instanceof HumanPlayer && !((HumanPlayer) nextPlayer).getJustMoved())) {
+				InvalidMakeAccusationButtonPress.displayInvalidPress();
+			} else {
+				AccusationMenu.makeAccusationMenu();
+			}
+			
+		});
 		
 		nextPlayerButton.setFont(new Font(25));
 		makeAccusationButton.setFont(new Font(25));
@@ -200,10 +245,11 @@ public class ControlGUI{
 	    guessLabel.setMinSize(60, 0);
 	    guessLabel.setFont(new Font(25));
 	    
-	    Label showGuess = new Label();
 	    showGuess.setFont(new Font(20));
 	    showGuess.setMinSize(390, 20);
 	    showGuess.setStyle("-fx-border-color: blue");
+	    showGuess.setPadding(new Insets(0, 10, 0, 10));
+	    showGuess.setMinHeight(Region.USE_PREF_SIZE);
 	    
 	    guessVbox.getChildren().addAll(guessLabel, showGuess);
 	    
@@ -218,6 +264,7 @@ public class ControlGUI{
 	    guessResultGrid.setPadding(new Insets(0, 30, 0, 20));
 	    guessResultGrid.setAlignment(Pos.CENTER_LEFT);
 	    
+	    
 	    VBox guessResultVbox = new VBox();
 	    guessResultVbox.setStyle("-fx-border-color: gray");
 	    guessResultVbox.setMinSize(250, 50);
@@ -228,7 +275,7 @@ public class ControlGUI{
 	    guessResultLabel.setFont(new Font(25));
 	    
 	    
-	    Label showGuessResult = new Label();
+	    showGuessResult.setPadding(new Insets(0, 10, 0, 10));
 	    showGuessResult.setFont(new Font(20));
 	    showGuessResult.setMinSize(240, 20);
 	    showGuessResult.setStyle("-fx-border-color: blue");
@@ -248,8 +295,60 @@ public class ControlGUI{
 	}
 	
 	
-
-
-	    
+	// Used to show the guess on the control GUI
+	public static void setGuess(String roomGuess, String weaponGuess, String personGuess) {
+		
+		showGuess.setText(personGuess + ", " + roomGuess + ", " + weaponGuess);
+		
+		showGuess.setFont(new Font(20));
+		
+		// While to make sure that the guess can fit onto the GUI
+		while(true) {
+			pane.applyCss();
+			pane.layout();
+			
+			
+			String actualString = ((Text)showGuess.lookup(".text")).getText();
+			
+			if(showGuess.getText().equals(actualString)) {
+				break;
+			} else {
+				Font font = showGuess.getFont();
+				
+				showGuess.setFont(new Font(font.getSize() - 1));
+			}
+		}
+	}
+	
+	
+	// Used to show the guess result on the control GUI
+	public static void setGuessResult(Card disproveCard) {
+		
+		if(disproveCard == null) {
+			showGuessResult.setText("No New Clue");
+		} else {
+			showGuessResult.setText(disproveCard.getCardName());
+		}
+		
+		
+		showGuessResult.setFont(new Font(20));
+		
+		// While to make sure that the guess result can fit onto the GUI
+		while(true) {
+			pane.applyCss();
+			pane.layout();
+			
+			String actualString = ((Text)showGuess.lookup(".text")).getText();
+			
+			if(showGuess.getText().equals(actualString)) {
+				break;
+			} else {
+				Font font = showGuessResult.getFont();
+				
+				showGuessResult.setFont(new Font(font.getSize() - 1));
+			}
+		}
+		
+	}  
 	
 }

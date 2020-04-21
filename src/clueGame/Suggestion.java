@@ -12,6 +12,8 @@ public class Suggestion {
 		this.weapon = weapon;
 		this.person = person;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "Suggestion [room=" + room + ", weapon=" + weapon + ", person=" + person + "]";

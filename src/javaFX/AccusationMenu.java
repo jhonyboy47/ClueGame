@@ -5,7 +5,9 @@ import java.util.Map;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
+import clueGame.HumanPlayer;
 import clueGame.Player;
+import clueGame.Solution;
 import clueGame.Suggestion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,11 +28,12 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 
-public class SuggestionMenu {
+public class AccusationMenu {
 	private static double largestComboBoxWidth = 0;
 	
-	public static void makeSuggestionMenu(String roomName) {
+	public static void makeAccusationMenu() {
 		
+		// Need the board instance
 		Board board = Board.getInstance();
 		
 		Stage window = new Stage();
@@ -38,11 +41,12 @@ public class SuggestionMenu {
 		// Set the window so that the user can't click on other Clue Game windows
 		window.initModality(Modality.APPLICATION_MODAL);
 		
-		window.setTitle("Make a Suggestion");
 		
+		window.setTitle("Make an Accusation");
+	
 		GridPane gridPane = new GridPane();
 		
-		Label yourRoomLabel = new Label("Your room");
+		Label yourRoomLabel = new Label("Room");
 		yourRoomLabel.setFont(new Font(25));
 		yourRoomLabel.setPadding(new Insets(0,0,0, 10));
 		
@@ -71,12 +75,11 @@ public class SuggestionMenu {
 		roomComboBox.setStyle("-fx-font-size: 25");
 		
 		
-		
-		
 		// Get the names lists
 		ArrayList<Player> players = board.getPlayersSet();
 		ArrayList<String> playerNames = new ArrayList<String>();
 		ArrayList<String> weaponNames = board.getWeapons();
+		ArrayList<String> roomNames = board.getRooms();
 		
 		// Get the player names
 		for(Player player : players) {
@@ -92,11 +95,11 @@ public class SuggestionMenu {
 			weaponComboBox.getItems().add(weaponName);
 		}
 		
-		roomComboBox.getItems().add(roomName);
-		
+		for(String roomName : roomNames) {
+			roomComboBox.getItems().add(roomName);
+		}
 		
 		// Calculate what the largest width is for all ComboBoxes
-		
 		calculateLargestComboBoxWidth(personComboBox);
 		calculateLargestComboBoxWidth(roomComboBox);
 		calculateLargestComboBoxWidth(weaponComboBox);
@@ -113,49 +116,24 @@ public class SuggestionMenu {
 		submitButton.setMinHeight(50);
 		cancelButton.setMinHeight(50);
 		
-
-		
 		submitButton.setOnAction(e -> {
-			Map<Character,String> legend = board.getLegend();
-			char roomChar = ' ';
-			
-			// Get the room character from legend for the selected room
-			for(Map.Entry<Character, String> entry : legend.entrySet()) {
-				if(entry.getValue().equals(roomComboBox.getSelectionModel().getSelectedItem())) {
-					roomChar = entry.getKey();
-				}
-			}
-			
-			Player nextPlayer = board.getNextPlayer();
-			
-			// Make a copy of players so we can remove the human player from out query list
-			ArrayList<Player> queryPlayers = new ArrayList<Player>(players);
-			
-			queryPlayers.remove(board.getHumanPlayer());
-			
-			
-			// Create the suggestion
-			Suggestion suggestion = new Suggestion(roomChar, weaponComboBox.getValue(), personComboBox.getValue());
-			
-			// Update the GUI with the new guess
-			ControlGUI.setGuess(roomComboBox.getValue(),  weaponComboBox.getValue(), personComboBox.getValue());
-		
-			// Move suggested player to suggested room
-			for(Player player : players) {
-				if(player.getPlayerName().equals(personComboBox.getValue())) {
-					board.movePlayerToSuggestedRoom(player, roomChar, nextPlayer.getRow(), nextPlayer.getColumn());
-				}
-			}
-			
-			Card disproveCard = board.handleSuggestion(queryPlayers, suggestion, board.getHumanPlayer());
-			ControlGUI.setGuessResult(disproveCard);
+			Solution accusation = new Solution(personComboBox.getValue(), weaponComboBox.getValue(), roomComboBox.getValue());
+			Boolean accusationCorrectBool = board.checkAccusation(accusation);
 			
 			board.unHighlightTargets();
 			
+			// Set just moved to true, so the player can't cheat
+			((HumanPlayer) board.getHumanPlayer()).setJustMoved(true);
+			
+			// Show the accusation window showing the results
+			AccusationWindow.showWindow(board.getNextPlayer(), accusation, accusationCorrectBool);
+			
+			// Close the accusation menu
 			window.close();
 		});
 		
 		cancelButton.setOnAction(e ->{
+			// Close the accusation menu
 			window.close();
 		});
 		
@@ -177,8 +155,6 @@ public class SuggestionMenu {
 		gridPane.add(submitButton, 0, 4);
 		
 		gridPane.add(cancelButton, 1, 4);
-		
-		
 		
 		
 		Scene scene = new Scene(gridPane);

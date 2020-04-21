@@ -27,9 +27,19 @@ public class Player {
 		myCards.add(card);
 	}
 	
-	// This function is for testing
 	public ArrayList<Card> getMyCards() {
 		return myCards;
+	}
+	
+	public ArrayList<String> getMyCardsAsStrings(){
+		ArrayList<String> tempArrayList = new ArrayList<String>();
+		
+		for(Card card : myCards) {
+			tempArrayList.add(card.getCardName());
+		}
+		
+		return tempArrayList;
+		
 	}
 	
 	public void changeMyCards(Card card) {

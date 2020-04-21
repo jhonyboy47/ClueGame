@@ -104,13 +104,13 @@ public class gameActionTests {
 		unSeenPersonCards.add("Bob");
 		unSeenPersonCards.add("Shark");
 		unSeenPersonCards.add("Jared");
-		player.setSeenPersonCards(unSeenPersonCards);
+		player.setUnseenPersonCards(unSeenPersonCards);
 		
 		
 		ArrayList<String> unSeenWeaponCards = new ArrayList<String>();
 		unSeenWeaponCards.add("Pillow");
 		unSeenWeaponCards.add("Car");
-		player.setSeenWeaponsCards(unSeenWeaponCards);
+		player.setUnseenWeaponsCards(unSeenWeaponCards);
 		
 		Suggestion suggestion = player.createSuggestion(board.getCellAt(5, 18));
 		
@@ -150,8 +150,8 @@ public class gameActionTests {
 		unSeenPersonCards.remove("Shark");
 		unSeenWeaponCards.remove("Car");
 		
-		player.setSeenPersonCards(unSeenPersonCards);
-		player.setSeenWeaponsCards(unSeenWeaponCards);
+		player.setUnseenPersonCards(unSeenPersonCards);
+		player.setUnseenWeaponsCards(unSeenWeaponCards);
 		
 		suggestion = player.createSuggestion(board.getCellAt(5, 18));
 		
@@ -242,7 +242,7 @@ public class gameActionTests {
 		
 		Suggestion suggestion = new Suggestion('J', "Marshmellow", "Jared");
 		
-		Card responseCard = board.handleSuggestion(playerList,suggestion);
+		Card responseCard = board.handleSuggestion(playerList,suggestion, computerPlayer1);
 		
 		assertEquals(null, responseCard);
 		
@@ -250,7 +250,7 @@ public class gameActionTests {
 		// Computer Player 1 is the accuser
 		suggestion = new Suggestion('G', "Marshmellow", "Jared");
 		
-		responseCard = board.handleSuggestion(playerList,suggestion);
+		responseCard = board.handleSuggestion(playerList,suggestion, computerPlayer1);
 		
 		assertEquals(null, responseCard);
 		
@@ -262,7 +262,7 @@ public class gameActionTests {
 		playerList.add(computerPlayer2);
 		suggestion = new Suggestion('L', "Marshmellow", "Jared");
 	
-		responseCard = board.handleSuggestion(playerList,suggestion);
+		responseCard = board.handleSuggestion(playerList,suggestion, humanPlayer);
 		
 		assertEquals(null, responseCard);
 		
@@ -272,7 +272,7 @@ public class gameActionTests {
 		playerList.add(computerPlayer2);
 		playerList.add(humanPlayer);
 		
-		responseCard = board.handleSuggestion(playerList,suggestion);
+		responseCard = board.handleSuggestion(playerList,suggestion, computerPlayer1);
 		
 		assertEquals(libraryRoom, responseCard);
 		
@@ -280,7 +280,7 @@ public class gameActionTests {
 		// Computer player 1 is the accuser
 		suggestion = new Suggestion('L', "Pillow", "Jared");
 		
-		responseCard = board.handleSuggestion(playerList, suggestion);
+		responseCard = board.handleSuggestion(playerList, suggestion, computerPlayer1);
 		
 		assertEquals(pillowCard, responseCard);
 		
@@ -290,7 +290,7 @@ public class gameActionTests {
 		playerList.add(computerPlayer1);
 		playerList.add(computerPlayer2);
 		suggestion = new Suggestion('G', "Pillow", "Jared");
-		responseCard = board.handleSuggestion(playerList, suggestion);
+		responseCard = board.handleSuggestion(playerList, suggestion, humanPlayer);
 		assertEquals(gameRoomCard, responseCard);
 	
 	}
