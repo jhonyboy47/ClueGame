@@ -1,0 +1,8 @@
+Authors: Michael Crews and Jhon Malagon
+
+For C24A, we did the extra credit.
+
+The display updates so that it's apparent to the user when two or more players are in the same room 
+(e.g., when a suggestion is made and the player's token gets moved to the room).
+
+To test this please play the game. You'll see that when two or more players are in the same room, they are on different cells.

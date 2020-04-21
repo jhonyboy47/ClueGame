@@ -1,3 +1,4 @@
+///Authors: Jhonathan Malagon and Michael Crews
 package javaFX;
 
 import clueGame.ComputerPlayer;
